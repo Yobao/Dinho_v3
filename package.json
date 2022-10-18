@@ -1,0 +1,36 @@
+{
+	"name": "dinho_v3",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "webpack-dev-server --mode development",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Yobao/Dinho_v3.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Yobao/Dinho_v3/issues"
+	},
+	"homepage": "https://github.com/Yobao/Dinho_v3#readme",
+	"devDependencies": {
+		"@babel/cli": "^7.1.0",
+		"@babel/core": "^7.1.0",
+		"@babel/preset-env": "^7.1.0",
+		"@babel/preset-react": "^7.0.0",
+		"babel-loader": "^8.0.2",
+		"css-loader": "^1.0.0",
+		"style-loader": "^0.23.0",
+		"webpack": "^4.19.1",
+		"webpack-cli": "^3.1.1",
+		"webpack-dev-server": "^3.1.8"
+	},
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	}
+}
