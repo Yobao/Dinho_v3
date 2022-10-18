@@ -1,8 +1,32 @@
-import React from "react";
-import { render } from "react-dom";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
+import useFetch from "./hooks/use-fetch";
+import { URL } from "./store/structure";
 
 const App = () => {
-	return <h1>Hello Joži!</h1>;
+	const [tableData, setTableData] = useState(null);
+	const requestConfig = {
+		url: URL,
+		requestOptions: {
+			method: "GET",
+			mode: "cors",
+			headers: { "Access-Control-Allow-Origin": "*" },
+		},
+	};
+	const transformData = (data) => {
+		setTableData(data);
+	};
+	const { isLoading, error, sendRequest } = useFetch();
+
+	useEffect(() => {
+		sendRequest(requestConfig, transformData);
+	}, [sendRequest]);
+
+	return (
+		<React.Fragment>
+			{isLoading && <h1>LOADING...</h1>}
+			{!isLoading && tableData && <h1>Hello there you {tableData.table[1].username}!</h1>}
+		</React.Fragment>
+	);
 };
 
 export default App;
