@@ -43,22 +43,22 @@ export const SLOVAK = {
 		info: "Tip sa dá kedykoľvek do začiatku zápasu zmeniť.",
 	},
 	pagination: { previous: "Predošlá", next: "Nasledujúca" },
-	loginModal: [
-		[
+	loginModal: {
+		inputs: [
 			{ title: "Meno", placeHolder: "Zadajte Meno", icon: "fas fa-user" },
 			{ title: "Heslo", placeHolder: "Zadajte Heslo", icon: "fas fa-lock" },
 		],
-		[
+		buttons: [
 			{ text: "Prihlásiť sa", style: "is-info" },
 			{ text: "Zabudnuté heslo", style: "is-warning" },
 		],
-		{
+		warnings: {
 			warning: "Nesprávne Meno alebo Heslo. Skúste to prosím znova.",
 			somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
 		},
-	],
-	regModal: [
-		[
+	},
+	regModal: {
+		inputs: [
 			{ title: "Meno", placeHolder: "Zadajte Meno (3-15 znakov)", icon: "fas fa-user" },
 			{ title: "Heslo", placeHolder: "Heslo aspoň 6 znakov", icon: "fas fa-lock" },
 			{
@@ -68,8 +68,8 @@ export const SLOVAK = {
 			},
 			{ title: "Email", placeHolder: "Zadajte Email", icon: "fas fa-envelope" },
 		],
-		[{ text: "Zaregistrovať", style: "is-info" }],
-		{
+		buttons: [{ text: "Zaregistrovať", style: "is-info" }],
+		warnings: {
 			nameMin:
 				"Zadané Meno musí obsahovať 3-15 znakov a smie obsahovať iba povolené špecialné znaky.",
 			nameMinLetter: "Zadané Meno musí obsahovať minimálne 1 písmeno.",
@@ -80,36 +80,36 @@ export const SLOVAK = {
 			exists: "Zadané Meno alebo e-mail už existuje.",
 			somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
 		},
-		[
+		dropdown: [
 			"Komunita",
 			[
 				{ name: "chelsea-fc.cz", value: 1 },
 				{ name: "Chelsea FB", value: 2 },
 			],
 		],
-	],
-	changePwdModal: [
-		[
+	},
+	changePwdModal: {
+		inputs: [
 			{ title: "Staré Heslo", placeHolder: "Zadajte staré heslo", icon: "fas fa-lock" },
 			{ title: "Nové Heslo", placeHolder: "Heslo aspoň 6 znakov", icon: "fas fa-lock" },
 		],
-		[{ text: "Zmeniť Heslo", style: "is-info" }],
-		{
+		buttons: [{ text: "Zmeniť Heslo", style: "is-info" }],
+		warnings: {
 			pwdMin: "Zadané heslo musí obsahovať minimálne 6 znakov.",
 			somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
 			fillEverything: "Vyplňte prosím všetky polia.",
 		},
-	],
-	forgotPwdModal: [
-		[
+	},
+	forgotPwdModal: {
+		inputs: [
 			{
 				title: "Zadaj Email na reset hesla.",
 				placeHolder: "Email",
 				icon: "fas fa-envelope",
 			},
 		],
-		[{ text: "Vygeneruj heslo", style: "is-info" }],
-		{
+		buttons: [{ text: "Vygeneruj heslo", style: "is-info" }],
+		warnings: {
 			mailFormat: "Zadali ste nesprávny formát e-mailu.",
 			somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
 			fillEverything: "Vyplňte prosím všetky polia.",
@@ -117,9 +117,9 @@ export const SLOVAK = {
 			passwordSent:
 				"Na Vašu e-mailovú adresu bol zaslaný odkaz na reset hesla. V prípade že ste e-mail neobdržali, skontrolujte prosím spam.",
 		},
-	],
-	mailPwd: [
-		[
+	},
+	mailPwd: {
+		inputs: [
 			{ title: "Nové Heslo", placeHolder: "Heslo aspoň 6 znakov", icon: "fas fa-lock" },
 			{
 				title: "Zopakuj Nové Heslo",
@@ -127,14 +127,14 @@ export const SLOVAK = {
 				icon: "fas fa-lock",
 			},
 		],
-		[{ text: "Změnit Heslo", style: "is-warning" }],
-		{
+		buttons: [{ text: "Změnit Heslo", style: "is-warning" }],
+		warnings: {
 			pwdMin: "Zadané heslo musí obsahovať minimálne 6 znakov.",
 			somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
 			fillEverything: "Vyplňte prosím všetky polia.",
 			pwdNotMatch: "Zadané heslá sa nezhodujú.",
 		},
-	],
+	},
 };
 
 export const CZECH = {
@@ -179,22 +179,22 @@ export const CZECH = {
 		info: "Tip lze kdykoli do začátku zápasu změnit.",
 	},
 	pagination: { previous: "Předošlí", next: "Nasledující" },
-	loginModal: [
-		[
+	loginModal: {
+		inputs: [
 			{ title: "Jméno", placeHolder: "Zadejte Jméno", icon: "fas fa-user" },
 			{ title: "Heslo", placeHolder: "Zadejte Heslo", icon: "fas fa-lock" },
 		],
-		[
+		buttons: [
 			{ text: "Přihlásit se", style: "is-info" },
 			{ text: "Zapomenuté heslo", style: "is-warning" },
 		],
-		{
+		warnings: {
 			warning: "Nesprávné Jméno nebo Heslo. Zkuste to prosím znovu.",
 			somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
 		},
-	],
-	regModal: [
-		[
+	},
+	regModal: {
+		inputs: [
 			{ title: "Jméno", placeHolder: "Zadajte Jméno (3-15 znaků)", icon: "fas fa-user" },
 			{ title: "Heslo", placeHolder: "Heslo alespoň 6 znaků", icon: "fas fa-lock" },
 			{
@@ -204,8 +204,8 @@ export const CZECH = {
 			},
 			{ title: "Email", placeHolder: "Zadejte Email", icon: "fas fa-envelope" },
 		],
-		[{ text: "Zaregistrovat", style: "is-info" }],
-		{
+		buttons: [{ text: "Zaregistrovat", style: "is-info" }],
+		warnings: {
 			nameMin:
 				"Zadané Jméno musí obsahovat 3-15 znaků a může obsahovat pouze povolené speciální znaky.",
 			nameMinLetter: "Zadané Jméno musí obsahovat minimálně 1 písmeno.",
@@ -216,36 +216,36 @@ export const CZECH = {
 			exists: "Zadané Jméno nebo e-mail již existuje.",
 			somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
 		},
-		[
+		dropdown: [
 			"Komunita",
 			[
 				{ name: "chelsea-fc.cz", value: 1 },
 				{ name: "Chelsea FB", value: 2 },
 			],
 		],
-	],
-	changePwdModal: [
-		[
+	},
+	changePwdModal: {
+		inputs: [
 			{ title: "Staré Heslo", placeHolder: "Zadajte staré heslo", icon: "fas fa-lock" },
 			{ title: "Nové Heslo", placeHolder: "Heslo alespoň 6 znaků", icon: "fas fa-lock" },
 		],
-		[{ text: "Změnit Heslo", style: "is-info" }],
-		{
+		buttons: [{ text: "Změnit Heslo", style: "is-info" }],
+		warnings: {
 			pwdMin: "Zadané heslo musí obsahovat minimálně 6 znaků.",
 			somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
 			fillEverything: "Vyplňte prosím všechna pole.",
 		},
-	],
-	forgotPwdModal: [
-		[
+	},
+	forgotPwdModal: {
+		inputs: [
 			{
 				title: "Zadej Email na reset hesla.",
 				placeHolder: "Email",
 				icon: "fas fa-envelope",
 			},
 		],
-		[{ text: "Vygeneruj heslo", style: "is-info" }],
-		{
+		buttons: [{ text: "Vygeneruj heslo", style: "is-info" }],
+		warnings: {
 			mailFormat: "Zadali jste nesprávný formát e-mailu.",
 			somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
 			fillEverything: "Vyplňte prosím všechna pole.",
@@ -253,9 +253,9 @@ export const CZECH = {
 			passwordSent:
 				"Na Vaši e-mailovou adresu byl zaslán odkaz na reset hesla. V případě že jste e-mail neobdrželi, zkontrolujte prosím spam.",
 		},
-	],
-	mailPwd: [
-		[
+	},
+	mailPwd: {
+		inputs: [
 			{ title: "Nové Heslo", placeHolder: "Heslo alespoň 6 znaků", icon: "fas fa-lock" },
 			{
 				title: "Zopakuj Nové Heslo",
@@ -263,14 +263,14 @@ export const CZECH = {
 				icon: "fas fa-lock",
 			},
 		],
-		[{ text: "Změnit Heslo", style: "is-warning" }],
-		{
+		buttons: [{ text: "Změnit Heslo", style: "is-warning" }],
+		warnings: {
 			pwdMin: "Zadané heslo musí obsahovat minimálně 6 znaků.",
 			somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
 			fillEverything: "Vyplňte prosím všechna pole.",
 			pwdNotMatch: "Zadaná hesla se neshodují.",
 		},
-	],
+	},
 };
 
 export const ENGLISH = {
@@ -317,22 +317,22 @@ export const ENGLISH = {
 		info: "The tip can be changed at any time before the start of the match.",
 	},
 	pagination: { previous: "Previous", next: "Next" },
-	loginModal: [
-		[
+	loginModal: {
+		inputs: [
 			{ title: "Name", placeHolder: "Enter a Name", icon: "fas fa-user" },
 			{ title: "Password", placeHolder: "Enter a Password", icon: "fas fa-lock" },
 		],
-		[
+		buttons: [
 			{ text: "Login", style: "is-info" },
 			{ text: "Forgot password?", style: "is-warning" },
 		],
-		{
+		warnings: {
 			warning: "Incorrect Username or Password. Please try again.",
 			somethingWrong: "Something went wrong. Please try again.",
 		},
-	],
-	regModal: [
-		[
+	},
+	regModal: {
+		inputs: [
 			{ title: "Name", placeHolder: "Enter a Name(3-15 chars)", icon: "fas fa-user" },
 			{ title: "Password", placeHolder: "At least 6 characters", icon: "fas fa-lock" },
 			{
@@ -342,8 +342,8 @@ export const ENGLISH = {
 			},
 			{ title: "Email", placeHolder: "Enter a Email", icon: "fas fa-envelope" },
 		],
-		[{ text: "Sign In", style: "is-info" }],
-		{
+		buttons: [{ text: "Sign In", style: "is-info" }],
+		warnings: {
 			nameMin:
 				"3-15 characters are required for Name and you can use only certain special characters.",
 			nameMinLetter: "At least 1 letter is required for Name.",
@@ -354,16 +354,16 @@ export const ENGLISH = {
 			exists: "Name or e-mail already exists.",
 			somethingWrong: "Something went wrong. Please try again.",
 		},
-		[
+		dropdown: [
 			"Community",
 			[
 				{ name: "chelsea-fc.cz", value: 1 },
 				{ name: "Chelsea FB", value: 2 },
 			],
 		],
-	],
-	changePwdModal: [
-		[
+	},
+	changePwdModal: {
+		inputs: [
 			{
 				title: "Old Password",
 				placeHolder: "Enter the Old Password",
@@ -375,23 +375,23 @@ export const ENGLISH = {
 				icon: "fas fa-lock",
 			},
 		],
-		[{ text: "Change Password", style: "is-info" }],
-		{
+		buttons: [{ text: "Change Password", style: "is-info" }],
+		warnings: {
 			pwdMin: "At least 6 characters are required for passowrd.",
 			somethingWrong: "Something went wrong. Please try again.",
 			fillEverything: "Please fill in all fields.",
 		},
-	],
-	forgotPwdModal: [
-		[
+	},
+	forgotPwdModal: {
+		inputs: [
 			{
 				title: "Enter your email to reset your password.",
 				placeHolder: "Email",
 				icon: "fas fa-envelope",
 			},
 		],
-		[{ text: "Generate a password", style: "is-info" }],
-		{
+		buttons: [{ text: "Generate a password", style: "is-info" }],
+		warnings: {
 			mailFormat: "You have entered an incorrect email format.",
 			somethingWrong: "Something went wrong. Please try again.",
 			fillEverything: "Please fill in all fields.",
@@ -399,9 +399,9 @@ export const ENGLISH = {
 			passwordSent:
 				"A reset link has been sent to your e-mail address. If you did not receive the email, please check your spam folder.",
 		},
-	],
-	mailPwd: [
-		[
+	},
+	mailPwd: {
+		inputs: [
 			{
 				title: "New Password",
 				placeHolder: "At least 6 characters",
@@ -413,12 +413,12 @@ export const ENGLISH = {
 				icon: "fas fa-lock",
 			},
 		],
-		[{ text: "Change Password", style: "is-warning" }],
-		{
+		buttons: [{ text: "Change Password", style: "is-warning" }],
+		warnings: {
 			pwdMin: "At least 6 characters are required for passowrd.",
 			somethingWrong: "Something went wrong. Please try again.",
 			fillEverything: "Please fill in all fields.",
 			pwdNotMatch: "Passwords do not match.",
 		},
-	],
+	},
 };

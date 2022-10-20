@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useFetch from "./hooks/use-fetch";
 import { URL } from "./store/structure";
 
-const ScoreTableComponent = () => {
+const ScoreTablePage = () => {
 	const [tableData, setTableData] = useState(null);
 	const requestConfig = {
 		url: URL,
@@ -29,4 +29,4 @@ const ScoreTableComponent = () => {
 	);
 };
 
-export default ScoreTableComponent;
+export default ScoreTablePage;
