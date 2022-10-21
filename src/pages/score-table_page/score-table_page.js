@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import useFetch from "../../hooks/use-fetch";
 import { URL } from "../../store/data";
 
@@ -15,20 +15,25 @@ const ScoreTablePage = () => {
 			headers: { "Access-Control-Allow-Origin": "*" },
 		},
 	};
-
-	const { isLoading, error, sendRequest } = useFetch();
 	const transformData = (data) => {
 		setTableData(data);
 	};
+	const { isLoading, error, sendRequest } = useFetch();
 
 	useEffect(() => {
 		sendRequest(requestConfig, transformData);
-	}, [sendRequest]);
+	}, []);
+
+	console.log("ASDF");
 
 	return (
 		<React.Fragment>
 			{isLoading && <h1>LOADING...</h1>}
-			{!isLoading && tableData && <h1>Hello there you {tableData.table[1].username}!</h1>}
+			{!isLoading && tableData && (
+				<h1>
+					Hello there you {tableData.table[1].username}! {renderRef.current}
+				</h1>
+			)}
 			<h3>Table render: {renderRef.current}</h3>
 		</React.Fragment>
 	);

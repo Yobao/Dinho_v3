@@ -9,8 +9,6 @@ const NavbarComponent = () => {
 	const renderRef = useRef(0);
 	renderRef.current = renderRef.current + 1;
 
-	console.log("asdf");
-
 	return (
 		<React.Fragment>
 			<h1>Navbar</h1>
