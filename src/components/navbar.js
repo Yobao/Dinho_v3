@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+	useState,
+	useEffect,
+	useContext,
+	useRef,
+	useMemo,
+	useCallback,
+} from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
@@ -9,6 +16,8 @@ const NavbarComponent = () => {
 	const renderRef = useRef(0);
 	renderRef.current = renderRef.current + 1;
 
+	console.log(NAVBAR);
+
 	return (
 		<React.Fragment>
 			<h1>Navbar</h1>
@@ -17,4 +26,4 @@ const NavbarComponent = () => {
 	);
 };
 
-export default NavbarComponent;
+export default React.memo(NavbarComponent);

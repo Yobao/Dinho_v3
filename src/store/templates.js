@@ -1,3 +1,5 @@
+import * as TRANSLATIONS from "./translations";
+
 export const SCORE_TABLE_BODY = [
 	{ name: "position", class: "has-text-weight-bold is-unselectable" },
 	{ name: "username", class: "is-clickable is-unselectable" },

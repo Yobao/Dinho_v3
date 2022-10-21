@@ -14,4 +14,4 @@ const BodyComponent = () => {
 	);
 };
 
-export default BodyComponent;
+export default React.memo(BodyComponent);

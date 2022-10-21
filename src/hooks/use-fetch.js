@@ -7,8 +7,9 @@ const useFetch = () => {
 	const [error, setError] = useState(null);
 
 	const sendRequest = useCallback(async (requestConfig, applyData) => {
+		/* 		const urlCheck = requestConfig.url.slice(-9) === "autologin";
+		if (!urlCheck) setIsLoading(true); */
 		setIsLoading(true);
-		setError(null);
 		try {
 			const response = await fetch(requestConfig.url, requestConfig.requestOptions);
 			const data = await response.json();
@@ -19,6 +20,7 @@ const useFetch = () => {
 		} catch (err) {
 			setError(err.message || "Something went wrong!");
 		}
+		/* 		if (!urlCheck) setIsLoading(false); */
 		setIsLoading(false);
 	}, []);
 

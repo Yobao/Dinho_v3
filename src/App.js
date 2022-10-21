@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback, useRef } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import useFetch from "./hooks/use-fetch";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
@@ -44,9 +44,9 @@ const App = () => {
 		setCurrentUser(data.id);
 	};
 
-	/* 	useEffect(() => {
+	useEffect(() => {
 		sendRequest(requestConfig, transformData);
-	}, [sendRequest]); */
+	}, []);
 
 	return (
 		<div className='App'>
