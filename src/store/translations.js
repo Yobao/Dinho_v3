@@ -1,4 +1,6 @@
-// Importing images for translations...
+import Rules_sk from "./../assets/rules_sk.jpg";
+import Rules_cz from "./../assets/rules_cz.jpg";
+import Rules_en from "./../assets/rules_en.jpg";
 
 export const SLOVAK = {
 	navbar: {
