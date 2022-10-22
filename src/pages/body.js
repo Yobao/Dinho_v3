@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import ScoreTablePage from "./score-table_page/score-table_page";
+import { CurrentUserContext } from "../store/user-context";
 
 const BodyComponent = () => {
 	const renderRef = useRef(0);
 	renderRef.current = renderRef.current + 1;
+
+	const currentUser = useContext(CurrentUserContext);
 
 	return (
 		<React.Fragment>
@@ -14,4 +17,4 @@ const BodyComponent = () => {
 	);
 };
 
-export default React.memo(BodyComponent);
+export default BodyComponent;

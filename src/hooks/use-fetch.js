@@ -5,10 +5,9 @@ import React, { useState, useCallback } from "react";
 const useFetch = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [isAuth, setIsAuth] = useState(null);
 
 	const sendRequest = useCallback(async (requestConfig, applyData) => {
-		/* 		const urlCheck = requestConfig.url.slice(-9) === "autologin";
-		if (!urlCheck) setIsLoading(true); */
 		setIsLoading(true);
 		try {
 			const response = await fetch(requestConfig.url, requestConfig.requestOptions);
@@ -20,14 +19,15 @@ const useFetch = () => {
 		} catch (err) {
 			setError(err.message || "Something went wrong!");
 		}
-		/* 		if (!urlCheck) setIsLoading(false); */
 		setIsLoading(false);
+		if (requestConfig.url.slice(-9) === "autologin") setIsAuth(true);
 	}, []);
 
 	return {
 		isLoading,
 		error,
 		sendRequest,
+		isAuth,
 	};
 };
 

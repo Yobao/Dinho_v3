@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useMemo } from "react";
 import useFetch from "./hooks/use-fetch";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
@@ -25,7 +25,7 @@ const App = () => {
 			}
 		}
 	});
-	const [currentUser, setCurrentUser] = useState();
+	const [currentUser, setCurrentUser] = useState(null);
 	const [otherUser, setOtherUser] = useState({ otherUserName: null, otherUserId: null });
 	const [title, setTitle] = useState(null);
 
@@ -39,32 +39,33 @@ const App = () => {
 			},
 		},
 	};
-	const { isLoading, error, sendRequest } = useFetch();
-	const transformData = (data) => {
-		setCurrentUser(data.id);
-	};
+	const { isLoading, error, sendRequest, isAuth } = useFetch();
 
 	useEffect(() => {
+		const transformData = (data) => {
+			setCurrentUser(data);
+		};
 		sendRequest(requestConfig, transformData);
 	}, []);
 
 	return (
-		<div className='App'>
-			<LanguageContext.Provider
-				value={{ appLanguage: appLanguage, setAppLanguage: setAppLanguage }}>
-				<CurrentUserContext.Provider
-					value={{ currentUser: currentUser, setCurrentUser: setCurrentUser }}>
-					<NavbarComponent />
-
-					<OtherUserContext.Provider
-						value={{ otherUser: otherUser, setOtherUser: setOtherUser }}>
-						<DropdownTitleContext.Provider value={{ title: title, setTitle: setTitle }}>
-							<BodyComponent />
-						</DropdownTitleContext.Provider>
-					</OtherUserContext.Provider>
-				</CurrentUserContext.Provider>
-			</LanguageContext.Provider>
-		</div>
+		<LanguageContext.Provider
+			value={{ appLanguage: appLanguage, setAppLanguage: setAppLanguage }}>
+			<CurrentUserContext.Provider
+				value={{ currentUser: currentUser, setCurrentUser: setCurrentUser }}>
+				<OtherUserContext.Provider
+					value={{ otherUser: otherUser, setOtherUser: setOtherUser }}>
+					<DropdownTitleContext.Provider value={{ title: title, setTitle: setTitle }}>
+						{isAuth && (
+							<div className='App'>
+								<NavbarComponent />
+								<BodyComponent />
+							</div>
+						)}
+					</DropdownTitleContext.Provider>
+				</OtherUserContext.Provider>
+			</CurrentUserContext.Provider>
+		</LanguageContext.Provider>
 	);
 };
 

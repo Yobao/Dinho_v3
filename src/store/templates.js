@@ -1,5 +1,3 @@
-import * as TRANSLATIONS from "./translations";
-
 export const SCORE_TABLE_BODY = [
 	{ name: "position", class: "has-text-weight-bold is-unselectable" },
 	{ name: "username", class: "is-clickable is-unselectable" },
@@ -33,18 +31,39 @@ export const FLAGS = {
 	},
 };
 
-const NAVBAR_CONST = [
-	{
-		path: "/",
-		class: "navbar-item",
-	},
-	{
-		path: "/table",
-		class: "navbar-item",
-	},
-];
+// const NAVBAR_CONST = [
+// 	{
+// 		path: "/",
+// 	},
+// 	{
+// 		name: "table",
+// 		path: "/table",
+// 	},
+// ];
 
-export const NAVBAR = {
-	loggedIn: [...NAVBAR_CONST, {}],
-	loggedOut: [{}, {}],
-};
+// export const NAVBAR = {
+// 	loggedIn: [
+// 		...NAVBAR_CONST,
+// 		{
+// 			name: "bet",
+// 			path: "/bet",
+// 		},
+// 		{
+// 			name: "user",
+// 			path: "/profil",
+// 		},
+// 		{
+// 			name: "account",
+// 			path: "/bet",
+// 		},
+// 	],
+// 	loggedOut: [
+// 		...NAVBAR_CONST,
+// 		{
+// 			name: "login",
+// 		},
+// 		{
+// 			name: "registration",
+// 		},
+// 	],
+// };

@@ -34,4 +34,4 @@ const ScoreTablePage = () => {
 	);
 };
 
-export default ScoreTablePage;
+export default React.memo(ScoreTablePage);
