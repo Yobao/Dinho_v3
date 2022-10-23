@@ -1,4 +1,6 @@
 import React, { Fragment, useState, useEffect, useMemo } from "react";
+import "bulma/css/bulma.css";
+//import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.css";
 import useFetch from "./hooks/use-fetch";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
@@ -20,9 +22,8 @@ const App = () => {
 		for (const language in LANGUAGES) {
 			if (LANGUAGES[language].includes(localStorage.getItem("dinholanguage"))) {
 				return TRANSLATIONS[language];
-			} else {
-				return TRANSLATIONS["CZECH"];
 			}
+			return TRANSLATIONS["CZECH"];
 		}
 	});
 	const [currentUser, setCurrentUser] = useState(null);
