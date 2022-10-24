@@ -14,6 +14,7 @@ import * as TRANSLATIONS from "./store/translations";
 import { LANGUAGES, URL } from "./store/data";
 
 const token = "35ca651f7f71a98d6162d93fb13a06bd04311050";
+//   35ca651f7f71a98d6162d93fb13a06bd04311050
 
 const App = () => {
 	if (!localStorage.getItem("dinholanguage"))
