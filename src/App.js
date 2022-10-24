@@ -13,9 +13,6 @@ import {
 import * as TRANSLATIONS from "./store/translations";
 import { LANGUAGES, URL } from "./store/data";
 
-const token = "35ca651f7f71a98d6162d93fb13a06bd04311050";
-//   35ca651f7f71a98d6162d93fb13a06bd04311050
-
 const App = () => {
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
@@ -24,12 +21,15 @@ const App = () => {
 			if (LANGUAGES[language].includes(localStorage.getItem("dinholanguage"))) {
 				return TRANSLATIONS[language];
 			}
-			return TRANSLATIONS["CZECH"];
 		}
+		return TRANSLATIONS["CZECH"];
 	});
 	const [currentUser, setCurrentUser] = useState(null);
 	const [otherUser, setOtherUser] = useState({ otherUserName: null, otherUserId: null });
 	const [title, setTitle] = useState(null);
+	const token = localStorage.getItem("dinhotoken");
+	const { isLoading, error, sendRequest, isAuth } = useFetch();
+	//localStorage.setItem("dinhotoken", "e26858a06db39d08ad8e2148389c9be48ebf486e");
 
 	const requestConfig = {
 		url: URL + "/autologin",
@@ -41,7 +41,6 @@ const App = () => {
 			},
 		},
 	};
-	const { isLoading, error, sendRequest, isAuth } = useFetch();
 
 	useEffect(() => {
 		const transformData = (data) => {
