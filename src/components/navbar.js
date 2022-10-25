@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import useFetch from "../hooks/use-fetch";
 import { Outlet, useLocation } from "react-router-dom";
 import * as TRANSLATIONS from "../store/translations";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
 import { NAVBAR, FLAGS } from "./../store/templates";
 import Brand from "../assets/brand.png";
-import { URL } from "./../store/data";
+import { URL, LANGUAGES } from "./../store/data";
 import NavbarButtonComponent from "./ui/navbar-button";
-import { LANGUAGES } from "../store/data";
+import LoginModal from "../modals/login-modal";
 
 const NavbarComponent = () => {
+	const renderRef = useRef(0);
+	renderRef.current++;
+
 	const currentUserContext = useContext(CurrentUserContext).currentUser;
 	const currentUser = currentUserContext ? currentUserContext.user : null;
 	const languageContext = useContext(LanguageContext);
@@ -36,7 +39,6 @@ const NavbarComponent = () => {
 			if (!window.matchMedia("(max-width: 1023px)").matches) {
 				setShowMobileFlags("");
 			} else {
-				console.log(showMobileFlags);
 				setShowMobileFlags(showMobileFlags === "" ? "" : "is-hidden");
 			}
 		};
@@ -91,6 +93,7 @@ const NavbarComponent = () => {
 	const logOut = () => {
 		sendRequest(requestConfig);
 		currentUserContext.setCurrentUser(null);
+		localStorage.removeItem("dinhotoken");
 	};
 
 	const showModal = {
@@ -104,59 +107,52 @@ const NavbarComponent = () => {
 		<div className='columns column is-centered'>
 			<nav className='navbar'>
 				<div className='navbar-brand'>
-					{NAVBAR.visible.map((button, i) => {
-						return (
-							<NavbarButtonComponent
-								text={navbarText[button.name]}
-								key={`navbar-${button.name}`}
-								type={button.type}
-								path={button.path}
-								class={button.class}
-								style={button.style}>
-								{button.name === "home" ? (
-									<img
-										src={Brand}
-										style={{ maxHeight: "70px" }}
-										height='69.98'
-										width='76.75'></img>
-								) : null}
-							</NavbarButtonComponent>
-						);
-					})}
+					<p>Navbar render: {renderRef.current}</p>
+					{NAVBAR.visible.map((button) => (
+						<NavbarButtonComponent
+							text={navbarText[button.name]}
+							key={`navbar-${button.name}`}
+							type={button.type}
+							path={button.path}
+							class={button.class}
+							style={button.style}>
+							{button.name === "home" ? (
+								<img
+									src={Brand}
+									style={{ maxHeight: "70px" }}
+									height='69.98'
+									width='76.75'></img>
+							) : null}
+						</NavbarButtonComponent>
+					))}
 
 					{!currentUser && (
 						<React.Fragment>
-							{NAVBAR.logOut.map((button, i) => {
-								return (
-									<NavbarButtonComponent
-										text={navbarText[button.name]}
-										key={button.name}
-										type={button.type}
-										class={button.class}
-										style={button.style}
-										click={showModal[button.name]}
-									/>
-								);
-							})}
+							{NAVBAR.logOut.map((button) => (
+								<NavbarButtonComponent
+									text={navbarText[button.name]}
+									key={button.name}
+									type={button.type}
+									class={button.class}
+									style={button.style}
+									click={showModal[button.name]}
+								/>
+							))}
 						</React.Fragment>
 					)}
 
 					{currentUser && (
 						<React.Fragment>
-							{NAVBAR.logIn.map((button, i) => {
-								return (
-									<NavbarButtonComponent
-										text={
-											button.name === "profil" ? currentUser : navbarText[button.name]
-										}
-										key={`navbar-${button.name}`}
-										type={button.type}
-										path={button.path}
-										class={button.class}
-										style={button.style}
-									/>
-								);
-							})}
+							{NAVBAR.logIn.map((button) => (
+								<NavbarButtonComponent
+									text={button.name === "profil" ? currentUser : navbarText[button.name]}
+									key={`navbar-${button.name}`}
+									type={button.type}
+									path={button.path}
+									class={button.class}
+									style={button.style}
+								/>
+							))}
 							<a
 								role='button'
 								className={`navbar-burger my-auto ${showMobileMenu}`}
@@ -184,19 +180,17 @@ const NavbarComponent = () => {
 									click={handleShowMobileMenu}
 								/>
 								<div className='account-dropdown-list navbar-dropdown'>
-									{NAVBAR.menu.map((button, i) => {
-										return (
-											<NavbarButtonComponent
-												text={navbarText[button.name]}
-												key={button.name}
-												type={button.type}
-												path={button.path}
-												class={button.class}
-												style={button.styleMenu}
-												click={showModal[button.name]}
-											/>
-										);
-									})}
+									{NAVBAR.menu.map((button) => (
+										<NavbarButtonComponent
+											text={navbarText[button.name]}
+											key={button.name}
+											type={button.type}
+											path={button.path}
+											class={button.class}
+											style={button.styleMenu}
+											click={showModal[button.name]}
+										/>
+									))}
 								</div>
 							</div>
 						</div>
@@ -210,18 +204,16 @@ const NavbarComponent = () => {
 								<img src={defaultLanguage.flag}></img>
 							</a>
 							<div className={`navbar-dropdown is-boxed ${showMobileFlags}`}>
-								{Object.keys(FLAGS).map((country) => {
-									return (
-										<a
-											className='navbar-item'
-											key={FLAGS[country].text}
-											value={FLAGS[country].code}
-											onClick={handleChangeLanguage}>
-											<img src={FLAGS[country].flag} value={FLAGS[country].code}></img>
-											<span value={FLAGS[country].code}>{FLAGS[country].text}</span>
-										</a>
-									);
-								})}
+								{Object.keys(FLAGS).map((country) => (
+									<a
+										className='navbar-item'
+										key={FLAGS[country].text}
+										value={FLAGS[country].code}
+										onClick={handleChangeLanguage}>
+										<img src={FLAGS[country].flag} value={FLAGS[country].code}></img>
+										<span value={FLAGS[country].code}>{FLAGS[country].text}</span>
+									</a>
+								))}
 								<hr className='navbar-divider'></hr>
 							</div>
 						</div>
@@ -229,6 +221,8 @@ const NavbarComponent = () => {
 				)}
 				<Outlet />
 			</nav>
+
+			{showLogin && <LoginModal showModal={handleShowLogin} />}
 		</div>
 	);
 };

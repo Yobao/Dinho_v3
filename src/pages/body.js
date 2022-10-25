@@ -17,7 +17,6 @@ const BodyComponent = () => {
 
 	return (
 		<div className=''>
-			<h1>Body</h1>
 			<h3>Body render: {renderRef.current}</h3>
 			<Routes>
 				<Route path='/' element={<HomePage />} />

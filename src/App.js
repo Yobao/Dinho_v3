@@ -29,7 +29,7 @@ const App = () => {
 	const [title, setTitle] = useState(null);
 	const token = localStorage.getItem("dinhotoken");
 	const { isLoading, error, sendRequest, isAuth } = useFetch();
-	//localStorage.setItem("dinhotoken", "e26858a06db39d08ad8e2148389c9be48ebf486e");
+	//localStorage.setItem("dinhotoken", "9dd7d5163b7ac4779cd044a2ec88abccae4c8541");
 
 	const requestConfig = {
 		url: URL + "/autologin",
