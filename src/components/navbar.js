@@ -5,7 +5,7 @@ import * as TRANSLATIONS from "../store/translations";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
 import { NAVBAR, FLAGS } from "./../store/templates";
 import Brand from "../assets/brand.png";
-import URL from "./../store/templates";
+import { URL } from "./../store/data";
 import NavbarButtonComponent from "./ui/navbar-button";
 import { LANGUAGES } from "../store/data";
 
@@ -32,9 +32,17 @@ const NavbarComponent = () => {
 	const { isLoading, err, sendRequest } = useFetch();
 
 	useEffect(() => {
-		window.addEventListener("resize", handleShowMobileFlags);
+		const resize = () => {
+			if (!window.matchMedia("(max-width: 1023px)").matches) {
+				setShowMobileFlags("");
+			} else {
+				console.log(showMobileFlags);
+				setShowMobileFlags(showMobileFlags === "" ? "" : "is-hidden");
+			}
+		};
+		window.addEventListener("resize", resize);
 		return () => {
-			window.removeEventListener("resize", handleShowMobileFlags);
+			window.removeEventListener("resize", resize);
 		};
 	}, []);
 
@@ -55,7 +63,7 @@ const NavbarComponent = () => {
 	};
 	const handleShowMobileFlags = () => {
 		if (window.matchMedia("(max-width: 1023px)").matches) {
-			setShowMobileFlags(showMobileFlags === "is-hidden" ? "" : "is-hidden");
+			setShowMobileFlags(showMobileFlags === "" ? "is-hidden" : "");
 		}
 	};
 	const handleChangeLanguage = (e) => {
@@ -93,7 +101,7 @@ const NavbarComponent = () => {
 	};
 
 	return (
-		<div className='columns column is-centered '>
+		<div className='columns column is-centered'>
 			<nav className='navbar'>
 				<div className='navbar-brand'>
 					{NAVBAR.visible.map((button, i) => {
@@ -201,7 +209,7 @@ const NavbarComponent = () => {
 							<a className='navbar-link is-arrowless' onClick={handleShowMobileFlags}>
 								<img src={defaultLanguage.flag}></img>
 							</a>
-							<div className={`navbar-dropdown is-boxed is-right ${showMobileFlags}`}>
+							<div className={`navbar-dropdown is-boxed ${showMobileFlags}`}>
 								{Object.keys(FLAGS).map((country) => {
 									return (
 										<a
