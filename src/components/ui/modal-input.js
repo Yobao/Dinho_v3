@@ -1,8 +1,15 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 
-const ModalInput = ({ input, handleInput }) => {
+const ModalInput = ({ input, handleInput, color, showEye }) => {
 	const renderRef = useRef(0);
 	renderRef.current++;
+
+	const [inputType, setInputType] = useState(
+		input.icon === "fas fa-lock" ? "password" : "text"
+	);
+	const handleShowPwd = () => {
+		setInputType(inputType === "password" ? "text" : "password");
+	};
 
 	return (
 		<div className='field'>
@@ -11,13 +18,22 @@ const ModalInput = ({ input, handleInput }) => {
 			</label>
 			<div className='control has-icons-left'>
 				<input
-					className={`input ${handleInput.color}`}
+					className={`input ${color}`}
+					type={inputType}
 					placeholder={input.placeHolder}
-					onChange={handleInput.setValue}
+					onChange={handleInput}
 				/>
 				<span className='icon is-small is-left'>
 					<i className={`${input.icon}`}></i>
 				</span>
+				{input.icon === "fas fa-lock" && showEye && (
+					<span
+						className='icon is-clickable'
+						style={{ position: "absolute", right: "10px" }}
+						onClick={handleShowPwd}>
+						<i className={`fas fa-eye${inputType === "password" ? "" : "-slash"}`}></i>
+					</span>
+				)}
 			</div>
 		</div>
 	);

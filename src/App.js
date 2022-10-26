@@ -44,7 +44,7 @@ const App = () => {
 
 	useEffect(() => {
 		const transformData = (data) => {
-			setCurrentUser(data);
+			setCurrentUser(data.user);
 		};
 		sendRequest(requestConfig, transformData);
 	}, []);

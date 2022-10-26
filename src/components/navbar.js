@@ -8,13 +8,15 @@ import Brand from "../assets/brand.png";
 import { URL, LANGUAGES } from "./../store/data";
 import NavbarButtonComponent from "./ui/navbar-button";
 import LoginModal from "../modals/login-modal";
+import RegModal from "../modals/registration-modal";
+import ChangePwdModal from "../modals/changepwd-modal";
 
 const NavbarComponent = () => {
 	const renderRef = useRef(0);
 	renderRef.current++;
 
-	const currentUserContext = useContext(CurrentUserContext).currentUser;
-	const currentUser = currentUserContext ? currentUserContext.user : null;
+	const currentUserContext = useContext(CurrentUserContext);
+	const currentUser = currentUserContext.currentUser;
 	const languageContext = useContext(LanguageContext);
 	const navbarText = languageContext.appLanguage.navbar;
 	const [showLogin, setShowLogin] = useState(false);
@@ -55,6 +57,7 @@ const NavbarComponent = () => {
 		setShowReg(!showReg);
 	};
 	const handleShowChangePwd = () => {
+		console.log("SHOW ME!");
 		setShowChangePwd(!showChangePwd);
 	};
 	const handleShowForgotPwd = () => {
@@ -99,7 +102,7 @@ const NavbarComponent = () => {
 	const showModal = {
 		login: handleShowLogin,
 		registration: handleShowReg,
-		changepwd: handleShowChangePwd,
+		pwdchange: handleShowChangePwd,
 		logout: logOut,
 	};
 
@@ -223,6 +226,8 @@ const NavbarComponent = () => {
 			</nav>
 
 			{showLogin && <LoginModal showModal={handleShowLogin} />}
+			{showReg && <RegModal showModal={handleShowReg} />}
+			{showChangePwd && <ChangePwdModal showModal={handleShowChangePwd} />}
 		</div>
 	);
 };
