@@ -11,8 +11,7 @@ const ChangePwdModal = ({ showModal }) => {
 	const renderRef = useRef(0);
 	renderRef.current++;
 
-	const appLanguage = useContext(LanguageContext).appLanguage.changePwdModal;
-	const setCurrentUser = useContext(CurrentUserContext).setCurrentUser;
+	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const [oldPwd, setOldPwd] = useState();
 	const [newPwd, setNewPwd] = useState();
 	const [oldPwdColor, setOldPwdColor] = useState();
@@ -80,7 +79,7 @@ const ChangePwdModal = ({ showModal }) => {
 				<React.Fragment>
 					RENDERS {renderRef.current}
 					<ModalComponent
-						language={appLanguage}
+						language={applanguage.changePwdModal}
 						handleInputs={handleInputs}
 						handleButtons={buttons}
 						userData={userData}

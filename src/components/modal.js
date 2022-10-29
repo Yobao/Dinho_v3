@@ -18,7 +18,7 @@ const ModalComponent = ({
 	useEffect(() => {
 		const handleKeys = (e) => {
 			if (e.keyCode === 27) return showModal();
-			if (e.keyCode === 13) return handleButtons.login(e);
+			if (e.keyCode === 13) return Object.values(handleButtons)[0](e);
 		};
 		window.addEventListener("keydown", handleKeys);
 		return () => window.removeEventListener("keydown", handleKeys);

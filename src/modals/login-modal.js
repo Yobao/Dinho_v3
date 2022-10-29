@@ -4,15 +4,16 @@ import useFetch from "../hooks/use-fetch";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
 import { URL } from "../store/data";
 
+import ForgotPwdModal from "./forgotpwd-modal";
 import ModalComponent from "../components/modal";
 import toastik from "../components/ui/toast";
 
-const LoginModal = ({ showModal }) => {
+const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 	const renderRef = useRef(0);
 	renderRef.current++;
 
-	const appLanguage = useContext(LanguageContext).appLanguage.loginModal;
-	const setCurrentUser = useContext(CurrentUserContext).setCurrentUser;
+	const { applanguage, setApplanguage } = useContext(LanguageContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const [loginName, setLoginName] = useState(null);
 	const [loginPwd, setLoginPwd] = useState(null);
 	const [loginNameColor, setLoginNameColor] = useState();
@@ -65,9 +66,10 @@ const LoginModal = ({ showModal }) => {
 		if (data === 401 || data === 422) {
 			setLoginNameColor("is-danger");
 			setLoginPwdColor("is-danger");
-			return toastik(`${appLanguage.warnings.warning}`);
+			return toastik(`${applanguage.loginModal.warnings.warning}`);
 		}
-		if (err !== undefined) return toastik(`${appLanguage.warnings.somethingWrong}`);
+		if (err !== undefined)
+			return toastik(`${applanguage.loginModal.warnings.somethingWrong}`);
 
 		localStorage.setItem("dinhotoken", data.access_token);
 		setCurrentUser(loginName);
@@ -78,9 +80,10 @@ const LoginModal = ({ showModal }) => {
 		setSubmitSent(true);
 		sendRequest(requestConfig, transformData);
 	}, [requestConfig]);
-	const lostPwd = useCallback(() => {
+	const lostPwd = () => {
 		showModal();
-	}, []);
+		showForgotPwd();
+	};
 	const buttons = {
 		login,
 		lostPwd,
@@ -92,7 +95,7 @@ const LoginModal = ({ showModal }) => {
 				<React.Fragment>
 					RENDERS {renderRef.current}
 					<ModalComponent
-						language={appLanguage}
+						language={applanguage.loginModal}
 						handleInputs={handleInputs}
 						handleButtons={buttons}
 						userData={userData}
@@ -108,3 +111,6 @@ const LoginModal = ({ showModal }) => {
 };
 
 export default LoginModal;
+
+//CSS in JS - imotion library
+//APPsource git

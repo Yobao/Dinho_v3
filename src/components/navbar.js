@@ -10,15 +10,14 @@ import NavbarButtonComponent from "./ui/navbar-button";
 import LoginModal from "../modals/login-modal";
 import RegModal from "../modals/registration-modal";
 import ChangePwdModal from "../modals/changepwd-modal";
+import ForgotPwdModal from "../modals/forgotpwd-modal";
 
 const NavbarComponent = () => {
 	const renderRef = useRef(0);
 	renderRef.current++;
 
-	const currentUserContext = useContext(CurrentUserContext);
-	const currentUser = currentUserContext.currentUser;
-	const languageContext = useContext(LanguageContext);
-	const navbarText = languageContext.appLanguage.navbar;
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const [showLogin, setShowLogin] = useState(false);
 	const [showReg, setShowReg] = useState(false);
 	const [showChangePwd, setShowChangePwd] = useState(false);
@@ -57,7 +56,6 @@ const NavbarComponent = () => {
 		setShowReg(!showReg);
 	};
 	const handleShowChangePwd = () => {
-		console.log("SHOW ME!");
 		setShowChangePwd(!showChangePwd);
 	};
 	const handleShowForgotPwd = () => {
@@ -77,7 +75,7 @@ const NavbarComponent = () => {
 			if (LANGUAGES[language].includes(languageKey)) {
 				setDefaultLanguage(FLAGS[language]);
 				localStorage.setItem("dinholanguage", languageKey);
-				languageContext.setAppLanguage(TRANSLATIONS[language]);
+				setApplanguage(TRANSLATIONS[language]);
 				handleShowMobileFlags();
 			}
 		}
@@ -95,8 +93,9 @@ const NavbarComponent = () => {
 
 	const logOut = () => {
 		sendRequest(requestConfig);
-		currentUserContext.setCurrentUser(null);
+		setCurrentUser(null);
 		localStorage.removeItem("dinhotoken");
+		handleShowMobileMenu();
 	};
 
 	const showModal = {
@@ -113,7 +112,7 @@ const NavbarComponent = () => {
 					<p>Navbar render: {renderRef.current}</p>
 					{NAVBAR.visible.map((button) => (
 						<NavbarButtonComponent
-							text={navbarText[button.name]}
+							text={applanguage.navbar[button.name]}
 							key={`navbar-${button.name}`}
 							type={button.type}
 							path={button.path}
@@ -133,7 +132,7 @@ const NavbarComponent = () => {
 						<React.Fragment>
 							{NAVBAR.logOut.map((button) => (
 								<NavbarButtonComponent
-									text={navbarText[button.name]}
+									text={applanguage.navbar[button.name]}
 									key={button.name}
 									type={button.type}
 									class={button.class}
@@ -148,7 +147,11 @@ const NavbarComponent = () => {
 						<React.Fragment>
 							{NAVBAR.logIn.map((button) => (
 								<NavbarButtonComponent
-									text={button.name === "profil" ? currentUser : navbarText[button.name]}
+									text={
+										button.name === "profil"
+											? currentUser
+											: applanguage.navbar[button.name]
+									}
 									key={`navbar-${button.name}`}
 									type={button.type}
 									path={button.path}
@@ -176,8 +179,8 @@ const NavbarComponent = () => {
 						<div className='navbar-start'>
 							<div className='account-dropdown navbar-item has-dropdown is-hoverable has-text-centered'>
 								<NavbarButtonComponent
-									text={navbarText.account}
-									key={navbarText.account}
+									text={applanguage.navbar.account}
+									key={applanguage.navbar.account}
 									type='modal'
 									class='navbar-link'
 									click={handleShowMobileMenu}
@@ -185,7 +188,7 @@ const NavbarComponent = () => {
 								<div className='account-dropdown-list navbar-dropdown'>
 									{NAVBAR.menu.map((button) => (
 										<NavbarButtonComponent
-											text={navbarText[button.name]}
+											text={applanguage.navbar[button.name]}
 											key={button.name}
 											type={button.type}
 											path={button.path}
@@ -225,9 +228,12 @@ const NavbarComponent = () => {
 				<Outlet />
 			</nav>
 
-			{showLogin && <LoginModal showModal={handleShowLogin} />}
+			{showLogin && (
+				<LoginModal showModal={handleShowLogin} showAnotherModal={handleShowForgotPwd} />
+			)}
 			{showReg && <RegModal showModal={handleShowReg} />}
 			{showChangePwd && <ChangePwdModal showModal={handleShowChangePwd} />}
+			{showForgotPwd && <ForgotPwdModal showModal={handleShowForgotPwd} />}
 		</div>
 	);
 };

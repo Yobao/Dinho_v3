@@ -11,8 +11,8 @@ const RegModal = ({ showModal }) => {
 	const renderRef = useRef(0);
 	renderRef.current++;
 
-	const appLanguage = useContext(LanguageContext).appLanguage.regModal;
-	const setCurrentUser = useContext(CurrentUserContext).setCurrentUser;
+	const { applanguage, setApplanguage } = useContext(LanguageContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const [regName, setRegName] = useState(null);
 	const [regPwd, setRegPwd] = useState(null);
 	const [regPwd2, setRegPwd2] = useState(null);
@@ -121,7 +121,7 @@ const RegModal = ({ showModal }) => {
 				<React.Fragment>
 					RENDERS {renderRef.current}
 					<ModalComponent
-						language={appLanguage}
+						language={applanguage.regModal}
 						handleInputs={handleInputs}
 						handleButtons={buttons}
 						userData={userData}

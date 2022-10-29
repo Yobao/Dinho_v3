@@ -16,7 +16,7 @@ import { LANGUAGES, URL } from "./store/data";
 const App = () => {
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
-	const [appLanguage, setAppLanguage] = useState(() => {
+	const [applanguage, setApplanguage] = useState(() => {
 		for (const language in LANGUAGES) {
 			if (LANGUAGES[language].includes(localStorage.getItem("dinholanguage"))) {
 				return TRANSLATIONS[language];
@@ -50,13 +50,10 @@ const App = () => {
 	}, []);
 
 	return (
-		<LanguageContext.Provider
-			value={{ appLanguage: appLanguage, setAppLanguage: setAppLanguage }}>
-			<CurrentUserContext.Provider
-				value={{ currentUser: currentUser, setCurrentUser: setCurrentUser }}>
-				<OtherUserContext.Provider
-					value={{ otherUser: otherUser, setOtherUser: setOtherUser }}>
-					<DropdownTitleContext.Provider value={{ title: title, setTitle: setTitle }}>
+		<LanguageContext.Provider value={{ applanguage, setApplanguage }}>
+			<CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+				<OtherUserContext.Provider value={{ otherUser, setOtherUser }}>
+					<DropdownTitleContext.Provider value={{ title, setTitle }}>
 						{isAuth && (
 							<div className='App'>
 								<NavbarComponent />

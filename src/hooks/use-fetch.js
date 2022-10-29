@@ -13,9 +13,11 @@ const useFetch = () => {
 		try {
 			const response = await fetch(requestConfig.url, requestConfig.requestOptions);
 			if (response.status !== 200 && response.status !== 201) applyData(response.status);
+			console.log(response.status);
 			const data = await response.json();
 
 			if (data) applyData(data);
+			if (!data) applyData(data);
 		} catch (err) {
 			setError(err.message || "Something went wrong!");
 		}

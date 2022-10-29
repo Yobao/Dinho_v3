@@ -12,8 +12,8 @@ const BodyComponent = () => {
 	const renderRef = useRef(0);
 	renderRef.current = renderRef.current + 1;
 
-	const currentUser = useContext(CurrentUserContext);
-	const otherUser = useContext(OtherUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 
 	return (
 		<div className=''>
