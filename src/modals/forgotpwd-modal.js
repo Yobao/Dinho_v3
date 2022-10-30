@@ -10,6 +10,7 @@ import { toast } from "bulma-toast";
 
 const ForgotPwdModal = ({ showModal }) => {
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
+	const alerts = applanguage.forgotPwdModal.warnings;
 	const [email, setEmail] = useState();
 	const [emailColor, setEmailColor] = useState();
 	const [submitSent, setSubmitSent] = useState(false);
@@ -19,7 +20,9 @@ const ForgotPwdModal = ({ showModal }) => {
 			const val = e.target.value;
 			setEmail(val);
 			if (submitSent)
-				setEmailColor(val === null || !val.includes("@") ? "is-danger" : "");
+				setEmailColor(
+					!val.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}/) ? "is-danger" : ""
+				);
 		},
 		[submitSent]
 	);
@@ -51,24 +54,27 @@ const ForgotPwdModal = ({ showModal }) => {
 	const { isLoading, err, sendRequest } = useFetch();
 
 	const transformData = (data) => {
-		console.log(data, "TRANSFORM");
+		if (typeof data === "number" && data !== 200 && data !== 201) {
+			return toastik(alerts.mailNotExists);
+		}
+		if (err !== undefined) return toastik(alerts.somethingWrong);
 
-		if (typeof data === "number") {
-			return toastik(`${applanguage.forgotPwdModal.warnings.mailNotExists}`);
-		}
-		if (typeof data !== "number") {
-			//console.log(data);
-			toastik(`${applanguage.forgotPwdModal.warnings.passwordSent}`);
-			showModal();
-		}
+		toastik(alerts.passwordSent, "is-success");
+		showModal();
 	};
 
 	const sendEmail = useCallback(() => {
 		setSubmitSent(true);
 
-		if (!email) return toastik(`${applanguage.forgotPwdModal.warnings.fillEverything}`);
-		if (!email.includes("@"))
-			return toastik(`${applanguage.forgotPwdModal.warnings.mailFormat}`);
+		if (!email) {
+			setEmailColor("is-danger");
+			return toastik(alerts.fillEverything);
+		}
+		if (!email.includes("@")) {
+			setEmailColor("is-danger");
+			return toastik(alerts.mailFormat);
+		}
+
 		sendRequest(requestConfig, transformData);
 	}, [requestConfig]);
 

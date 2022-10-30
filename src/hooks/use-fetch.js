@@ -12,12 +12,11 @@ const useFetch = () => {
 		setIsLoading(true);
 		try {
 			const response = await fetch(requestConfig.url, requestConfig.requestOptions);
-			if (response.status !== 200 && response.status !== 201) applyData(response.status);
-			console.log(response.status);
-			const data = await response.json();
+			const data =
+				response.headers.get("content-length") !== 0 ? await response.json() : null;
 
 			if (data) applyData(data);
-			if (!data) applyData(data);
+			if (!data) applyData(response.status);
 		} catch (err) {
 			setError(err.message || "Something went wrong!");
 		}

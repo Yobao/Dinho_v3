@@ -14,6 +14,7 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+	const alerts = applanguage.loginModal.warnings;
 	const [loginName, setLoginName] = useState(null);
 	const [loginPwd, setLoginPwd] = useState(null);
 	const [loginNameColor, setLoginNameColor] = useState();
@@ -22,15 +23,17 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 
 	const handleLoginName = useCallback(
 		(e) => {
-			setLoginName(e.target.value);
-			if (submitSent) setLoginNameColor(e.target.value.length < 3 ? "is-danger" : "");
+			const val = e.target.value;
+			setLoginName(val);
+			if (submitSent) setLoginNameColor(val.length < 3 ? "is-danger" : "");
 		},
 		[submitSent]
 	);
 	const handleLoginPwd = useCallback(
 		(e) => {
-			setLoginPwd(e.target.value);
-			if (submitSent) setLoginPwdColor(e.target.value.length < 6 ? "is-danger" : "");
+			const val = e.target.value;
+			setLoginPwd(val);
+			if (submitSent) setLoginPwdColor(val.length < 6 ? "is-danger" : "");
 		},
 		[submitSent]
 	);
@@ -42,6 +45,10 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 		[submitSent]
 	);
 
+	const handleInputColors = {
+		setLoginNameColor,
+		setLoginPwdColor,
+	};
 	const inputColors = {
 		loginNameColor,
 		loginPwdColor,
@@ -66,10 +73,9 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 		if (data === 401 || data === 422) {
 			setLoginNameColor("is-danger");
 			setLoginPwdColor("is-danger");
-			return toastik(`${applanguage.loginModal.warnings.warning}`);
+			return toastik(alerts.warning);
 		}
-		if (err !== undefined)
-			return toastik(`${applanguage.loginModal.warnings.somethingWrong}`);
+		if (err !== undefined) return toastik(alerts.somethingWrong);
 
 		localStorage.setItem("dinhotoken", data.access_token);
 		setCurrentUser(loginName);
@@ -78,12 +84,25 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 
 	const login = useCallback(() => {
 		setSubmitSent(true);
+		let index = 0;
+		let message = null;
+
+		for (const input in userData) {
+			if (userData[input] === null) {
+				if (!message) message = alerts.fillEverything;
+				Object.values(handleInputColors)[index]("is-danger");
+			}
+			index++;
+		}
+		if (message) return toastik(message);
 		sendRequest(requestConfig, transformData);
 	}, [requestConfig]);
-	const lostPwd = () => {
+
+	const lostPwd = useCallback(() => {
 		showModal();
 		showForgotPwd();
-	};
+	}, []);
+
 	const buttons = {
 		login,
 		lostPwd,

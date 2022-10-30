@@ -13,6 +13,7 @@ const RegModal = ({ showModal }) => {
 
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+	const alerts = applanguage.regModal.warnings;
 	const [regName, setRegName] = useState(null);
 	const [regPwd, setRegPwd] = useState(null);
 	const [regPwd2, setRegPwd2] = useState(null);
@@ -28,9 +29,9 @@ const RegModal = ({ showModal }) => {
 
 	const handleRegName = useCallback(
 		(e) => {
-			const val = e.target.value;
+			const val = e?.target === undefined ? e : e.target.value;
 			setRegName(val);
-			if (submitSent)
+			const validation = () => {
 				setRegNameColor(
 					val.length < 3 ||
 						val.length > 15 ||
@@ -39,31 +40,43 @@ const RegModal = ({ showModal }) => {
 						? "is-danger"
 						: ""
 				);
+			};
+			if (submitSent || e?.target === undefined) validation();
 		},
 		[submitSent]
 	);
 	const handleRegPwd = useCallback(
 		(e) => {
-			setRegPwd(e.target.value);
-			if (submitSent) setRegPwdColor(e.target.value.length < 6 ? "is-danger" : "");
+			const val = e?.target === undefined ? e : e.target.value;
+			setRegPwd(val);
+			const validation = () => {
+				setRegPwdColor(val.length < 6 ? "is-danger" : "");
+			};
+			if (submitSent || e?.target === undefined) validation();
 		},
 		[submitSent]
 	);
 	const handleRegPwd2 = useCallback(
 		(e) => {
-			setRegPwd2(e.target.value);
-			if (submitSent) setRegPwdColor2(e.target.value.length < 6 ? "is-danger" : "");
+			const val = e?.target === undefined ? e : e.target.value;
+			setRegPwd2(val);
+			const validation = () => {
+				setRegPwdColor2(val.length < 6 ? "is-danger" : "");
+			};
+			if (submitSent || e?.target === undefined) validation();
 		},
 		[submitSent]
 	);
 	const handleRegEmail = useCallback(
 		(e) => {
-			const val = e.target.value;
+			const val = e?.target === undefined ? e : e.target.value;
 			setRegEmail(val);
-			if (submitSent)
+			const validation = () => {
 				setRegEmailColor(
 					!val.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}/) ? "is-danger" : ""
 				);
+			};
+			if (submitSent || e?.target === undefined) validation();
 		},
 		[submitSent]
 	);
@@ -77,6 +90,13 @@ const RegModal = ({ showModal }) => {
 		[submitSent]
 	);
 
+	const handleInputColors = {
+		setRegNameColor,
+		setRegPwdColor,
+		setRegPwdColor2,
+		setRegEmailColor,
+		setCommunityColor,
+	};
 	const inputColors = {
 		regNameColor,
 		regPwdColor,
@@ -85,9 +105,9 @@ const RegModal = ({ showModal }) => {
 	};
 	const userData = {
 		username: regName,
-		mail: regEmail,
 		password: regPwd,
 		team: team,
+		mail: regEmail,
 		community: community,
 	};
 	const requestConfig = {
@@ -110,7 +130,40 @@ const RegModal = ({ showModal }) => {
 
 	const registration = useCallback(() => {
 		setSubmitSent(true);
+		let index = 0;
+		let message = null;
+		let checkUserData = {
+			regName,
+			regPwd,
+			regPwd2,
+			regEmail,
+			community,
+		};
+
+		// Fill all fields condition.
+		for (const input in checkUserData) {
+			if (checkUserData[input] === null) {
+				if (!message) message = alerts.fillEverything;
+				Object.values(handleInputColors)[index]("is-danger");
+			}
+			index++;
+		}
+		if (message) return toastik(message);
+		// Inputfield specific.
+		for (let i = 0; i < Object.keys(handleInputs).length; i++) {
+			Object.values(handleInputs)[i](Object.values(checkUserData)[i]);
+		}
+		// Not matching passwords condition.
+		if (regPwd !== regPwd2) {
+			setRegPwdColor("is-danger");
+			setRegPwdColor2("is-danger");
+			message = alerts.pwdNotMatch;
+		}
+		if (message) return toastik(message);
+
+		//sendRequest(requestConfig, transformData);
 	}, [requestConfig]);
+
 	const buttons = {
 		registration,
 	};

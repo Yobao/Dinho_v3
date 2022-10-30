@@ -57,6 +57,7 @@ export const SLOVAK = {
 		warnings: {
 			warning: "Nesprávne Meno alebo Heslo. Skúste to prosím znova.",
 			somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
+			fillEverything: "Vyplňte prosím všetky polia.",
 		},
 	},
 	regModal: {
@@ -193,6 +194,7 @@ export const CZECH = {
 		warnings: {
 			warning: "Nesprávné Jméno nebo Heslo. Zkuste to prosím znovu.",
 			somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
+			fillEverything: "Vyplňte prosím všechna pole.",
 		},
 	},
 	regModal: {
@@ -331,6 +333,7 @@ export const ENGLISH = {
 		warnings: {
 			warning: "Incorrect Username or Password. Please try again.",
 			somethingWrong: "Something went wrong. Please try again.",
+			fillEverything: "Please fill in all fields.",
 		},
 	},
 	regModal: {
