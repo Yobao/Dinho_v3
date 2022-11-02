@@ -109,7 +109,6 @@ const NavbarComponent = () => {
 		<div className='columns column is-centered'>
 			<nav className='navbar'>
 				<div className='navbar-brand'>
-					<p>Navbar render: {renderRef.current}</p>
 					{NAVBAR.visible.map((button) => (
 						<NavbarButtonComponent
 							text={applanguage.navbar[button.name]}

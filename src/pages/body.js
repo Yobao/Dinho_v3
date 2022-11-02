@@ -16,7 +16,7 @@ const BodyComponent = () => {
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 
 	return (
-		<div className=''>
+		<div className='columns is-centered'>
 			<h3>Body render: {renderRef.current}</h3>
 			<Routes>
 				<Route path='/' element={<HomePage />} />
