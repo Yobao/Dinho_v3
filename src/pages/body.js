@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { CurrentUserContext, OtherUserContext } from "../store/user-context";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "./home_page/home_page";
 import ScoreTablePage from "./score-table_page/score-table_page";
@@ -24,6 +24,7 @@ const BodyComponent = () => {
 				<Route path='/bet' element={<BettingPage />} />
 				<Route path='/profil' element={<UserCurrentPage />} />
 				<Route path={otherUser.otherUserName} element={<ScoreTablePage />} />
+				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
 		</div>
 	);

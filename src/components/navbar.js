@@ -4,13 +4,13 @@ import { Outlet, useLocation } from "react-router-dom";
 import * as TRANSLATIONS from "../store/translations";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
 import { NAVBAR, FLAGS } from "./../store/templates";
-import Brand from "../assets/brand.png";
 import { URL, LANGUAGES } from "./../store/data";
 import NavbarButtonComponent from "./ui/navbar-button";
 import LoginModal from "../modals/login-modal";
 import RegModal from "../modals/registration-modal";
 import ChangePwdModal from "../modals/changepwd-modal";
 import ForgotPwdModal from "../modals/forgotpwd-modal";
+import BrandImage from "./ui/brand-image";
 
 const NavbarComponent = () => {
 	const renderRef = useRef(0);
@@ -49,18 +49,18 @@ const NavbarComponent = () => {
 		};
 	}, []);
 
-	const handleShowLogin = () => {
+	const handleShowLogin = useCallback(() => {
 		setShowLogin(!showLogin);
-	};
-	const handleShowReg = () => {
+	}, [showLogin]);
+	const handleShowReg = useCallback(() => {
 		setShowReg(!showReg);
-	};
-	const handleShowChangePwd = () => {
+	}, [showReg]);
+	const handleShowChangePwd = useCallback(() => {
 		setShowChangePwd(!showChangePwd);
-	};
-	const handleShowForgotPwd = () => {
+	}, [showChangePwd]);
+	const handleShowForgotPwd = useCallback(() => {
 		setShowForgotPwd(!showForgotPwd);
-	};
+	}, [showForgotPwd]);
 	const handleShowMobileMenu = () => {
 		setShowMobileMenu(!showMobileMenu ? "is-active" : null);
 	};
@@ -107,23 +107,18 @@ const NavbarComponent = () => {
 
 	return (
 		<div className='columns column is-centered'>
+			<p>{renderRef.current}</p>
 			<nav className='navbar'>
 				<div className='navbar-brand'>
 					{NAVBAR.visible.map((button) => (
 						<NavbarButtonComponent
-							text={applanguage.navbar[button.name]}
 							key={`navbar-${button.name}`}
+							text={applanguage.navbar[button.name]}
 							type={button.type}
 							path={button.path}
-							class={button.class}
+							className={button.class}
 							style={button.style}>
-							{button.name === "home" ? (
-								<img
-									src={Brand}
-									style={{ maxHeight: "70px" }}
-									height='69.98'
-									width='76.75'></img>
-							) : null}
+							{button.name === "home" ? <BrandImage /> : null}
 						</NavbarButtonComponent>
 					))}
 
@@ -131,12 +126,12 @@ const NavbarComponent = () => {
 						<React.Fragment>
 							{NAVBAR.logOut.map((button) => (
 								<NavbarButtonComponent
-									text={applanguage.navbar[button.name]}
 									key={button.name}
+									text={applanguage.navbar[button.name]}
 									type={button.type}
-									class={button.class}
+									className={button.class}
 									style={button.style}
-									click={showModal[button.name]}
+									onClick={showModal[button.name]}
 								/>
 							))}
 						</React.Fragment>
@@ -146,15 +141,15 @@ const NavbarComponent = () => {
 						<React.Fragment>
 							{NAVBAR.logIn.map((button) => (
 								<NavbarButtonComponent
+									key={`navbar-${button.name}`}
 									text={
 										button.name === "profil"
 											? currentUser
 											: applanguage.navbar[button.name]
 									}
-									key={`navbar-${button.name}`}
 									type={button.type}
 									path={button.path}
-									class={button.class}
+									className={button.class}
 									style={button.style}
 								/>
 							))}
@@ -178,22 +173,22 @@ const NavbarComponent = () => {
 						<div className='navbar-start'>
 							<div className='account-dropdown navbar-item has-dropdown is-hoverable has-text-centered'>
 								<NavbarButtonComponent
-									text={applanguage.navbar.account}
 									key={applanguage.navbar.account}
+									text={applanguage.navbar.account}
 									type='modal'
-									class='navbar-link'
-									click={handleShowMobileMenu}
+									className='navbar-link'
+									onClick={handleShowMobileMenu}
 								/>
 								<div className='account-dropdown-list navbar-dropdown'>
 									{NAVBAR.menu.map((button) => (
 										<NavbarButtonComponent
-											text={applanguage.navbar[button.name]}
 											key={button.name}
+											text={applanguage.navbar[button.name]}
 											type={button.type}
 											path={button.path}
-											class={button.class}
+											className={button.class}
 											style={button.styleMenu}
-											click={showModal[button.name]}
+											onClick={showModal[button.name]}
 										/>
 									))}
 								</div>

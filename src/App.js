@@ -1,9 +1,16 @@
-import React, { Fragment, useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "bulma/css/bulma.css";
 //import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.css";
-import useFetch from "./hooks/use-fetch";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
+import HomePage from "./pages/home_page/home_page";
+import ScoreTablePage from "./pages/score-table_page/score-table_page";
+import BettingPage from "./pages/betting_page/betting_page";
+import UserCurrentPage from "./pages/user-current_page/user-current_page";
+import UserOtherPage from "./pages/user-other_page/user-other_page";
+
+import useFetch from "./hooks/use-fetch";
 import {
 	CurrentUserContext,
 	OtherUserContext,
@@ -14,6 +21,9 @@ import * as TRANSLATIONS from "./store/translations";
 import { LANGUAGES, URL } from "./store/data";
 
 const App = () => {
+	const renderRef = useRef(0);
+	renderRef.current = renderRef.current + 1;
+
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
 	const [applanguage, setApplanguage] = useState(() => {
@@ -29,7 +39,6 @@ const App = () => {
 	const [title, setTitle] = useState(null);
 	const token = localStorage.getItem("dinhotoken");
 	const { isLoading, error, sendRequest, isAuth } = useFetch();
-	//localStorage.setItem("dinhotoken", "9dd7d5163b7ac4779cd044a2ec88abccae4c8541");
 
 	const requestConfig = {
 		url: URL + "/autologin",
@@ -37,7 +46,6 @@ const App = () => {
 			method: "GET",
 			headers: {
 				Authorization: `Bearer ${token}`,
-				/* Authorization: `Bearer ${localStorage.getItem("dinhotoken")}`, */
 			},
 		},
 	};
@@ -57,7 +65,20 @@ const App = () => {
 						{isAuth && (
 							<div className='App'>
 								<NavbarComponent />
-								<BodyComponent />
+
+								{<BodyComponent />}
+
+								{/* 								<div className='columns is-centered'>
+									<h3>Body render: {renderRef.current}</h3>
+									<Routes>
+										<Route path='/' element={<HomePage />} />
+										<Route path='/table' element={<ScoreTablePage />} />
+										<Route path='/bet' element={<BettingPage />} />
+										<Route path='/profil' element={<UserCurrentPage />} />
+										<Route path={otherUser.otherUserName} element={<ScoreTablePage />} />
+										<Route path='*' element={<Navigate to='/' replace />} />
+									</Routes>
+								</div> */}
 							</div>
 						)}
 					</DropdownTitleContext.Provider>
