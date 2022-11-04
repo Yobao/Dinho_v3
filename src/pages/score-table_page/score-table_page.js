@@ -38,7 +38,6 @@ const ScoreTablePage = () => {
 	useEffect(() => {
 		const transformData = (data) => {
 			setTableData(data);
-			console.log(data);
 		};
 		sendRequest(requestConfig, transformData);
 	}, [sendRequest]);
@@ -55,7 +54,7 @@ const ScoreTablePage = () => {
 			<TableComponent
 				head={applanguage.scoreTableHead}
 				body={SCORE_TABLE_BODY}
-				data={""}
+				data={tableData?.table}
 			/>
 		</div>
 	);

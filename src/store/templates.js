@@ -32,9 +32,8 @@ export const FLAGS = {
 };
 
 const styling = {
-	class: "navbar-item",
+	className: "navbar-item",
 	style: { paddingLeft: "8px", paddingRight: "8px" },
-	styleMenu: { paddingLeft: "8px", paddingRight: "40px" },
 };
 
 export const NAVBAR = {
@@ -82,13 +81,15 @@ export const NAVBAR = {
 		{
 			name: "pwdchange",
 			type: "modal",
-			...styling,
+			className: styling.className,
+			style: { paddingLeft: "8px", paddingRight: "40px" },
 		},
 		{
 			name: "logout",
 			type: "link",
 			path: "/",
-			...styling,
+			className: styling.className,
+			style: { paddingLeft: "8px", paddingRight: "40px" },
 		},
 	],
 };

@@ -1,9 +1,11 @@
-import React, { Fragment, useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import "bulma/css/bulma.css";
 //import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.css";
-import useFetch from "./hooks/use-fetch";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
+
+import useFetch from "./hooks/use-fetch";
 import {
 	CurrentUserContext,
 	OtherUserContext,
@@ -14,6 +16,8 @@ import * as TRANSLATIONS from "./store/translations";
 import { LANGUAGES, URL } from "./store/data";
 
 const App = () => {
+	const location = window.location.pathname;
+	const urlPreCheck = Number(location.slice(location.lastIndexOf("/") + 1));
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
 	const [applanguage, setApplanguage] = useState(() => {
@@ -25,11 +29,12 @@ const App = () => {
 		return TRANSLATIONS["CZECH"];
 	});
 	const [currentUser, setCurrentUser] = useState(null);
-	const [otherUser, setOtherUser] = useState({ otherUserName: null, otherUserId: null });
+	const [otherUser, setOtherUser] = useState(
+		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
+	);
 	const [title, setTitle] = useState(null);
 	const token = localStorage.getItem("dinhotoken");
 	const { isLoading, error, sendRequest, isAuth } = useFetch();
-	//localStorage.setItem("dinhotoken", "9dd7d5163b7ac4779cd044a2ec88abccae4c8541");
 
 	const requestConfig = {
 		url: URL + "/autologin",
@@ -37,7 +42,6 @@ const App = () => {
 			method: "GET",
 			headers: {
 				Authorization: `Bearer ${token}`,
-				/* Authorization: `Bearer ${localStorage.getItem("dinhotoken")}`, */
 			},
 		},
 	};
@@ -49,17 +53,30 @@ const App = () => {
 		sendRequest(requestConfig, transformData);
 	}, []);
 
+	// useMemo(() => ({ applanguage, setApplanguage }), [applanguage])
+	// useMemo(() => ({ currentUser, setCurrentUser }), [currentUser])
+	// useMemo(() => ({ otherUser, setOtherUser }), [otherUser])
+	// useMemo(() => ({ title, setTitle }), [title])
+
 	return (
 		<LanguageContext.Provider value={{ applanguage, setApplanguage }}>
 			<CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
 				<OtherUserContext.Provider value={{ otherUser, setOtherUser }}>
 					<DropdownTitleContext.Provider value={{ title, setTitle }}>
-						{isAuth && (
-							<div className='App'>
-								<NavbarComponent />
-								<BodyComponent />
-							</div>
-						)}
+						<Routes>
+							<Route
+								path='/*'
+								element={
+									isAuth && (
+										<div className='App'>
+											<NavbarComponent />
+											<BodyComponent />
+										</div>
+									)
+								}
+							/>
+							<Route path={`/changepassword/*`} element={<p>Change PWD!</p>} />
+						</Routes>
 					</DropdownTitleContext.Provider>
 				</OtherUserContext.Provider>
 			</CurrentUserContext.Provider>
