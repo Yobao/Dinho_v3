@@ -20,6 +20,13 @@ const App = () => {
 	const urlPreCheck = Number(location.slice(location.lastIndexOf("/") + 1));
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
+	const token = localStorage.getItem("dinhotoken");
+
+	const [currentUser, setCurrentUser] = useState(null);
+	const [otherUser, setOtherUser] = useState(
+		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
+	);
+	const [title, setTitle] = useState(null);
 	const [applanguage, setApplanguage] = useState(() => {
 		for (const language in LANGUAGES) {
 			if (LANGUAGES[language].includes(localStorage.getItem("dinholanguage"))) {
@@ -28,14 +35,8 @@ const App = () => {
 		}
 		return TRANSLATIONS["CZECH"];
 	});
-	const [currentUser, setCurrentUser] = useState(null);
-	const [otherUser, setOtherUser] = useState(
-		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
-	);
-	const [title, setTitle] = useState(null);
-	const token = localStorage.getItem("dinhotoken");
-	const { isLoading, error, sendRequest, isAuth } = useFetch();
 
+	const { isLoading, error, sendRequest, isAuth } = useFetch();
 	const requestConfig = {
 		url: URL + "/autologin",
 		requestOptions: {
