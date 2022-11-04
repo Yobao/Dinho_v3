@@ -1,5 +1,3 @@
-import * as TRANSLATIONS from "./translations";
-
 export const SCORE_TABLE_BODY = [
 	{ name: "position", class: "has-text-weight-bold is-unselectable" },
 	{ name: "username", class: "is-clickable is-unselectable" },
@@ -16,35 +14,82 @@ export const USER_TABLE_BODY = [
 ];
 
 export const FLAGS = {
-	cz: {
+	CZECH: {
 		text: "Česky",
 		flag: "https://cdn0.iconfinder.com/data/icons/all-national-flags-of-the-world-very-high-quality-/283/czech_republic-512.png",
 		code: "cs",
 	},
-	sk: {
+	SLOVAK: {
 		text: "Slovensky",
 		flag: "https://cdn0.iconfinder.com/data/icons/all-national-flags-of-the-world-very-high-quality-/283/slovakia-512.png",
 		code: "sk",
 	},
-	en: {
+	ENGLISH: {
 		text: "English",
 		flag: "https://cdn0.iconfinder.com/data/icons/all-national-flags-of-the-world-very-high-quality-/283/united_kingdom-1024.png",
-		code: "english",
+		code: "en",
 	},
 };
 
-const NAVBAR_CONST = [
-	{
-		path: "/",
-		class: "navbar-item",
-	},
-	{
-		path: "/table",
-		class: "navbar-item",
-	},
-];
+const styling = {
+	className: "navbar-item",
+	style: { paddingLeft: "8px", paddingRight: "8px" },
+};
 
 export const NAVBAR = {
-	loggedIn: [...NAVBAR_CONST, {}],
-	loggedOut: [{}, {}],
+	visible: [
+		{
+			name: "home",
+			type: "link",
+			path: "/",
+			...styling,
+		},
+		{
+			name: "table",
+			type: "link",
+			path: "/table",
+			...styling,
+		},
+	],
+	logIn: [
+		{
+			name: "bet",
+			type: "link",
+			path: "/bet",
+			...styling,
+		},
+		{
+			name: "profil",
+			type: "link",
+			path: "/profil",
+			...styling,
+		},
+	],
+	logOut: [
+		{
+			name: "login",
+			type: "modal",
+			...styling,
+		},
+		{
+			name: "registration",
+			type: "modal",
+			...styling,
+		},
+	],
+	menu: [
+		{
+			name: "pwdchange",
+			type: "modal",
+			className: styling.className,
+			style: { paddingLeft: "8px", paddingRight: "40px" },
+		},
+		{
+			name: "logout",
+			type: "link",
+			path: "/",
+			className: styling.className,
+			style: { paddingLeft: "8px", paddingRight: "40px" },
+		},
+	],
 };
