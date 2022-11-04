@@ -7,10 +7,10 @@ export const SLOVAK = {
 		table: "Tabuľka",
 		bet: "Tipuj",
 		account: "Účet",
-		login: "Prihlásenie",
-		registration: "Registrácia",
-		pwdchange: "Zmena hesla",
-		logout: "Odhlásenie",
+		login: "Prihlásiť",
+		registration: "Registrovať",
+		pwdchange: "Zmeniť heslo",
+		logout: "Odhlásiť",
 	},
 	homeTitle: {
 		welcome: "Vitajte na tipovačke zápasov Chelsea",
@@ -57,6 +57,7 @@ export const SLOVAK = {
 		warnings: {
 			warning: "Nesprávne Meno alebo Heslo. Skúste to prosím znova.",
 			somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
+			fillEverything: "Vyplňte prosím všetky polia.",
 		},
 	},
 	regModal: {
@@ -144,10 +145,10 @@ export const CZECH = {
 		table: "Tabulka",
 		bet: "Tipuj",
 		account: "Účet",
-		login: "Přihlášení",
-		registration: "Registrace",
-		pwdchange: "Změna hesla",
-		logout: "Odhlášení",
+		login: "Přihlásit",
+		registration: "Registrovat",
+		pwdchange: "Změnit heslo",
+		logout: "Odhlásit",
 	},
 	homeTitle: {
 		welcome: "Vítejte na tipovačce zápasů Chelsea",
@@ -193,6 +194,7 @@ export const CZECH = {
 		warnings: {
 			warning: "Nesprávné Jméno nebo Heslo. Zkuste to prosím znovu.",
 			somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
+			fillEverything: "Vyplňte prosím všechna pole.",
 		},
 	},
 	regModal: {
@@ -281,7 +283,7 @@ export const ENGLISH = {
 		bet: "Bet",
 		account: "Account",
 		login: "Login",
-		registration: "Registration",
+		registration: "Sign Up",
 		pwdchange: "Change password",
 		logout: "Logout",
 	},
@@ -331,6 +333,7 @@ export const ENGLISH = {
 		warnings: {
 			warning: "Incorrect Username or Password. Please try again.",
 			somethingWrong: "Something went wrong. Please try again.",
+			fillEverything: "Please fill in all fields.",
 		},
 	},
 	regModal: {

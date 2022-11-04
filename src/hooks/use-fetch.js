@@ -1,3 +1,4 @@
+import { apply } from "file-loader";
 import React, { useState, useCallback } from "react";
 //In order to make hook work, it is neccessary to create requestConfig object which will contain
 //request url as well as request header in the component where we want to fetch data.
@@ -11,9 +12,11 @@ const useFetch = () => {
 		setIsLoading(true);
 		try {
 			const response = await fetch(requestConfig.url, requestConfig.requestOptions);
-			const data = await response.json();
+			const data =
+				response.headers.get("content-length") !== 0 ? await response.json() : null;
 
 			if (data) applyData(data);
+			if (!data) applyData(response.status);
 		} catch (err) {
 			setError(err.message || "Something went wrong!");
 		}

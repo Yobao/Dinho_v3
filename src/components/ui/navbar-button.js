@@ -1,13 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
-const NavbarButtonComponent = (props) => {
-	return (
-		<React.Fragment>
-			<h1 className={props.class} onClick={props.click}>
-				{props.text}
-			</h1>
-		</React.Fragment>
-	);
+const NavbarButtonComponent = ({ children, path, type, text, ...props }) => {
+	const button =
+		type === "link" ? (
+			<Link to={path} {...props}>
+				{!children ? text : children}
+			</Link>
+		) : (
+			<a {...props}>{text}</a>
+		);
+
+	return <React.Fragment>{button}</React.Fragment>;
 };
 
 export default NavbarButtonComponent;
