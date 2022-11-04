@@ -7,9 +7,6 @@ import App from "./App.js";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<BrowserRouter>
-		<Routes>
-			<Route path='/*' element={<App />} />
-			<Route path={`/changepassword/*`} element={<p>Change PWD!</p>} />
-		</Routes>
+		<App />
 	</BrowserRouter>
 );

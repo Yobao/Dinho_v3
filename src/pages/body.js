@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
-import { CurrentUserContext, OtherUserContext } from "../store/user-context";
+import React, { useContext, useRef } from "react";
+import { OtherUserContext } from "../store/user-context";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import HomePage from "./home_page/home_page";
@@ -12,7 +12,6 @@ const BodyComponent = () => {
 	const renderRef = useRef(0);
 	renderRef.current = renderRef.current + 1;
 
-	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 
 	return (
@@ -23,7 +22,7 @@ const BodyComponent = () => {
 				<Route path='/table' element={<ScoreTablePage />} />
 				<Route path='/bet' element={<BettingPage />} />
 				<Route path='/profil' element={<UserCurrentPage />} />
-				<Route path={otherUser.otherUserName} element={<ScoreTablePage />} />
+				<Route path={`/${otherUser}`} element={<UserOtherPage />} />
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
 		</div>

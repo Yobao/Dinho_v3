@@ -14,4 +14,4 @@ const NavbarButtonComponent = ({ children, path, type, text, ...props }) => {
 	return <React.Fragment>{button}</React.Fragment>;
 };
 
-export default React.memo(NavbarButtonComponent);
+export default NavbarButtonComponent;

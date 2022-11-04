@@ -29,12 +29,12 @@ const HomePage = () => {
 
 			<div className='column is-centered has-text-centered'>
 				<p>{renderRef.current}</p>
-				<h1 className='title is-3'>{text.welcome}</h1>
+				<h1 className='title is-3'>{applanguage.homeTitle.welcome}</h1>
 				<br />
-				<h3 className='title is-5'>{text.info1}</h3>
-				<h3 className='title is-5'>{text.info2}</h3>
-				<h3 className='title is-5'>{text.info3}</h3>
-				<h3 className='title is-5'>{text.info4}</h3>
+				<h3 className='title is-5'>{applanguage.homeTitle.info1}</h3>
+				<h3 className='title is-5'>{applanguage.homeTitle.info2}</h3>
+				<h3 className='title is-5'>{applanguage.homeTitle.info3}</h3>
+				<h3 className='title is-5'>{applanguage.homeTitle.info4}</h3>
 				<br />
 
 				<div className='column'>
@@ -53,11 +53,11 @@ const HomePage = () => {
 
 				<br />
 				<br />
-				<h2 className='title is-3'>{text.example}</h2>
+				<h2 className='title is-3'>{applanguage.homeTitle.example}</h2>
 
 				<figure className='image is-inline-block column'>
 					<img
-						src={text.rules}
+						src={applanguage.homeTitle.rules}
 						className=''
 						onLoad={() => setIsLoading(false)}
 						style={!isLoading ? {} : { display: "none" }}
