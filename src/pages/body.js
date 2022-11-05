@@ -15,14 +15,13 @@ const BodyComponent = () => {
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 
 	return (
-		<div className='columns is-centered'>
-			<h3>Body render: {renderRef.current}</h3>
+		<div className=''>
 			<Routes>
 				<Route path='/' element={<HomePage />} />
 				<Route path='/table' element={<ScoreTablePage />} />
 				<Route path='/bet' element={<BettingPage />} />
 				<Route path='/profil' element={<UserCurrentPage />} />
-				<Route path={`/${otherUser}`} element={<UserOtherPage />} />
+				<Route path={`${otherUser}`} element={<UserOtherPage />} />
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
 		</div>

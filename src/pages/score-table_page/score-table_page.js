@@ -7,9 +7,9 @@ import {
 import useFetch from "../../hooks/use-fetch";
 import { URL } from "../../store/data";
 import { SCORE_TABLE_BODY } from "../../store/templates";
-
 import TableComponent from "../../components/table";
 import LoadingButton from "../../components/ui/button-loading";
+import "./../body.css";
 
 const ScoreTablePage = () => {
 	const renderRef = useRef(0);
@@ -48,9 +48,9 @@ const ScoreTablePage = () => {
 	if (isLoading) return <LoadingButton />;
 
 	return (
-		<div className='column '>
-			<h3>ScoreTable render: {renderRef.current}</h3>
-			<h2>DROPDOWN HERE</h2>
+		<div className='column is-full-mobile is-two-thirds-tablet is-half-desktop table-width'>
+			{/* 			<h3>ScoreTable render: {renderRef.current}</h3>
+			<h2>DROPDOWN HERE</h2> */}
 			<TableComponent
 				head={applanguage.scoreTableHead}
 				body={SCORE_TABLE_BODY}
