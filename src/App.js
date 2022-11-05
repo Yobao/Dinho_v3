@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import "bulma/css/bulma.css";
+//import "bulma/css/bulma.css";
+import "./App.scss";
 //import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.css";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
