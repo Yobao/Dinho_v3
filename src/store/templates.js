@@ -32,7 +32,7 @@ export const FLAGS = {
 };
 
 const styling = {
-	className: "navbar-item",
+	className: "navbar-item is-danger",
 	style: { paddingLeft: "8px", paddingRight: "8px" },
 };
 
