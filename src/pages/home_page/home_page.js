@@ -4,6 +4,7 @@ import { URL } from "../../store/data";
 import { CurrentUserContext, LanguageContext } from "../../store/user-context";
 
 import LoadingButton from "../../components/ui/button-loading";
+import "./../body.css";
 
 const HomePage = () => {
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
@@ -27,7 +28,7 @@ const HomePage = () => {
 		<React.Fragment>
 			{/* {isLoading && <LoadingButton />} */}
 
-			<div className='column is-centered has-text-centered'>
+			<div className='column is-centered has-text-centered is-7-desktop table-width'>
 				<p>{renderRef.current}</p>
 				<h1 className='title is-3'>{applanguage.homeTitle.welcome}</h1>
 				<br />

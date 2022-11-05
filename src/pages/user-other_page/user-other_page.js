@@ -8,8 +8,10 @@ import { useNavigate } from "react-router-dom";
 const UserOtherPage = () => {
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 	const navigateHome = useNavigate();
-	const userId = otherUser.slice(otherUser.lastIndexOf("/") + 1);
-
+	const userId = otherUser.slice(
+		otherUser.split("/", 2).join("/").length + 1,
+		otherUser.split("/", 3).join("/").length
+	);
 	const requestConfig = {
 		url: URL + "/tips?user=" + userId,
 		requestOptions: {
@@ -21,6 +23,7 @@ const UserOtherPage = () => {
 
 	const { isLoading, err, sendRequest } = useFetch();
 	const transformData = (data) => {
+		console.log(data);
 		if (data.length === 0) return navigateHome("/");
 	};
 

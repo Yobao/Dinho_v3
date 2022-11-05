@@ -107,7 +107,7 @@ const NavbarComponent = () => {
 	};
 
 	return (
-		<div className='columns column is-centered'>
+		<div className='columns my-3 mx-0 is-centered is-mobile'>
 			<nav className='navbar'>
 				<div className='navbar-brand'>
 					{NAVBAR.visible.map(({ name, ...button }) => (
