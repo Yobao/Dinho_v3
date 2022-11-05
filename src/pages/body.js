@@ -21,7 +21,7 @@ const BodyComponent = () => {
 				<Route path='/table' element={<ScoreTablePage />} />
 				<Route path='/bet' element={<BettingPage />} />
 				<Route path='/profil' element={<UserCurrentPage />} />
-				<Route path={`/${otherUser}`} element={<UserOtherPage />} />
+				<Route path={`${otherUser}`} element={<UserOtherPage />} />
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>
 		</div>

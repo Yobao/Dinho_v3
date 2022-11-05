@@ -8,9 +8,10 @@ const TableComponent = ({ head, body, data }) => {
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 	const navigate = useNavigate();
 
-	const handleNavigate = (e) => {
-		setOtherUser(e);
-		navigate(`/${e}`);
+	const handleNavigate = (path) => {
+		console.log("/" + path);
+		setOtherUser(`/${path}`);
+		navigate(`/${path}`);
 	};
 
 	return (
@@ -34,10 +35,9 @@ const TableComponent = ({ head, body, data }) => {
 								{body.map((column, iColumn) => (
 									<td
 										key={`${row.username}-${column.name}`}
-										id={`${row.username}/${row.id}`}
 										className={column.class}
-										onClick={(e) => {
-											if (iColumn === 1) handleNavigate(e.target.id);
+										onClick={() => {
+											if (iColumn === 1) handleNavigate(`user/${row.id}/${row.username}`);
 										}}>
 										{iColumn === 0 ? iRow + 1 : row[column.name]}
 									</td>

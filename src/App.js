@@ -17,12 +17,22 @@ import { LANGUAGES, URL } from "./store/data";
 
 const App = () => {
 	const location = window.location.pathname;
-	const urlPreCheck = Number(location.slice(location.lastIndexOf("/") + 1));
+	//const location = "/user/193/Fojcek";
+	const urlPreCheck = Number(
+		location.slice(
+			location.split("/", 2).join("/").length + 1,
+			location.split("/", 3).join("/").length
+		)
+	);
+
+	console.log(urlPreCheck);
+
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
 	const token = localStorage.getItem("dinhotoken");
 
 	const [currentUser, setCurrentUser] = useState(null);
+
 	const [otherUser, setOtherUser] = useState(
 		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
 	);
