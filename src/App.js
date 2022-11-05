@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import "bulma/css/bulma.css";
+//import "bulma/css/bulma.css";
+import "./App.scss";
 //import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.css";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
@@ -17,9 +18,26 @@ import { LANGUAGES, URL } from "./store/data";
 
 const App = () => {
 	const location = window.location.pathname;
-	const urlPreCheck = Number(location.slice(location.lastIndexOf("/") + 1));
+	//const location = "/user/193/Fojcek";
+	const urlPreCheck = Number(
+		location.slice(
+			location.split("/", 2).join("/").length + 1,
+			location.split("/", 3).join("/").length
+		)
+	);
+
+	console.log(urlPreCheck);
+
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
+	const token = localStorage.getItem("dinhotoken");
+
+	const [currentUser, setCurrentUser] = useState(null);
+
+	const [otherUser, setOtherUser] = useState(
+		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
+	);
+	const [title, setTitle] = useState(null);
 	const [applanguage, setApplanguage] = useState(() => {
 		for (const language in LANGUAGES) {
 			if (LANGUAGES[language].includes(localStorage.getItem("dinholanguage"))) {
@@ -28,14 +46,8 @@ const App = () => {
 		}
 		return TRANSLATIONS["CZECH"];
 	});
-	const [currentUser, setCurrentUser] = useState(null);
-	const [otherUser, setOtherUser] = useState(
-		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
-	);
-	const [title, setTitle] = useState(null);
-	const token = localStorage.getItem("dinhotoken");
-	const { isLoading, error, sendRequest, isAuth } = useFetch();
 
+	const { isLoading, error, sendRequest, isAuth } = useFetch();
 	const requestConfig = {
 		url: URL + "/autologin",
 		requestOptions: {
