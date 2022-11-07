@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 import { Navigate, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const TableComponent = ({ head, body, data }) => {
+const TableComponent = ({ head, body, data, position }) => {
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 	const navigate = useNavigate();
 
 	const handleNavigate = (path) => {
-		console.log("/" + path);
 		setOtherUser(`/${path}`);
 		navigate(`/${path}`);
 	};
@@ -39,7 +38,11 @@ const TableComponent = ({ head, body, data }) => {
 										onClick={() => {
 											if (iColumn === 1) handleNavigate(`user/${row.id}/${row.username}`);
 										}}>
-										{iColumn === 0 ? iRow + 1 : row[column.name]}
+										{iColumn === 0
+											? `${position + iRow + 1} ${
+													row.prize === null ? "" : `(${row.prize}€)`
+											  }`
+											: row[column.name]}
 									</td>
 								))}
 							</tr>
