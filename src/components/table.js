@@ -19,7 +19,7 @@ const TableComponent = ({ head, body, data, position }) => {
 				<table className='table is-bordered is-striped is-hoverable is-narrow is-fullwidth is-mobile has-text-centered is-size-7-mobile is-full-tablet'>
 					<thead>
 						<tr>
-							{head.map((column) => (
+							{head.map((column, i) => (
 								<th
 									key={column}
 									className='has-text-centered is-vcentered is-size-7-mobile is-full-tablet'>
@@ -30,11 +30,11 @@ const TableComponent = ({ head, body, data, position }) => {
 					</thead>
 					<tbody>
 						{data.map((row, iRow) => (
-							<tr key={`${row.username}-${row.id}`}>
+							<tr key={`${row.username}-${row.id}`} className='custom-mobile-row-height'>
 								{body.map((column, iColumn) => (
 									<td
 										key={`${row.username}-${column.name}`}
-										className={column.class}
+										className={`is-vcentered ${column.class}`}
 										onClick={() => {
 											if (iColumn === 1) handleNavigate(`user/${row.id}/${row.username}`);
 										}}>
@@ -55,3 +55,5 @@ const TableComponent = ({ head, body, data, position }) => {
 };
 
 export default TableComponent;
+
+// (${row.prize}€)
