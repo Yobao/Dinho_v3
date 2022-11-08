@@ -11,9 +11,6 @@ const HomePage = () => {
 	const text = applanguage.homeTitle;
 	const [isLoading, setIsLoading] = useState(true);
 
-	const renderRef = useRef(0);
-	renderRef.current = renderRef.current + 1;
-
 	useEffect(() => {
 		let timer = setTimeout(() => {
 			setIsLoading(false);
@@ -28,8 +25,7 @@ const HomePage = () => {
 		<React.Fragment>
 			{/* {isLoading && <LoadingButton />} */}
 
-			<div className='column is-centered has-text-centered is-7-desktop table-width'>
-				<p>{renderRef.current}</p>
+			<div className='column is-centered has-text-centered is-7-desktop home-width'>
 				<h1 className='title is-3'>{applanguage.homeTitle.welcome}</h1>
 				<br />
 				<h3 className='title is-5'>{applanguage.homeTitle.info1}</h3>

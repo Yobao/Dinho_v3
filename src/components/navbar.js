@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import useFetch from "../hooks/use-fetch";
 import { Outlet, useLocation } from "react-router-dom";
 import * as TRANSLATIONS from "../store/translations";
@@ -14,15 +14,21 @@ import ForgotPwdModal from "../modals/forgotpwd-modal";
 import BrandImage from "../components/ui/brand-image";
 
 const NavbarComponent = () => {
+	const location = useLocation();
+	const checkResolution = window.matchMedia("(max-width: 1023px)").matches;
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
+
 	const [showLogin, setShowLogin] = useState(false);
 	const [showReg, setShowReg] = useState(false);
 	const [showChangePwd, setShowChangePwd] = useState(false);
 	const [showForgotPwd, setShowForgotPwd] = useState(false);
 	const [showMobileMenu, setShowMobileMenu] = useState(false);
 	const [showMobileFlags, setShowMobileFlags] = useState(
-		!window.matchMedia("(max-width: 1023px)").matches ? "" : "is-hidden"
+		!checkResolution ? "" : "is-hidden"
+	);
+	const [navbarEndWidth, setNavbarEndWidth] = useState(
+		!checkResolution ? { width: "140px" } : {}
 	);
 	const [defaultLanguage, setDefaultLanguage] = useState(() => {
 		for (const language in LANGUAGES) {
@@ -33,19 +39,26 @@ const NavbarComponent = () => {
 	});
 	const { isLoading, err, sendRequest } = useFetch();
 
-	/* 	useEffect(() => {
-		const resize = () => {
-			if (!window.matchMedia("(max-width: 1023px)").matches) {
-				setShowMobileFlags("");
-			} else {
-				setShowMobileFlags(showMobileFlags === "" ? "" : "is-hidden");
-			}
-		};
-		window.addEventListener("resize", resize);
-		return () => {
-			window.removeEventListener("resize", resize);
-		};
-	}, []); */
+	useEffect(() => {
+		if (location.pathname === "/") {
+			let resizeTimeout = null;
+			const resize = () => {
+				clearTimeout(resizeTimeout);
+				resizeTimeout = setTimeout(() => {
+					setShowMobileFlags(
+						!window.matchMedia("(max-width: 1023px)").matches ? "" : "is-hidden"
+					);
+					setNavbarEndWidth(
+						!window.matchMedia("(max-width: 1023px)").matches ? { width: "140px" } : {}
+					);
+				}, 150);
+			};
+			window.addEventListener("resize", resize);
+			return () => {
+				window.removeEventListener("resize", resize);
+			};
+		}
+	}, [location]);
 
 	const handleShowLogin = () => {
 		setShowLogin(!showLogin);
@@ -182,18 +195,30 @@ const NavbarComponent = () => {
 				{useLocation().pathname === "/" && (
 					<div className='navbar-end'>
 						<div className='navbar-item has-dropdown is-hoverable lang-dropdown'>
-							<a className='navbar-link is-arrowless' onClick={handleShowMobileFlags}>
+							<a
+								className='navbar-link is-arrowless has-text-centered'
+								onClick={handleShowMobileFlags}>
 								<img src={defaultLanguage.flag}></img>
 							</a>
-							<div className={`navbar-dropdown is-boxed ${showMobileFlags}`}>
+							<div
+								className={`navbar-dropdown is-boxed ${showMobileFlags} custom-navbar-end`}
+								style={navbarEndWidth}>
 								{Object.keys(FLAGS).map((country) => (
 									<a
 										className='navbar-item'
 										key={FLAGS[country].text}
 										value={FLAGS[country].code}
 										onClick={handleChangeLanguage}>
-										<img src={FLAGS[country].flag} value={FLAGS[country].code}></img>
-										<span value={FLAGS[country].code}>{FLAGS[country].text}</span>
+										<div className='columns is-mobile has-text-centered'>
+											<div className='column is-mobile has-text-right px-0'>
+												<img src={FLAGS[country].flag} value={FLAGS[country].code} />
+											</div>
+											<div className='column is-mobile has-text-left px-0'>
+												<span value={FLAGS[country].code}>
+													&nbsp;&nbsp;{`${FLAGS[country].text}`}
+												</span>
+											</div>
+										</div>
 									</a>
 								))}
 								<hr className='navbar-divider'></hr>

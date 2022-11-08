@@ -1,16 +1,3 @@
-@media all and (min-width: 768px) {
-	.table-width {
-		margin: auto;
-		width: 50%;
-	}
-}
-
-@media all and (max-width: 768px) {
-	.custom-mobile-width {
-		width: 336px;
-	}
-}
-
 @media all and (max-width: 425px) {
 	.custom-mobile-row-height {
 		height: 70px;
@@ -23,8 +10,38 @@
 	}
 }
 
-@media all and (min-width: 769px) and (max-width: 1550px) {
+@media all and (max-width: 768px) {
+	.custom-mobile-width {
+		width: 336px;
+	}
+}
+
+/* @media all and (min-width: 769px) and (max-width: 1550px) {
 	.custom-mobile-row-height {
 		height: 60px;
+	}
+} */
+
+@media all and (min-width: 768px) {
+	.table-width {
+		margin: auto;
+		width: 50%;
+	}
+	.home-width {
+		margin: auto;
+		width: 70%;
+	}
+}
+
+@media all and (min-width: 1024px) {
+	.custom-navbar-end {
+		width: "140px";
+	}
+}
+
+@media all and (min-width: 1201px) {
+	.home-width {
+		margin: auto;
+		width: 50%;
 	}
 }

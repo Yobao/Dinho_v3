@@ -81,7 +81,7 @@ const ScoreTablePage = () => {
 	return (
 		<div
 			className='column table-width 
-				is-full-mobile is-two-thirds-tablet is-half-desktop is-two-fifths-fullhd'>
+				is-full-mobile is-three-quarters-tablet is-three-quarters-desktop is-three-fifths-fullhd'>
 			{/* 			<h3>ScoreTable render: {renderRef.current}</h3>
 			<h2>DROPDOWN HERE</h2>
  */}
@@ -91,8 +91,8 @@ const ScoreTablePage = () => {
 					dropdown={{ dropdownTitle, setDropdownTitle, setId: setMatch }}
 					style={{
 						title:
-							"is-size-9-mobile is-size-4-tablet is-size-4-desktop custom-mobile-width",
-						menu: "is-size-6-mobile is-size-5-tablet is-size-5-desktop",
+							"is-size-9-mobile is-size-5-tablet is-size-4-desktop custom-mobile-width",
+						menu: "is-size-6-mobile is-size-6-tablet is-size-5-desktop",
 					}}
 				/>
 			</div>
