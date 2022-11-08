@@ -24,6 +24,10 @@ export const SLOVAK = {
 		rules: Rules_sk,
 	},
 	scoreTableHead: ["Pozícia", "Meno", "Skóre", "Tip", "Zmena"],
+	scoreTableTitles: {
+		total1: "Celkovo",
+		total2: "bodov",
+	},
 	userTableHead: ["Zápas", "Dátum", "Tip", "Body"],
 	userTableButton: "Späť",
 	betTitle: {
@@ -161,6 +165,10 @@ export const CZECH = {
 		rules: Rules_cz,
 	},
 	scoreTableHead: ["Pozice", "Jméno", "Skóre", "Tip", "Změna"],
+	scoreTableTitles: {
+		total1: "Celkovo",
+		total2: "bodů",
+	},
 	userTableHead: ["Zápas", "Datum", "Tip", "Body"],
 	userTableButton: "Zpět",
 	betTitle: {
@@ -300,6 +308,10 @@ export const ENGLISH = {
 		rules: Rules_en,
 	},
 	scoreTableHead: ["Position", "Name", "Points", "Player", "Change"],
+	scoreTableTitles: {
+		total1: "Total of",
+		total2: "points",
+	},
 	userTableHead: ["Match", "Date", "Player", "Points"],
 	userTableButton: "Back",
 	betTitle: {
