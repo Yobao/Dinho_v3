@@ -9,9 +9,6 @@ import UserCurrentPage from "./user-current_page/user-current_page";
 import UserOtherPage from "./user-other_page/user-other_page";
 
 const BodyComponent = () => {
-	const renderRef = useRef(0);
-	renderRef.current = renderRef.current + 1;
-
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
 
 	return (

@@ -26,8 +26,6 @@ const App = () => {
 		)
 	);
 
-	console.log(urlPreCheck);
-
 	if (!localStorage.getItem("dinholanguage"))
 		localStorage.setItem("dinholanguage", window.navigator.language.toLowerCase());
 	const token = localStorage.getItem("dinhotoken");
@@ -37,7 +35,7 @@ const App = () => {
 	const [otherUser, setOtherUser] = useState(
 		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
 	);
-	const [title, setTitle] = useState(null);
+	const [dropdownTitle, setDropdownTitle] = useState(null);
 	const [applanguage, setApplanguage] = useState(() => {
 		for (const language in LANGUAGES) {
 			if (LANGUAGES[language].includes(localStorage.getItem("dinholanguage"))) {
@@ -74,7 +72,7 @@ const App = () => {
 		<LanguageContext.Provider value={{ applanguage, setApplanguage }}>
 			<CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
 				<OtherUserContext.Provider value={{ otherUser, setOtherUser }}>
-					<DropdownTitleContext.Provider value={{ title, setTitle }}>
+					<DropdownTitleContext.Provider value={{ dropdownTitle, setDropdownTitle }}>
 						<Routes>
 							<Route
 								path='/*'
