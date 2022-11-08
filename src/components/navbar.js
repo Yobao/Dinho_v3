@@ -147,7 +147,7 @@ const NavbarComponent = () => {
 							{NAVBAR.logIn.map(({ name, ...button }) => (
 								<NavbarButtonComponent
 									key={`navbar-${name}`}
-									text={name === "profil" ? currentUser : applanguage.navbar[name]}
+									text={name === "profil" ? currentUser.user : applanguage.navbar[name]}
 									{...button}
 								/>
 							))}
