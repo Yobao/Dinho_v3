@@ -104,7 +104,7 @@ const ScoreTablePage = () => {
 				<div className='column'>
 					{tableData?.goals.map((goal) => {
 						return (
-							<div className='columns' key={`${goal.name}`}>
+							<div className='columns is-mobile' key={`${goal.name}`}>
 								<div className='column'>
 									<p className='is-size-6-mobile'>{`${goal.name}`}</p>
 								</div>

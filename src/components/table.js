@@ -35,7 +35,11 @@ const TableComponent = ({ head, body, data, position }) => {
 								{body.map((column, iColumn) => (
 									<td
 										key={`${row.username}-${column.name}`}
-										className={`is-vcentered ${column.class}`}
+										className={`is-vcentered ${column.class} ${
+											iColumn === body.length - 1 && row[column.name] > 0
+												? "has-text-success has-text-weight-bold"
+												: ""
+										}`}
 										onClick={() => {
 											if (iColumn === 1) handleNavigate(`user/${row.id}/${row.username}`);
 										}}>
@@ -44,7 +48,7 @@ const TableComponent = ({ head, body, data, position }) => {
 													row.prize === null ? "" : `(${row.prize}€)`
 											  }`
 											: !isNaN(Number(row[column.name]))
-											? Number(row[column.name])
+											? Number(row[column.name]).toLocaleString()
 											: row[column.name]}
 									</td>
 								))}
