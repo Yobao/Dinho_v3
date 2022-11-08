@@ -10,6 +10,7 @@ const TableComponent = ({ head, body, data, position }) => {
 
 	const handleNavigate = (path) => {
 		setOtherUser(`/${path}`);
+		console.log("NAVIGATE");
 		navigate(`/${path}`);
 	};
 
@@ -22,7 +23,7 @@ const TableComponent = ({ head, body, data, position }) => {
 							{head.map((column, i) => (
 								<th
 									key={column}
-									className='has-text-centered is-vcentered is-size-7-mobile is-full-tablet'>
+									className='has-text-centered is-vcentered is-size-8-mobile is-full-tablet'>
 									{column}
 								</th>
 							))}
@@ -42,6 +43,8 @@ const TableComponent = ({ head, body, data, position }) => {
 											? `${position + iRow + 1} ${
 													row.prize === null ? "" : `(${row.prize}€)`
 											  }`
+											: !isNaN(Number(row[column.name]))
+											? Number(row[column.name])
 											: row[column.name]}
 									</td>
 								))}

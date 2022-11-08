@@ -42,41 +42,36 @@ const ScoreTablePage = () => {
 
 	useEffect(() => {
 		const transformData = (data) => {
-			const createDropdownData = data.matches.reverse().map((match, i, matches) => {
-				const index = matches.length - i;
-				const start = match.start.slice(0, match.start.length - 4);
-				return {
-					value: !match.side
-						? `${index}. Chelsea - ${match.opponent} (N) ${start}`
-						: match.side === 1
-						? `${index}. Chelsea - ${match.opponent} ${start}`
-						: `${index}. ${match.opponent} - Chelsea ${start}`,
-					id: match.id,
-				};
-			});
-
+			if (dropdownData === null) {
+				const createDropdownData = data.matches.reverse().map((match, i, matches) => {
+					const index = matches.length - i;
+					const start = match.start.slice(0, match.start.length - 4);
+					return {
+						value: !match.side
+							? `${index}. Chelsea - ${match.opponent} (N) ${start}`
+							: match.side === 1
+							? `${index}. Chelsea - ${match.opponent} ${start}`
+							: `${index}. ${match.opponent} - Chelsea ${start}`,
+						id: match.id,
+					};
+				});
+				setDropdownData(createDropdownData);
+				setDropdownTitle(createDropdownData[0].value);
+			}
 			setIsLoadingRound(false);
-			setDropdownData(createDropdownData);
-			setDropdownTitle(!dropdownTitle ? createDropdownData[0].value : dropdownTitle);
-
-			/* 			const testData = {
-				...data,
-				table: data.table.map((row) => {
-					if (row?.last_round_score !== undefined)
-						return {
-							...row,
-							last_round_score: Math.ceil(Number(row.last_round_score)),
-						};
-					return row;
-				}),
-			}; */
-
+			setCurrentPage(1);
 			setTableData(data);
 		};
 
 		setIsLoadingRound(true);
 		sendRequest(requestConfig, transformData);
 	}, [sendRequest, match]);
+
+	useEffect(() => {
+		return () => {
+			setDropdownTitle(null);
+		};
+	}, []);
 
 	const indexOfLastUser = currentPage * usersPerPage;
 	const indexOfFirstUser = indexOfLastUser - usersPerPage;
@@ -100,6 +95,26 @@ const ScoreTablePage = () => {
 						menu: "is-size-6-mobile is-size-5-tablet is-size-5-desktop",
 					}}
 				/>
+			</div>
+
+			<div className='columns is-mobile '>
+				<div className='column has-text-centered'>
+					<p className='is-size-6-mobile'>{`${applanguage.scoreTableTitles.total1} ${tableData?.points} ${applanguage.scoreTableTitles.total2}`}</p>
+				</div>
+				<div className='column'>
+					{tableData?.goals.map((goal) => {
+						return (
+							<div className='columns' key={`${goal.name}`}>
+								<div className='column'>
+									<p className='is-size-6-mobile'>{`${goal.name}`}</p>
+								</div>
+								<div className='column'>
+									<p className='is-size-6-mobile'>{Math.floor(goal.points)}</p>
+								</div>
+							</div>
+						);
+					})}
+				</div>
 			</div>
 
 			{isLoadingRound && <LoadingButton />}

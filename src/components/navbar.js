@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useContext, useRef } from "react";
 import useFetch from "../hooks/use-fetch";
 import { Outlet, useLocation } from "react-router-dom";
 import * as TRANSLATIONS from "../store/translations";
@@ -14,9 +14,6 @@ import ForgotPwdModal from "../modals/forgotpwd-modal";
 import BrandImage from "../components/ui/brand-image";
 
 const NavbarComponent = () => {
-	const renderRef = useRef(0);
-	renderRef.current++;
-
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const [showLogin, setShowLogin] = useState(false);
