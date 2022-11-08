@@ -10,7 +10,6 @@ const TableComponent = ({ head, body, data, position }) => {
 
 	const handleNavigate = (path) => {
 		setOtherUser(`/${path}`);
-		console.log("NAVIGATE");
 		navigate(`/${path}`);
 	};
 
@@ -43,9 +42,11 @@ const TableComponent = ({ head, body, data, position }) => {
 										onClick={() => {
 											if (iColumn === 1) handleNavigate(`user/${row.id}/${row.username}`);
 										}}>
-										{iColumn === 0
+										{iColumn === 0 && position !== undefined
 											? `${position + iRow + 1} ${
-													row.prize === null ? "" : `(${row.prize}€)`
+													row.prize === null || row.prize === undefined
+														? ""
+														: `(${row.prize}€)`
 											  }`
 											: !isNaN(Number(row[column.name]))
 											? Number(row[column.name]).toLocaleString()

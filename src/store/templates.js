@@ -7,7 +7,7 @@ export const SCORE_TABLE_BODY = [
 ];
 
 export const USER_TABLE_BODY = [
-	{ name: "opp_name", class: "is-unselectable" },
+	{ name: "opponent", class: "is-unselectable" },
 	{ name: "match_start", class: "has-background-primary-light is-unselectable" },
 	{ name: "player_name", class: "is-unselectable" },
 	{ name: "score", class: "is-unselectable" },
