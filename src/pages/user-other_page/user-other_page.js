@@ -32,7 +32,7 @@ const UserOtherPage = () => {
 	const { isLoading, err, sendRequest } = useFetch();
 	const transformData = (data) => {
 		if (data.length === 0) return navigateHome("/");
-		setTableData(data);
+		setTableData(data.reverse());
 	};
 
 	useEffect(() => {

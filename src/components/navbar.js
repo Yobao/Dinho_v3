@@ -128,7 +128,6 @@ const NavbarComponent = () => {
 							{name === "home" ? <BrandImage /> : null}
 						</NavbarButtonComponent>
 					))}
-
 					{!currentUser && (
 						<React.Fragment>
 							{NAVBAR.logOut.map(({ name, ...button }) => (
@@ -147,7 +146,7 @@ const NavbarComponent = () => {
 							{NAVBAR.logIn.map(({ name, ...button }) => (
 								<NavbarButtonComponent
 									key={`navbar-${name}`}
-									text={name === "profil" ? currentUser : applanguage.navbar[name]}
+									text={name === "profil" ? currentUser.user : applanguage.navbar[name]}
 									{...button}
 								/>
 							))}

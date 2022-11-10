@@ -58,7 +58,7 @@ const App = () => {
 
 	useEffect(() => {
 		const transformData = (data) => {
-			setCurrentUser(data.user);
+			setCurrentUser(data);
 		};
 		sendRequest(requestConfig, transformData);
 	}, []);
