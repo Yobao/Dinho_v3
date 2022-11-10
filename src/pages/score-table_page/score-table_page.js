@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import {
-	LanguageContext,
-	OtherUserContext,
-	CurrentUserContext,
-	DropdownTitleContext,
-} from "../../store/user-context";
+import { LanguageContext, DropdownTitleContext } from "../../store/user-context";
 import useFetch from "../../hooks/use-fetch";
 import { URL } from "../../store/data";
 import { SCORE_TABLE_BODY } from "../../store/templates";
@@ -15,9 +10,6 @@ import "./../body.css";
 import DropdownComponent from "../../components/ui/dropdown";
 
 const ScoreTablePage = () => {
-	const renderRef = useRef(0);
-	renderRef.current = renderRef.current + 1;
-
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const { dropdownTitle, setDropdownTitle } = useContext(DropdownTitleContext);
 
@@ -82,9 +74,6 @@ const ScoreTablePage = () => {
 		<div
 			className='column table-width 
 				is-full-mobile is-three-quarters-tablet is-three-quarters-desktop is-three-fifths-fullhd'>
-			{/* 			<h3>ScoreTable render: {renderRef.current}</h3>
-			<h2>DROPDOWN HERE</h2>
- */}
 			<div className='columns is-centered is-mobile mt-4 mb-6'>
 				<DropdownComponent
 					data={dropdownData}

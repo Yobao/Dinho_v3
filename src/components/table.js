@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const TableComponent = ({ head, body, data, position }) => {
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const navigate = useNavigate();
 
 	const handleNavigate = (path) => {
@@ -16,7 +17,9 @@ const TableComponent = ({ head, body, data, position }) => {
 	return (
 		<React.Fragment>
 			{data && (
-				<table className='table is-bordered is-striped is-hoverable is-narrow is-fullwidth is-mobile has-text-centered is-size-7-mobile is-full-tablet'>
+				<table
+					className='table is-bordered is-striped is-hoverable is-narrow is-fullwidth
+					 is-mobile has-text-centered is-size-7-mobile is-full-tablet'>
 					<thead>
 						<tr>
 							{head.map((column, i) => (
@@ -37,6 +40,10 @@ const TableComponent = ({ head, body, data, position }) => {
 										className={`is-vcentered ${column.class} ${
 											iColumn === body.length - 1 && row[column.name] > 0
 												? "has-text-success has-text-weight-bold"
+												: ""
+										} ${
+											row.username === currentUser.user
+												? "has-background-danger-light"
 												: ""
 										}`}
 										onClick={() => {

@@ -18,6 +18,7 @@ import { LANGUAGES, URL } from "./store/data";
 
 const App = () => {
 	const location = window.location.pathname;
+
 	//const location = "/user/193/Fojcek";
 	const urlPreCheck = Number(
 		location.slice(

@@ -1,8 +1,15 @@
 import React from "react";
 import Brand from "../../assets/brand.png";
 
-const BrandImage = () => {
-	return <img src={Brand} style={{ maxHeight: "70px" }} height='69.98' width='76.75' />;
+const BrandImage = ({ style }) => {
+	return (
+		<img
+			src={Brand}
+			style={{ maxHeight: style.height + "px" }}
+			height={style.height}
+			width={style.width}
+		/>
+	);
 };
 
 export default React.memo(BrandImage);
