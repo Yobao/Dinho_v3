@@ -14,6 +14,9 @@
 	.custom-mobile-width {
 		width: 336px;
 	}
+	.custom-navbar-active {
+		font-size: 1.15rem;
+	}
 }
 
 /* @media all and (min-width: 769px) and (max-width: 1550px) {
@@ -30,6 +33,9 @@
 	.home-width {
 		margin: auto;
 		width: 70%;
+	}
+	.custom-navbar-active {
+		font-size: 1.3rem;
 	}
 }
 
