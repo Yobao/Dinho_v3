@@ -25,13 +25,23 @@ const HomePage = () => {
 		<React.Fragment>
 			{/* {isLoading && <LoadingButton />} */}
 
-			<div className='column is-centered has-text-centered is-7-desktop home-width'>
-				<h1 className='title is-3'>{applanguage.homeTitle.welcome}</h1>
+			<div className='column is-centered has-text-centered is-mobile is-7-desktop home-width'>
+				<h1 className='title is-size-4-mobile is-size-3-tablet is-size-3-desktop'>
+					{applanguage.homeTitle.welcome}
+				</h1>
 				<br />
-				<h3 className='title is-5'>{applanguage.homeTitle.info1}</h3>
-				<h3 className='title is-5'>{applanguage.homeTitle.info2}</h3>
-				<h3 className='title is-5'>{applanguage.homeTitle.info3}</h3>
-				<h3 className='title is-5'>{applanguage.homeTitle.info4}</h3>
+				<h3 className='title is-size-6-mobile is-size-5-tablet is-size-5-desktop'>
+					{applanguage.homeTitle.info1}
+				</h3>
+				<h3 className='title is-size-6-mobile is-size-5-tablet is-size-5-desktop'>
+					{applanguage.homeTitle.info2}
+				</h3>
+				<h3 className='title is-size-6-mobile is-size-5-tablet is-size-5-desktop'>
+					{applanguage.homeTitle.info3}
+				</h3>
+				<h3 className='title is-size-6-mobile is-size-5-tablet is-size-5-desktop'>
+					{applanguage.homeTitle.info4}
+				</h3>
 				<br />
 
 				<div className='column'>
@@ -50,7 +60,9 @@ const HomePage = () => {
 
 				<br />
 				<br />
-				<h2 className='title is-3'>{applanguage.homeTitle.example}</h2>
+				<h2 className='title is-size-4-mobile is-size-3-tablet is-size-3-desktop'>
+					{applanguage.homeTitle.example}
+				</h2>
 
 				<figure className='image is-inline-block column'>
 					<img

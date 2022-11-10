@@ -7,7 +7,7 @@ export const SCORE_TABLE_BODY = [
 ];
 
 export const USER_TABLE_BODY = [
-	{ name: "opp_name", class: "is-unselectable" },
+	{ name: "opponent", class: "is-unselectable" },
 	{ name: "match_start", class: "has-background-primary-light is-unselectable" },
 	{ name: "player_name", class: "is-unselectable" },
 	{ name: "score", class: "is-unselectable" },
@@ -32,7 +32,6 @@ export const FLAGS = {
 };
 
 const styling = {
-	className: "navbar-item is-danger",
 	style: { paddingLeft: "8px", paddingRight: "8px" },
 };
 
@@ -81,14 +80,14 @@ export const NAVBAR = {
 		{
 			name: "pwdchange",
 			type: "modal",
-			className: styling.className,
+			className: "navbar-item is-mobile is-size-6-tablet is-size-6-desktop",
 			style: { paddingLeft: "8px", paddingRight: "40px" },
 		},
 		{
 			name: "logout",
 			type: "link",
 			path: "/",
-			className: styling.className,
+			className: "navbar-item is-mobile is-size-6-tablet is-size-6-desktop",
 			style: { paddingLeft: "8px", paddingRight: "40px" },
 		},
 	],

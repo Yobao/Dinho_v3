@@ -6,18 +6,20 @@ import { useNavigate } from "react-router-dom";
 
 const TableComponent = ({ head, body, data, position }) => {
 	const { otherUser, setOtherUser } = useContext(OtherUserContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const navigate = useNavigate();
 
 	const handleNavigate = (path) => {
 		setOtherUser(`/${path}`);
-		console.log("NAVIGATE");
 		navigate(`/${path}`);
 	};
 
 	return (
 		<React.Fragment>
 			{data && (
-				<table className='table is-bordered is-striped is-hoverable is-narrow is-fullwidth is-mobile has-text-centered is-size-7-mobile is-full-tablet'>
+				<table
+					className='table is-bordered is-striped is-hoverable is-narrow is-fullwidth
+					 is-mobile has-text-centered is-size-7-mobile is-full-tablet'>
 					<thead>
 						<tr>
 							{head.map((column, i) => (
@@ -39,13 +41,19 @@ const TableComponent = ({ head, body, data, position }) => {
 											iColumn === body.length - 1 && row[column.name] > 0
 												? "has-text-success has-text-weight-bold"
 												: ""
+										} ${
+											row.username === currentUser.user
+												? "has-background-danger-light"
+												: ""
 										}`}
 										onClick={() => {
 											if (iColumn === 1) handleNavigate(`user/${row.id}/${row.username}`);
 										}}>
-										{iColumn === 0
+										{iColumn === 0 && position !== undefined
 											? `${position + iRow + 1} ${
-													row.prize === null ? "" : `(${row.prize}€)`
+													row.prize === null || row.prize === undefined
+														? ""
+														: `(${row.prize}€)`
 											  }`
 											: !isNaN(Number(row[column.name]))
 											? Number(row[column.name]).toLocaleString()

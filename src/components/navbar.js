@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import useFetch from "../hooks/use-fetch";
 import { Outlet, useLocation } from "react-router-dom";
 import * as TRANSLATIONS from "../store/translations";
@@ -16,6 +16,7 @@ import BrandImage from "../components/ui/brand-image";
 const NavbarComponent = () => {
 	const location = useLocation();
 	const checkResolution = window.matchMedia("(max-width: 1023px)").matches;
+	const checkBrandResolution = window.matchMedia("(max-width: 768px)").matches;
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 
@@ -30,6 +31,16 @@ const NavbarComponent = () => {
 	const [navbarEndWidth, setNavbarEndWidth] = useState(
 		!checkResolution ? { width: "140px" } : {}
 	);
+	const brandSmall = { height: "70", width: "76.75" };
+	const brandBig = { height: "90", width: "98.7" };
+	const brandSize = useMemo(
+		() => () => {
+			return window.matchMedia("(max-width: 768px)").matches ? brandSmall : brandBig;
+		},
+		[checkBrandResolution]
+	);
+	const [brandImage, setBrandImage] = useState(brandSize);
+
 	const [defaultLanguage, setDefaultLanguage] = useState(() => {
 		for (const language in LANGUAGES) {
 			if (LANGUAGES[language].includes(localStorage.getItem("dinholanguage"))) {
@@ -40,25 +51,28 @@ const NavbarComponent = () => {
 	const { isLoading, err, sendRequest } = useFetch();
 
 	useEffect(() => {
-		if (location.pathname === "/") {
-			let resizeTimeout = null;
-			const resize = () => {
-				clearTimeout(resizeTimeout);
-				resizeTimeout = setTimeout(() => {
+		//		if (location.pathname === "/") {
+		let resizeTimeout = null;
+		const resize = () => {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(() => {
+				if (location.pathname === "/") {
 					setShowMobileFlags(
 						!window.matchMedia("(max-width: 1023px)").matches ? "" : "is-hidden"
 					);
 					setNavbarEndWidth(
 						!window.matchMedia("(max-width: 1023px)").matches ? { width: "140px" } : {}
 					);
-				}, 150);
-			};
-			window.addEventListener("resize", resize);
-			return () => {
-				window.removeEventListener("resize", resize);
-			};
-		}
-	}, [location]);
+				}
+				setBrandImage(brandSize);
+			}, 150);
+		};
+		window.addEventListener("resize", resize);
+		return () => {
+			window.removeEventListener("resize", resize);
+		};
+		//		}
+	}, [location, checkBrandResolution]);
 
 	const handleShowLogin = () => {
 		setShowLogin(!showLogin);
@@ -125,10 +139,9 @@ const NavbarComponent = () => {
 							key={`navbar-${name}`}
 							text={applanguage.navbar[name]}
 							{...button}>
-							{name === "home" ? <BrandImage /> : null}
+							{name === "home" ? <BrandImage style={brandImage} /> : null}
 						</NavbarButtonComponent>
 					))}
-
 					{!currentUser && (
 						<React.Fragment>
 							{NAVBAR.logOut.map(({ name, ...button }) => (
@@ -147,7 +160,7 @@ const NavbarComponent = () => {
 							{NAVBAR.logIn.map(({ name, ...button }) => (
 								<NavbarButtonComponent
 									key={`navbar-${name}`}
-									text={name === "profil" ? currentUser : applanguage.navbar[name]}
+									text={name === "profil" ? currentUser.user : applanguage.navbar[name]}
 									{...button}
 								/>
 							))}
@@ -169,7 +182,7 @@ const NavbarComponent = () => {
 				{currentUser && (
 					<div className={`navbar-menu ${showMobileMenu}`}>
 						<div className='navbar-start'>
-							<div className='account-dropdown navbar-item has-dropdown is-hoverable has-text-centered'>
+							<div className='account-dropdown navbar-item has-dropdown is-hoverable has-text-centered is-mobile is-size-5-desktop'>
 								<NavbarButtonComponent
 									key={applanguage.navbar.account}
 									text={applanguage.navbar.account}
