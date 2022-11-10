@@ -10,8 +10,8 @@ const NavbarButtonComponent = ({ children, path, type, text, ...props }) => {
 
 	const buttonClass = `navbar-item is-mobile ${
 		isActive
-			? "has-text-link has-text-weight-medium custom-navbar-active is-size-4-tablet is-size-4-desktop"
-			: "is-size-5-tablet is-size-5-desktop"
+			? "has-text-link has-text-weight-medium custom-navbar-active"
+			: "is-size-5-tablet"
 	}`;
 
 	const button =
