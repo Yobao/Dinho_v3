@@ -68,6 +68,14 @@ const ScoreTablePage = () => {
 	const indexOfLastUser = currentPage * usersPerPage;
 	const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
+	const NoGoal = () => {
+		return (
+			<div className=''>
+				<p className=''>PRAZDNO TU JE</p>
+			</div>
+		);
+	};
+
 	if (isLoading && !tableData) return <LoadingButton />;
 
 	return (
@@ -86,29 +94,35 @@ const ScoreTablePage = () => {
 				/>
 			</div>
 
-			<div className='columns is-mobile '>
-				<div className='column has-text-centered'>
-					<p className='is-size-6-mobile'>{`${applanguage.scoreTableTitles.total1} ${tableData?.points} ${applanguage.scoreTableTitles.total2}`}</p>
-				</div>
-				<div className='column'>
-					{tableData?.goals.map((goal) => {
-						return (
-							<div className='columns is-mobile' key={`${goal.name}`}>
-								<div className='column'>
-									<p className='is-size-6-mobile'>{`${goal.name}`}</p>
-								</div>
-								<div className='column'>
-									<p className='is-size-6-mobile'>{Math.floor(goal.points)}</p>
-								</div>
-							</div>
-						);
-					})}
-				</div>
-			</div>
-
 			{isLoadingRound && <LoadingButton />}
 			{!isLoadingRound && (
 				<React.Fragment>
+					<div className='columns p-0 mx-0 my-6 is-mobile is-vcentered'>
+						<div className='column p-0 pl-1 m-0 is-5-mobile is-6-tablet has-text-left-mobile has-text-centered-tablet has-text-weight-semibold'>
+							<p className='is-size-8-mobile is-size-5-tablet is-size-4-desktop'>{`${applanguage.scoreTableTitles.total1} ${tableData?.points} ${applanguage.scoreTableTitles.total2}`}</p>
+						</div>
+						<div className='column p-0 m-0 is-7-mobile is-6-tablet'>
+							{tableData?.goals.length === 0 && <NoGoal />}
+							{tableData?.goals.length > 0 &&
+								tableData?.goals.map((goal) => {
+									return (
+										<div
+											className='columns p-0 mx-0 pr-1 my-2 is-mobile is-centered is-vcentered'
+											key={`${goal.name}`}>
+											<div className='column p-0 m-0 is-9 has-text-centered-mobile has-text-right-tablet'>
+												<p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>{`${goal.name}`}</p>
+											</div>
+											<div className='column p-0 m-0 is-3 has-text-right-mobile has-text-right-tablet'>
+												<p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
+													{Math.floor(goal.points).toLocaleString()}
+												</p>
+											</div>
+										</div>
+									);
+								})}
+						</div>
+					</div>
+
 					<TableComponent
 						head={applanguage.scoreTableHead}
 						body={SCORE_TABLE_BODY}
