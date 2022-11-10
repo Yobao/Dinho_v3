@@ -128,7 +128,6 @@ const NavbarComponent = () => {
 							{name === "home" ? <BrandImage /> : null}
 						</NavbarButtonComponent>
 					))}
-
 					{!currentUser && (
 						<React.Fragment>
 							{NAVBAR.logOut.map(({ name, ...button }) => (
