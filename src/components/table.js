@@ -25,7 +25,7 @@ const TableComponent = ({ head, body, data, position }) => {
 							{head.map((column, i) => (
 								<th
 									key={column}
-									className='has-text-centered is-vcentered is-size-8-mobile is-full-tablet'>
+									className='has-text-centered is-vcentered is-size-7-mobile is-full-tablet'>
 									{column}
 								</th>
 							))}

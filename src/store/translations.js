@@ -27,6 +27,7 @@ export const SLOVAK = {
 	scoreTableTitles: {
 		total1: "Celkovo",
 		total2: "bodov",
+		noGoal: "Nepadol žiaden gól.",
 	},
 	userTableHead: ["Zápas", "Dátum", "Tip", "Body"],
 	userTableButton: "Späť",
