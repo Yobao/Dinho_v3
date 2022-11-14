@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { LanguageContext } from "../../store/user-context";
 
 const TestTable = () => {
@@ -57,17 +57,18 @@ const TestInfo = () => {
 	);
 };
 
-const CardComponent = ({ data }) => {
+const CardComponent = ({ current, pool, player }) => {
+	const refTest = useRef(0);
+	refTest.current = refTest.current + 1;
+
 	const { applanguage, setApplamguage } = useContext(LanguageContext);
-	const currentBet = data.current;
-	const pool = data.pool;
-	const bettors = data.player.bettors;
-	const id = data.player.id;
+	const bettors = player.bettors;
+	const id = player.id;
 
 	const calculatePoints = () => {
-		if (id == currentBet) return Math.round(pool / bettors);
-		if (currentBet && !bettors) return Math.round(pool);
-		if (currentBet && bettors) return Math.round(pool / (bettors + 1));
+		if (id == current) return Math.round(pool / bettors);
+		if (current && !bettors) return Math.round(pool);
+		if (current && bettors) return Math.round(pool / (bettors + 1));
 		return Math.round((pool + 100) / (bettors + 1));
 	};
 
@@ -78,27 +79,21 @@ const CardComponent = ({ data }) => {
 			<div className='columns is-mobile is-gapless mb-0'>
 				<div className='column mx-2 mt-2' style={{ maxWidth: "115px" }}>
 					<img
-						src={`${data.player.photo}`}
+						src={`${player.photo}`}
 						style={{ maxWidth: "115px" }}
-						//className='custom-player-image-size'
-						/* width='92'
-							height='98.4' */
 						width='115'
 						height='123'
 					/>
 				</div>
 				<div className='column my-3 mr-3 has-text-centered is-size-8-mobile is-size-8-tablet'>
-					<p className={"has-text-weight-bold"}>{data.player.name}</p>
-					<p>{`${applanguage.betCard.bettors} ${data.player.bettors}`}</p>
+					<p>{refTest.current}</p>
+					<p className={"has-text-weight-bold"}>{player.name}</p>
+					<p>{`${applanguage.betCard.bettors} ${player.bettors}`}</p>
 					<p>
 						{`${applanguage.betCard.prize} `}
 						<strong>{`${calculatePoints()}`}</strong>
 					</p>
-					<hr
-						className='m-0 mt-2'
-						style={{ borderTop: "solid 1px rgb(0, 0, 0)" }}
-						noshade
-					/>
+					<hr className='m-0 mt-2' style={{ borderTop: "solid 1px rgb(0, 0, 0)" }} />
 					<TestInfo />
 				</div>
 			</div>
@@ -107,51 +102,4 @@ const CardComponent = ({ data }) => {
 	);
 };
 
-export default CardComponent;
-
-{
-	/* <div
-		className={`column is-one-quarter-tablet is-one-fifth-desktop has-text-centered box pt-0 px-3 pb-3 my-3 mx-3 custom-card-width`}
-		style={{ borderRadius: "5%" }}>
-		<div className='pb-3'>
-			<img
-				src={`${data.player.photo}`}
-				style={{ borderRadius: "15%", transform: "scale(0.75)" }}
-				width='172.5'
-				height='184.5'></img>
-			<p className={"has-text-weight-bold"}>{data.player.name}</p>
-			<p>{`${applanguage.betCard.bettors} ${data.player.bettors}`}</p>
-			<p>
-				{`${applanguage.betCard.prize} `}
-				<strong>{`${calculatePoints()}`}</strong>
-			</p>
-		</div>
-	</div>; */
-}
-
-{
-	/* <div
-	className={`column is-one-third-tablet has-text-centered box pt-0 px-3 pb-3 my-3 mx-3`}>
-	<div className='columns is-mobile is-gapless'>
-		<div className='column m-3'>
-			<figure>
-				<img
-					src={`${data.player.photo}`}
-					//className='custom-player-image-size'
-					width='92'
-					height='98.4'
-				/>
-			</figure>
-		</div>
-		<div className='column my-3 mr-3 has-text-centered is-size-8-mobile is-size-8-tablet'>
-			<p className={"has-text-weight-bold"}>{data.player.name}</p>
-			<p>{`${applanguage.betCard.bettors} ${data.player.bettors}`}</p>
-			<p>
-				{`${applanguage.betCard.prize} `}
-				<strong>{`${calculatePoints()}`}</strong>
-			</p>
-			<div></div>
-		</div>
-	</div>
-</div>; */
-}
+export default React.memo(CardComponent);

@@ -27,12 +27,6 @@
 	}
 }
 
-/* @media all and (min-width: 769px) and (max-width: 1550px) {
-	.custom-mobile-row-height {
-		height: 60px;
-	}
-} */
-
 @media all and (min-width: 768px) {
 	.table-width {
 		margin: auto;

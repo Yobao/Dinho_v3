@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { LanguageContext, DropdownTitleContext } from "../../store/user-context";
 import useFetch from "../../hooks/use-fetch";
+import useTitle from "../../hooks/use-title";
 import { URL } from "../../store/data";
 import { SCORE_TABLE_BODY } from "../../store/templates";
 import TableComponent from "../../components/table";
@@ -39,11 +40,7 @@ const ScoreTablePage = () => {
 					const index = matches.length - i;
 					const start = match.start.slice(0, match.start.length - 4);
 					return {
-						value: !match.side
-							? `${index}. Chelsea - ${match.opponent} (N) ${start}`
-							: match.side === 1
-							? `${index}. Chelsea - ${match.opponent} ${start}`
-							: `${index}. ${match.opponent} - Chelsea ${start}`,
+						value: useTitle(match.side, match.opponent, start, index),
 						id: match.id,
 					};
 				});
@@ -64,6 +61,12 @@ const ScoreTablePage = () => {
 			setDropdownTitle(null);
 		};
 	}, []);
+
+	/* 	!match.side
+							? `${index}. Chelsea - ${match.opponent} (N) ${start}`
+							: match.side === 1
+							? `${index}. Chelsea - ${match.opponent} ${start}`
+							: `${index}. ${match.opponent} - Chelsea ${start}`, */
 
 	const indexOfLastUser = currentPage * usersPerPage;
 	const indexOfFirstUser = indexOfLastUser - usersPerPage;
