@@ -51,19 +51,17 @@ const NavbarComponent = () => {
 	const { isLoading, err, sendRequest } = useFetch();
 
 	useEffect(() => {
-		//		if (location.pathname === "/") {
 		let resizeTimeout = null;
 		const resize = () => {
 			clearTimeout(resizeTimeout);
 			resizeTimeout = setTimeout(() => {
-				if (location.pathname === "/") {
-					setShowMobileFlags(
-						!window.matchMedia("(max-width: 1023px)").matches ? "" : "is-hidden"
-					);
-					setNavbarEndWidth(
-						!window.matchMedia("(max-width: 1023px)").matches ? { width: "140px" } : {}
-					);
-				}
+				setShowMobileFlags(
+					!window.matchMedia("(max-width: 1023px)").matches ? "" : "is-hidden"
+				);
+				setNavbarEndWidth(
+					!window.matchMedia("(max-width: 1023px)").matches ? { width: "140px" } : {}
+				);
+
 				setBrandImage(brandSize);
 			}, 150);
 		};
@@ -71,7 +69,6 @@ const NavbarComponent = () => {
 		return () => {
 			window.removeEventListener("resize", resize);
 		};
-		//		}
 	}, [location, checkBrandResolution]);
 
 	const handleShowLogin = () => {
