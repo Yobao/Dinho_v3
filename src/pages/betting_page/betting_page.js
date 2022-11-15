@@ -1,41 +1,25 @@
-import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import useFetch from "../../hooks/use-fetch";
 import useTitle from "../../hooks/use-title";
 import useFormatTime from "../../hooks/use-format-time";
 import { LanguageContext } from "../../store/user-context";
 import { URL } from "../../store/data";
 
-import LoadingButton from "../../components/ui/button-loading";
 import CardComponent from "./card";
-
-const TimeComponent = ({ start, language }) => {
-	const { handleTime } = useFormatTime();
-	const [distance, setDistance] = useState(null);
-
-	useEffect(() => {
-		let timer = setInterval(() => {
-			setDistance(handleTime(start));
-		}, 1000);
-		return () => {
-			clearInterval(timer);
-		};
-	}, [handleTime]);
-
-	return (
-		<p className='title is-size-4-mobile is-size-3-tablet'>{`${language} ${
-			!distance ? handleTime(start) : distance
-		}`}</p>
-	);
-};
+import TimeComponent from "./time";
+import LoadingButton from "../../components/ui/button-loading";
 
 const BettingPage = () => {
 	const refTest = useRef(0);
 	refTest.current = refTest.current + 1;
-	const testTime = "2022-11-17T16:30:00.000Z";
+	//const testTime = "2022-11-17T13:30:00.000Z";
+	const testTime = "2022-11-17T15:30:00.000Z";
 
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const [data, setData] = useState(null);
 	const [team, setTeam] = useState(1);
+	const { handleTime } = useFormatTime();
+	const [forceRefresh, setForceRefresh] = useState(false);
 
 	const requestConfig = {
 		url: URL + `/players?team=${team}`,
@@ -54,8 +38,11 @@ const BettingPage = () => {
 	};
 
 	useEffect(() => {
-		sendRequest(requestConfig, transformData);
-	}, []);
+		if (!data || forceRefresh) {
+			setForceRefresh(false);
+			sendRequest(requestConfig, transformData);
+		}
+	}, [forceRefresh]);
 
 	if (!data) return <LoadingButton />;
 
@@ -74,7 +61,12 @@ const BettingPage = () => {
 					<strong className='has-text-weight-bold'>{` ${data.pool.toLocaleString()} `}</strong>
 					{applanguage.betTitle.points2}
 				</p>
-				<TimeComponent start={testTime} language={applanguage.betTitle.time} />
+				<TimeComponent
+					//start={data.start}
+					start={testTime}
+					language={applanguage.betTitle.time}
+					forceRefresh={setForceRefresh}
+				/>
 			</div>
 
 			<div className='columns is-mobile is-centered is-multiline is-gapless'>

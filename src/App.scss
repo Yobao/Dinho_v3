@@ -3,11 +3,15 @@
 // BELOW CHANGE EXISTING / DEFINE NEW VARIABLES FROM BULMA
 $size-8: "0.9rem";
 $size-9: "1.15rem";
+$size-2: 2.25rem;
+$size-3: 1.75rem;
 
 @import "./../node_modules/bulma/sass/utilities/derived-variables";
 // BELOW ADD NEW VARIABLES INTO BULMA WITH FUNCTIONS
 $sizes: append($sizes, unquote($size-8), space);
 $sizes: append($sizes, unquote($size-9), space);
+/* $sizes: append($sizes, unquote($size-2), space);
+$sizes: append($sizes, unquote($size-3), space); */
 
 //@error $sizes;
 
