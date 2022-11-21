@@ -57,7 +57,7 @@ const TestInfo = () => {
 	);
 };
 
-const CardComponent = ({ current, pool, player }) => {
+const CardComponent = ({ current, pool, player, changeBet }) => {
 	const refTest = useRef(0);
 	refTest.current = refTest.current + 1;
 
@@ -77,7 +77,10 @@ const CardComponent = ({ current, pool, player }) => {
 			className={`column is-centered box pt-0 px-3 pb-3 my-3 mx-3 ${
 				current === Number(player.id) ? "has-background-info" : ""
 			}`}
-			style={{ maxWidth: "336px", minWidth: "336px" }}>
+			style={{ maxWidth: "336px", minWidth: "336px", zIndex: "10" }}
+			id={player.id}
+			data-player_name={player.name}
+			onClick={changeBet}>
 			<div className='columns is-mobile is-gapless mb-0'>
 				<div className='column mx-2 mt-2' style={{ maxWidth: "115px" }}>
 					<img
