@@ -20,15 +20,8 @@ const UserOtherPage = () => {
 		otherUser.split("/", 2).join("/").length + 1,
 		otherUser.split("/", 3).join("/").length
 	);
-	const requestConfig = {
-		url: URL + "/tips?user=" + userId,
-		requestOptions: {
-			method: "GET",
-			mode: "cors",
-			headers: { "Access-Control-Allow-Origin": "*", accept: "application/json" },
-		},
-	};
 
+	const options = { method: "GET", undefined, accept: true };
 	const { isLoading, err, sendRequest } = useFetch();
 	const transformData = (data) => {
 		if (data.length === 0) return navigateHome("/");
@@ -36,7 +29,7 @@ const UserOtherPage = () => {
 	};
 
 	useEffect(() => {
-		sendRequest(requestConfig, transformData);
+		sendRequest(`/tips?user=${userId}`, options, transformData);
 	}, []);
 
 	if (isLoading) return <LoadingButton />;

@@ -16,22 +16,14 @@ const UserCurrentPage = () => {
 
 	const [tableData, setTableData] = useState(null);
 
-	const requestConfig = {
-		url: URL + `/tips?user=${currentUser.id}`,
-		requestOptions: {
-			method: "GET",
-			mode: "cors",
-			headers: { "Access-Control-Allow-Origin": "*", accept: "application/json" },
-		},
-	};
-
+	const options = { method: "GET", undefined, accept: true };
 	const { isLoading, err, sendRequest } = useFetch();
 	const transformData = (data) => {
 		setTableData(data.reverse());
 	};
 
 	useEffect(() => {
-		sendRequest(requestConfig, transformData);
+		sendRequest(`/tips?user=${currentUser.id}`, options, transformData);
 	}, []);
 
 	if (isLoading) return <LoadingButton />;
