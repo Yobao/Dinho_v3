@@ -18,8 +18,6 @@ import { LANGUAGES, URL } from "./store/data";
 
 const App = () => {
 	const location = window.location.pathname;
-
-	//const location = "/user/193/Fojcek";
 	const urlPreCheck = Number(
 		location.slice(
 			location.split("/", 2).join("/").length + 1,
@@ -32,7 +30,6 @@ const App = () => {
 	const token = localStorage.getItem("dinhotoken");
 
 	const [currentUser, setCurrentUser] = useState(null);
-
 	const [otherUser, setOtherUser] = useState(
 		!Number.isNaN(urlPreCheck) && urlPreCheck !== 0 ? location : null
 	);
@@ -47,27 +44,14 @@ const App = () => {
 	});
 
 	const { isLoading, error, sendRequest, isAuth } = useFetch();
-	const requestConfig = {
-		url: URL + "/autologin",
-		requestOptions: {
-			method: "GET",
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		},
-	};
+	const options = { method: "GET", token };
 
 	useEffect(() => {
 		const transformData = (data) => {
 			setCurrentUser(data);
 		};
-		sendRequest(requestConfig, transformData);
+		sendRequest("/autologin", options, transformData);
 	}, []);
-
-	// useMemo(() => ({ applanguage, setApplanguage }), [applanguage])
-	// useMemo(() => ({ currentUser, setCurrentUser }), [currentUser])
-	// useMemo(() => ({ otherUser, setOtherUser }), [otherUser])
-	// useMemo(() => ({ title, setTitle }), [title])
 
 	return (
 		<LanguageContext.Provider value={{ applanguage, setApplanguage }}>

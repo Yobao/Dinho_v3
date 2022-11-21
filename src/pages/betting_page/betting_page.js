@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef, useCallback } from "react";
 import useFetch from "../../hooks/use-fetch";
 import useTitle from "../../hooks/use-title";
 import useFormatTime from "../../hooks/use-format-time";
-import { LanguageContext } from "../../store/user-context";
+import Pusher from "pusher-js";
+import { LanguageContext, CurrentUserContext } from "../../store/user-context";
 import { URL } from "../../store/data";
+import { ws } from "../../local";
 
 import CardComponent from "./card";
 import TimeComponent from "./time";
@@ -13,36 +15,65 @@ const BettingPage = () => {
 	const refTest = useRef(0);
 	refTest.current = refTest.current + 1;
 	//const testTime = "2022-11-17T13:30:00.000Z";
-	const testTime = "2022-11-17T15:30:00.000Z";
+	const testTime = "2022-11-23T15:30:00.000Z";
 
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
+	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const [data, setData] = useState(null);
 	const [team, setTeam] = useState(1);
 	const { handleTime } = useFormatTime();
 	const [forceRefresh, setForceRefresh] = useState(false);
 
-	const requestConfig = {
-		url: URL + `/players?team=${team}`,
-		requestOptions: {
-			method: "GET",
-			mode: "cors",
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem("dinhotoken")}`,
-				"Access-Control-Allow-Origin": "*",
-			},
-		},
-	};
-	const { isLoading, error, sendRequest } = useFetch();
+	const options = { method: "GET", token: true };
+	const { error, sendRequest } = useFetch();
 	const transformData = (data) => {
 		setData({ ...data, match: useTitle(data.side, data.match) });
 	};
 
 	useEffect(() => {
+		let pusher = new Pusher(ws, {
+			channelAuthorization: {
+				headers: { Authorization: `Bearer ${localStorage.getItem("dinhotoken")}` },
+				endpoint: `${URL}/auth`,
+			},
+			cluster: "eu",
+		});
+
+		let channel = pusher.subscribe(`private-${currentUser.user}`);
+		channel.bind("new-message", function (data) {
+			console.log(data);
+		});
+
+		return () => pusher.disconnect();
+	}, []);
+
+	useEffect(() => {
 		if (!data || forceRefresh) {
 			setForceRefresh(false);
-			sendRequest(requestConfig, transformData);
+			sendRequest(`/players?team=${team}`, options, transformData);
 		}
 	}, [forceRefresh]);
+
+	const changeBet = useCallback(
+		(e) => {
+			const betPlayerName = e.currentTarget.dataset.player_name;
+			const betPlayerId = e.currentTarget.id;
+
+			const opop = {
+				method: "POST",
+				token: true,
+				undefined,
+				//body: JSON.stringify({ player: betPlayerId }),
+				body: `player=${15}`,
+			};
+			const pofunc = (data) => {
+				//console.log(data);
+			};
+
+			sendRequest(`/bet`, opop, pofunc);
+		},
+		[sendRequest]
+	);
 
 	if (!data) return <LoadingButton />;
 
@@ -76,6 +107,7 @@ const BettingPage = () => {
 						current={data.current}
 						pool={data.pool}
 						player={player}
+						changeBet={changeBet}
 					/>
 				))}
 			</div>
