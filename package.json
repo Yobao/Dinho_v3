@@ -38,6 +38,7 @@
 		"@sentry/tracing": "^7.18.0",
 		"bulma": "^0.9.4",
 		"bulma-toast": "^2.4.1",
+		"bulma-tooltip": "^3.0.2",
 		"file-loader": "^6.2.0",
 		"moment": "^2.29.4",
 		"pusher-js": "^7.5.0",
