@@ -37,8 +37,6 @@ const BettingPage = () => {
 				}${interpunction}\n`;
 			})
 			.join("");
-
-		console.log(finalFixtures);
 		return finalFixtures;
 	};
 
@@ -68,7 +66,6 @@ const BettingPage = () => {
 				match: useTitle(data.side, data.match),
 				tooltip: handleTooltip(data.fixtures),
 			});
-			//console.log(data);
 		});
 		return () => pusher.disconnect();
 	}, []);

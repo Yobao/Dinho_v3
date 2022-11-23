@@ -64,7 +64,7 @@ const ChangePwdModal = ({ showModal }) => {
 	const changePassword = useCallback(() => {
 		setSubmitSent(true);
 		sendRequest("/change_password", options, transformData);
-	}, [requestConfig]);
+	}, [options.body]);
 
 	const buttons = {
 		changePassword,
