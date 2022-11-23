@@ -10,12 +10,10 @@ import { ws } from "../../local";
 import CardComponent from "./card";
 import TimeComponent from "./time";
 import LoadingButton from "../../components/ui/button-loading";
+import { toast } from "bulma-toast";
 
 const BettingPage = () => {
-	const refTest = useRef(0);
-	refTest.current = refTest.current + 1;
-	//const testTime = "2022-11-17T13:30:00.000Z";
-	const testTime = "2022-11-23T15:30:00.000Z";
+	const testTime = "2022-11-23T16:30:00.000Z";
 
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -24,10 +22,34 @@ const BettingPage = () => {
 	const { handleTime } = useFormatTime();
 	const [forceRefresh, setForceRefresh] = useState(false);
 
+	const handleTooltip = (fixtures) => {
+		const finalFixtures = fixtures
+			.map((match, i) => {
+				const interpunction =
+					fixtures.length === 1 || fixtures.length === i - 1 ? "" : ", ";
+				const date = new Date(match.start);
+				const completeDate = `${date.getDate()}.${
+					date.getMonth() + 1
+				}.${date.getFullYear()}`;
+
+				return `${completeDate} ${match.match} ${
+					match.side == 1 ? "(H)" : match.side == 0 ? "(N)" : "(A)"
+				}${interpunction}\n`;
+			})
+			.join("");
+
+		console.log(finalFixtures);
+		return finalFixtures;
+	};
+
 	const options = { method: "GET", token: true };
 	const { error, sendRequest } = useFetch();
 	const transformData = (data) => {
-		setData({ ...data, match: useTitle(data.side, data.match) });
+		setData({
+			...data,
+			match: useTitle(data.side, data.match),
+			tooltip: handleTooltip(data.fixtures),
+		});
 	};
 
 	useEffect(() => {
@@ -41,9 +63,13 @@ const BettingPage = () => {
 
 		let channel = pusher.subscribe(`private-${currentUser.user}`);
 		channel.bind("new-message", function (data) {
-			console.log(data);
+			setData({
+				...data,
+				match: useTitle(data.side, data.match),
+				tooltip: handleTooltip(data.fixtures),
+			});
+			//console.log(data);
 		});
-
 		return () => pusher.disconnect();
 	}, []);
 
@@ -54,36 +80,51 @@ const BettingPage = () => {
 		}
 	}, [forceRefresh]);
 
-	const changeBet = useCallback(
-		(e) => {
-			const betPlayerName = e.currentTarget.dataset.player_name;
-			const betPlayerId = e.currentTarget.id;
+	const changeBet = (e) => {
+		const betPlayerName = e.currentTarget.dataset.player_name;
+		const betPlayerId = Number(e.currentTarget.id);
+		const optionsNewBet = {
+			method: "POST",
+			token: true,
+			undefined,
+			body: `player=${betPlayerId}`,
+		};
+		toast({
+			message: `${applanguage.betAlerts.bet} ${betPlayerName}. \r\n${applanguage.betAlerts.info}`,
+			position: "center",
+			duration: 2500,
+			type: "is-info",
+		});
+		sendRequest(`/bet`, optionsNewBet);
+	};
 
-			const opop = {
-				method: "POST",
-				token: true,
-				undefined,
-				//body: JSON.stringify({ player: betPlayerId }),
-				body: `player=${15}`,
-			};
-			const pofunc = (data) => {
-				//console.log(data);
-			};
+	const goToCurrentBet = (current) => {
+		if (window.matchMedia("(max-width: 1023px)").matches) {
+			const currentBet = document.getElementById(
+				typeof current === "object" ? data.current : current
+			);
+			currentBet.scrollIntoView({ block: "center", behavior: "smooth" });
+		}
+	};
 
-			sendRequest(`/bet`, opop, pofunc);
-		},
-		[sendRequest]
-	);
+	const infoButtonsColor = (i) => {
+		return i === 0
+			? "has-background-info"
+			: i === 1
+			? "has-background-success"
+			: "has-background-warning";
+	};
 
 	if (!data) return <LoadingButton />;
 
 	return (
 		<div className=''>
-			<div className='has-text-centered'>
-				<p>{refTest.current}</p>
+			<div className='has-text-centered my-4'>
 				<p className='title is-size-3-mobile is-size-2-tablet'>
 					{data.match}
-					<span className='icon has-text-info tooltip has-tooltip-left has-tooltip-multiline'>
+					<span
+						className='icon tooltip has-tooltip-multiline is-multiline has-text-info mx-2'
+						data-tooltip={data.tooltip}>
 						<i className='fas fa-calendar icon is-small' aria-hidden='true' />
 					</span>
 				</p>
@@ -98,6 +139,25 @@ const BettingPage = () => {
 					language={applanguage.betTitle.time}
 					forceRefresh={setForceRefresh}
 				/>
+			</div>
+
+			<div className='buttons is-centered mb-4 mt-2'>
+				{applanguage.betButtons.map((button, i) => {
+					const showButton =
+						data.players[0].status !== "unknown" ||
+						(data.players[0].status === "unknown" && i !== 1 && i !== 2);
+					return (
+						showButton && (
+							<button
+								key={button}
+								className={`button has-text-weight-bold is-hovered m-2 is-active
+								is-size-8-mobile is-size-6-tablet is-size-6-desktop ${infoButtonsColor(i)}`}
+								onClick={i === 0 ? goToCurrentBet : null}>
+								{button}
+							</button>
+						)
+					);
+				})}
 			</div>
 
 			<div className='columns is-mobile is-centered is-multiline is-gapless'>

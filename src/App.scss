@@ -16,3 +16,4 @@ $sizes: append($sizes, unquote($size-3), space); */
 //@error $sizes;
 
 @import "./../node_modules/bulma/bulma.sass";
+@import "./../node_modules/@creativebulma/bulma-tooltip/dist/bulma-tooltip.css";
