@@ -23,7 +23,7 @@ const RegModal = ({ showModal }) => {
 	const [regPwdColor2, setRegPwdColor2] = useState();
 	const [regEmailColor, setRegEmailColor] = useState();
 	const [team, setTeam] = useState(1);
-	const [community, setCommunity] = useState();
+	const [community, setCommunity] = useState("");
 	const [communityColor, setCommunityColor] = useState();
 	const [submitSent, setSubmitSent] = useState(false);
 
@@ -110,21 +110,26 @@ const RegModal = ({ showModal }) => {
 		mail: regEmail,
 		community: community,
 	};
-	const requestConfig = {
-		url: URL + "/login",
-		requestOptions: {
-			method: "POST",
-			headers: {
-				accept: "application/json",
-				"content-type": "application/json",
-			},
-			body: JSON.stringify(userData),
-		},
+
+	const options = {
+		method: "POST",
+		undefined,
+		accept: true,
+		body: JSON.stringify(userData),
 	};
+
 	const { isLoading, err, sendRequest } = useFetch();
 	const transformData = (data) => {
+		console.log(data);
+		if (data?.statusCode === 400 || data?.statusCode === 409) {
+			setRegNameColor("is-danger");
+			setRegEmailColor("is-danger");
+			return toastik(`${alerts.exists}`);
+		}
+
+		// toastik(`${alerts.somethingWrong}`);
 		localStorage.setItem("dinhotoken", data.access_token);
-		setCurrentUser(regName);
+		setCurrentUser({ user: regName, id: null });
 		showModal();
 	};
 
@@ -139,6 +144,8 @@ const RegModal = ({ showModal }) => {
 			regEmail,
 			community,
 		};
+
+		console.log(options);
 
 		// Fill all fields condition.
 		for (const input in checkUserData) {
@@ -161,8 +168,8 @@ const RegModal = ({ showModal }) => {
 		}
 		if (message) return toastik(message);
 
-		//sendRequest(requestConfig, transformData);
-	}, [requestConfig]);
+		sendRequest("/register", options, transformData);
+	}, [options.body]);
 
 	const buttons = {
 		registration,

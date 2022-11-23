@@ -25,8 +25,6 @@ const BettingPage = () => {
 	const handleTooltip = (fixtures) => {
 		const finalFixtures = fixtures
 			.map((match, i) => {
-				const interpunction =
-					fixtures.length === 1 || fixtures.length === i - 1 ? "" : ", ";
 				const date = new Date(match.start);
 				const completeDate = `${date.getDate()}.${
 					date.getMonth() + 1
@@ -34,7 +32,7 @@ const BettingPage = () => {
 
 				return `${completeDate} ${match.match} ${
 					match.side == 1 ? "(H)" : match.side == 0 ? "(N)" : "(A)"
-				}${interpunction}\n`;
+				}\n`;
 			})
 			.join("");
 		return finalFixtures;
