@@ -23,21 +23,18 @@ const BettingPage = () => {
 	const [forceRefresh, setForceRefresh] = useState(false);
 
 	const handleTooltip = (fixtures) => {
-		console.log(fixtures);
-
 		const finalFixtures = fixtures
 			.map((match, i) => {
 				const interpunction =
 					fixtures.length === 1 || fixtures.length === i - 1 ? "" : ", ";
 				const date = new Date(match.start);
-				console.log(date);
 				const completeDate = `${date.getDate()}.${
 					date.getMonth() + 1
 				}.${date.getFullYear()}`;
 
 				return `${completeDate} ${match.match} ${
 					match.side == 1 ? "(H)" : match.side == 0 ? "(N)" : "(A)"
-				}${interpunction}`;
+				}${interpunction}\n`;
 			})
 			.join("");
 
@@ -126,7 +123,7 @@ const BettingPage = () => {
 				<p className='title is-size-3-mobile is-size-2-tablet'>
 					{data.match}
 					<span
-						className='icon has-text-info tooltip has-tooltip-left has-tooltip-multiline mx-2'
+						className='icon tooltip has-tooltip-multiline is-multiline has-text-info mx-2'
 						data-tooltip={data.tooltip}>
 						<i className='fas fa-calendar icon is-small' aria-hidden='true' />
 					</span>
