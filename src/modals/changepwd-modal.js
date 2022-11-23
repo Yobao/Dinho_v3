@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/use-fetch";
-import { CurrentUserContext, LanguageContext } from "../store/user-context";
+import { LanguageContext } from "../store/user-context";
 import { URL } from "../store/data";
 
 import ModalComponent from "../components/modal";
@@ -48,17 +48,13 @@ const ChangePwdModal = ({ showModal }) => {
 		old_password: oldPwd,
 		new_password: newPwd,
 	};
-	const requestConfig = {
-		url: URL + "/change_password",
-		requestOptions: {
-			method: "POST",
-			headers: {
-				accept: "application/json",
-				"content-type": "application/json",
-			},
-			body: JSON.stringify(userData),
-		},
+	const options = {
+		method: "POST",
+		undefined,
+		accept: true,
+		body: JSON.stringify(userData),
 	};
+
 	const { isLoading, err, sendRequest } = useFetch();
 	const transformData = (data) => {
 		showModal();
@@ -67,8 +63,9 @@ const ChangePwdModal = ({ showModal }) => {
 
 	const changePassword = useCallback(() => {
 		setSubmitSent(true);
-		sendRequest(requestConfig, transformData);
+		sendRequest("/change_password", options, transformData);
 	}, [requestConfig]);
+
 	const buttons = {
 		changePassword,
 	};

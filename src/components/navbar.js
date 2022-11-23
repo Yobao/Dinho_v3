@@ -81,7 +81,6 @@ const NavbarComponent = () => {
 		setShowChangePwd(!showChangePwd);
 	};
 	const handleShowForgotPwd = () => {
-		console.log("CLOSE ME!");
 		setShowForgotPwd(!showForgotPwd);
 	};
 	const handleShowMobileMenu = () => {
