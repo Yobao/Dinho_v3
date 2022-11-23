@@ -51,13 +51,13 @@ const ScoreTablePage = () => {
 	const indexOfLastUser = currentPage * usersPerPage;
 	const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
-	const NoGoal = () => {
+	/* 	const NoGoal = () => {
 		return (
 			<div className=''>
 				<p className=''>PRAZDNO TU JE</p>
 			</div>
 		);
-	};
+	}; */
 
 	if (!state.data && !state.matches) return <LoadingButton />;
 
@@ -84,7 +84,7 @@ const ScoreTablePage = () => {
 							<p className='is-size-8-mobile is-size-5-tablet is-size-4-desktop'>{`${applanguage.scoreTableTitles.total1} ${state.data.points} ${applanguage.scoreTableTitles.total2}`}</p>
 						</div>
 						<div className='column p-0 m-0 is-7-mobile is-6-tablet'>
-							{state.data.goals.length === 0 && <NoGoal />}
+							{/* {state.data.goals.length === 0 && <NoGoal />} */}
 							{state.data.goals.length > 0 &&
 								state.data.goals.map((goal) => {
 									return (

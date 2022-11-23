@@ -19,9 +19,7 @@ const useFetch = () => {
 							: `Bearer ${token}`,
 				}),
 				...(accept && { accept: "application/json" }),
-				//"content-type": "application/json",
 				"content-type": "application/x-www-form-urlencoded",
-				"sec-fetch-site": "same-site",
 			});
 	}
 

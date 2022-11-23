@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 
 const DropdownComponent = ({
 	data,
@@ -28,7 +28,6 @@ const DropdownComponent = ({
 		<div
 			className={`dropdown columns is-right dropdown-button ${showMenu}`}
 			onBlur={handleShowMenu}>
-			<p>{refTest.current}</p>
 			<div className='dropdown-trigger' onClick={handleShowMenu}>
 				<button
 					id='dropdownButton'
