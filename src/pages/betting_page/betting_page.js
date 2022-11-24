@@ -13,7 +13,7 @@ import LoadingButton from "../../components/ui/button-loading";
 import { toast } from "bulma-toast";
 
 const BettingPage = () => {
-	const testTime = "2022-11-23T16:30:00.000Z";
+	const testTime = "2022-11-25T17:30:00.000Z";
 
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -118,7 +118,8 @@ const BettingPage = () => {
 				<p className='title is-size-3-mobile is-size-2-tablet'>
 					{data.match}
 					<span
-						className='icon tooltip has-tooltip-multiline is-multiline has-text-info mx-2'
+						className='icon has-tooltip-multiline has-tooltip-arrow 
+						has-tooltip-left has-tooltip-info has-text-info mx-2'
 						data-tooltip={data.tooltip}>
 						<i className='fas fa-calendar icon is-small' aria-hidden='true' />
 					</span>
