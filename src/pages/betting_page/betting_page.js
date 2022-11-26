@@ -82,7 +82,7 @@ const BettingPage = () => {
 			method: "POST",
 			token: true,
 			undefined,
-			body: `player=${betPlayerId}`,
+			body: JSON.stringify({ player: betPlayerId }),
 		};
 		toast({
 			message: `${applanguage.betAlerts.bet} ${betPlayerName}. \r\n${applanguage.betAlerts.info}`,

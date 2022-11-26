@@ -5,6 +5,7 @@ import { CurrentUserContext, LanguageContext } from "../store/user-context";
 import { URL } from "../store/data";
 
 import ModalComponent from "../components/modal";
+import DropdownComponent from "../components/ui/dropdown";
 import toastik from "../components/ui/toast";
 
 const RegModal = ({ showModal }) => {
@@ -23,7 +24,7 @@ const RegModal = ({ showModal }) => {
 	const [regPwdColor2, setRegPwdColor2] = useState();
 	const [regEmailColor, setRegEmailColor] = useState();
 	const [team, setTeam] = useState(1);
-	const [community, setCommunity] = useState("");
+	const [community, setCommunity] = useState(null);
 	const [communityColor, setCommunityColor] = useState();
 	const [submitSent, setSubmitSent] = useState(false);
 
