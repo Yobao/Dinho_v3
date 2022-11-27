@@ -13,7 +13,7 @@ import LoadingButton from "../../components/ui/button-loading";
 import { toast } from "bulma-toast";
 
 const BettingPage = () => {
-	const testTime = "2022-11-23T16:30:00.000Z";
+	const testTime = "2022-11-25T17:30:00.000Z";
 
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -25,8 +25,6 @@ const BettingPage = () => {
 	const handleTooltip = (fixtures) => {
 		const finalFixtures = fixtures
 			.map((match, i) => {
-				const interpunction =
-					fixtures.length === 1 || fixtures.length === i - 1 ? "" : ", ";
 				const date = new Date(match.start);
 				const completeDate = `${date.getDate()}.${
 					date.getMonth() + 1
@@ -34,11 +32,9 @@ const BettingPage = () => {
 
 				return `${completeDate} ${match.match} ${
 					match.side == 1 ? "(H)" : match.side == 0 ? "(N)" : "(A)"
-				}${interpunction}\n`;
+				}\n`;
 			})
 			.join("");
-
-		console.log(finalFixtures);
 		return finalFixtures;
 	};
 
@@ -68,7 +64,6 @@ const BettingPage = () => {
 				match: useTitle(data.side, data.match),
 				tooltip: handleTooltip(data.fixtures),
 			});
-			//console.log(data);
 		});
 		return () => pusher.disconnect();
 	}, []);
@@ -87,7 +82,7 @@ const BettingPage = () => {
 			method: "POST",
 			token: true,
 			undefined,
-			body: `player=${betPlayerId}`,
+			body: JSON.stringify({ player: betPlayerId }),
 		};
 		toast({
 			message: `${applanguage.betAlerts.bet} ${betPlayerName}. \r\n${applanguage.betAlerts.info}`,
@@ -123,7 +118,8 @@ const BettingPage = () => {
 				<p className='title is-size-3-mobile is-size-2-tablet'>
 					{data.match}
 					<span
-						className='icon tooltip has-tooltip-multiline is-multiline has-text-info mx-2'
+						className='icon has-tooltip-multiline has-tooltip-arrow 
+						has-tooltip-left has-tooltip-info has-text-info mx-2'
 						data-tooltip={data.tooltip}>
 						<i className='fas fa-calendar icon is-small' aria-hidden='true' />
 					</span>

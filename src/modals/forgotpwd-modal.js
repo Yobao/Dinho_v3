@@ -1,12 +1,10 @@
-import React, { useState, useContext, useRef, useCallback, useMemo } from "react";
+import React, { useState, useContext, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/use-fetch";
-import { CurrentUserContext, LanguageContext } from "../store/user-context";
-import { URL } from "../store/data";
+import { LanguageContext } from "../store/user-context";
 
 import ModalComponent from "../components/modal";
 import toastik from "../components/ui/toast";
-import { toast } from "bulma-toast";
 
 const ForgotPwdModal = ({ showModal }) => {
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
@@ -40,18 +38,14 @@ const ForgotPwdModal = ({ showModal }) => {
 	const userData = {
 		mail: email,
 	};
-	const requestConfig = {
-		url: URL + "/reset_password",
-		requestOptions: {
-			method: "POST",
-			headers: {
-				accept: "application/json",
-				"content-type": "application/json",
-			},
-			body: JSON.stringify(userData),
-		},
+
+	const options = {
+		method: "POST",
+		undefined,
+		accept: true,
+		body: JSON.stringify(userData),
 	};
-	const { isLoading, err, sendRequest } = useFetch();
+	const { err, sendRequest } = useFetch();
 
 	const transformData = (data) => {
 		if (typeof data === "number" && data !== 200 && data !== 201) {
@@ -65,7 +59,6 @@ const ForgotPwdModal = ({ showModal }) => {
 
 	const sendEmail = useCallback(() => {
 		setSubmitSent(true);
-
 		if (!email) {
 			setEmailColor("is-danger");
 			return toastik(alerts.fillEverything);
@@ -74,9 +67,8 @@ const ForgotPwdModal = ({ showModal }) => {
 			setEmailColor("is-danger");
 			return toastik(alerts.mailFormat);
 		}
-
-		sendRequest(requestConfig, transformData);
-	}, [requestConfig]);
+		sendRequest("/reset_password", options, transformData);
+	}, [options]);
 
 	const buttons = {
 		sendEmail,

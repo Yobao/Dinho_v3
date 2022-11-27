@@ -42,7 +42,8 @@ const TableComponent = ({ head, body, data, position }) => {
 												? "has-text-success has-text-weight-bold"
 												: ""
 										} ${
-											row.username === currentUser.user
+											currentUser?.user !== undefined &&
+											row.username === currentUser?.user
 												? "has-background-danger-light"
 												: ""
 										}`}
