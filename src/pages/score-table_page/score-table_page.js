@@ -22,6 +22,10 @@ const ScoreTablePage = () => {
       isLoading: false,
    });
 
+   const handleState = (value) => {
+      setState({ match: `&m=${value}`, isLoading: true });
+   };
+
    const options = { method: "GET" };
    const { error, sendRequest } = useFetch();
 
@@ -66,7 +70,7 @@ const ScoreTablePage = () => {
                data={state.matches}
                dropdownTitle={dropdownTitle}
                setDropdownTitle={setDropdownTitle}
-               handleRequest={setState}
+               handleRequest={handleState}
                styleTitle='is-size-9-mobile is-size-5-tablet is-size-4-desktop custom-mobile-width'
                styleMenu='is-size-6-mobile is-size-6-tablet is-size-5-desktop'
             />

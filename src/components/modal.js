@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import ModalInput from "./ui/modal-input";
 import ButtonComponent from "./ui/button";
+import DropdownComponent from "./ui/dropdown";
 import LoadingButton from "./ui/button-loading";
 
 const ModalComponent = ({
@@ -16,8 +17,6 @@ const ModalComponent = ({
 }) => {
    const renderRef = useRef(0);
    renderRef.current++;
-
-   //console.log(inputColors);
 
    useEffect(() => {
       const handleKeys = (e) => {
@@ -45,6 +44,8 @@ const ModalComponent = ({
       />
    ));
 
+   console.log(inputColors.communityColor);
+
    return (
       <div className='modal is-active'>
          <div className='modal-background' onClick={showModal}></div>
@@ -64,6 +65,22 @@ const ModalComponent = ({
                <React.Fragment>
                   {renderRef.current}
                   {inputs}
+                  {dropdown && (
+                     <div style={{ maxWidth: "154px" }}>
+                        <div className='field mb-5'>
+                           <label className='label '>{dropdown.data.title}</label>
+                           <div className='is-mobile ml-3 my-4'>
+                              <DropdownComponent
+                                 data={dropdown.data.values}
+                                 handleRequest={dropdown.handleRequest}
+                                 styleTitle={dropdown.styleTitle}
+                                 styleMenu={dropdown.styleMenu}
+                                 styleButton={inputColors.communityColor}
+                              />
+                           </div>
+                        </div>
+                     </div>
+                  )}
                   <div className={`has-content-left`}>{buttons}</div>
                </React.Fragment>
             )}

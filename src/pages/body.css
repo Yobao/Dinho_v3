@@ -25,6 +25,9 @@
       max-width: 138px;
       max-height: 147.6px;
    }
+   .custom-modal-dropdown {
+      min-width: 150px;
+   }
 }
 
 @media all and (min-width: 768px) {
@@ -44,6 +47,9 @@
    }
    .custom-card-width {
       max-width: 240px;
+   }
+   .custom-modal-dropdown {
+      min-width: 150px;
    }
 }
 

@@ -29,12 +29,15 @@ const useFetch = () => {
       try {
          const response = await fetch(URL + path, { ...reqOptions });
 
-         const test = response.headers.get("content-type").toString().slice(0, 10);
-         const valuation = "text/plain" !== test ? "wait for response" : "nothing";
-         //console.log("FETCH", valuation, test);
+         console.log(response.status);
+         // POSSIBLE REFACTOR
+         const responseHeaderType = response.headers.get("content-type").toString().slice(0, 10);
+         const valuation = "text/plain" !== responseHeaderType ? "wait for response" : "nothing";
+         console.log(responseHeaderType, valuation);
 
          const data =
-            response.headers.get("content-type").toString().slice(0, 10) !== "text/plain"
+            response.headers.get("content-type").toString().slice(0, 10) !== "text/plain" ||
+            response.headers.get("content-type") === "null"
                ? await response.json()
                : null;
 
@@ -55,4 +58,3 @@ const useFetch = () => {
 };
 
 export default useFetch;
-//jozef.babos11@gmail.com

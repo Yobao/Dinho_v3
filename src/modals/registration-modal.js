@@ -25,13 +25,15 @@ const RegModal = ({ showModal }) => {
    const [regEmailColor, setRegEmailColor] = useState();
    const [team, setTeam] = useState(1);
    const [community, setCommunity] = useState(null);
-   const [communityColor, setCommunityColor] = useState();
+   const [communityColor, setCommunityColor] = useState("");
+
    const [submitSent, setSubmitSent] = useState(false);
 
    const handleRegName = useCallback(
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegName(val);
+         //console.log("Name", e.target.value);
          const validation = () => {
             setRegNameColor(
                val.length < 3 ||
@@ -50,6 +52,7 @@ const RegModal = ({ showModal }) => {
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegPwd(val);
+         //console.log("PWD", e.target.value);
          const validation = () => {
             setRegPwdColor(val.length < 6 ? "is-danger" : "");
          };
@@ -61,6 +64,7 @@ const RegModal = ({ showModal }) => {
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegPwd2(val);
+         //console.log("PWD2", e.target.value);
          const validation = () => {
             setRegPwdColor2(val.length < 6 ? "is-danger" : "");
          };
@@ -72,6 +76,7 @@ const RegModal = ({ showModal }) => {
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegEmail(val);
+         //console.log("MAIL", e.target.value);
          const validation = () => {
             setRegEmailColor(
                !val.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}/) ? "is-danger" : ""
@@ -81,6 +86,10 @@ const RegModal = ({ showModal }) => {
       },
       [submitSent]
    );
+   const handleCommunity = (value) => {
+      setCommunityColor("");
+      setCommunity(value);
+   };
    const handleInputs = useMemo(
       () => ({
          handleRegName,
@@ -103,6 +112,7 @@ const RegModal = ({ showModal }) => {
       regPwdColor,
       regPwdColor2,
       regEmailColor,
+      communityColor,
    };
    const userData = {
       username: regName,
@@ -122,7 +132,8 @@ const RegModal = ({ showModal }) => {
    const { err, sendRequest } = useFetch();
    const transformData = (data) => {
       console.log(data);
-      if (data?.statusCode === 400 || data?.statusCode === 409) {
+
+      if (data === 400 || data === 409) {
          setRegNameColor("is-danger");
          setRegEmailColor("is-danger");
          return toastik(`${alerts.exists}`);
@@ -146,16 +157,19 @@ const RegModal = ({ showModal }) => {
          community,
       };
 
-      console.log(options);
-
       // Fill all fields condition.
       for (const input in checkUserData) {
-         if (checkUserData[input] === null) {
+         if (checkUserData[input] === null || checkUserData[input] === "") {
             if (!message) message = alerts.fillEverything;
-            Object.values(handleInputColors)[index]("is-danger");
+            if (input === "community") {
+               Object.values(handleInputColors)[index]("hsl(348deg, 86%, 61%)");
+            } else {
+               Object.values(handleInputColors)[index]("is-danger");
+            }
          }
          index++;
       }
+
       if (message) return toastik(message);
       // Inputfield specific.
       for (let i = 0; i < Object.keys(handleInputs).length; i++) {
@@ -176,6 +190,13 @@ const RegModal = ({ showModal }) => {
       registration,
    };
 
+   const dropdownData = {
+      data: applanguage.regModal.dropdown,
+      handleRequest: handleCommunity,
+      styleTitle: "is-size-6",
+      styleMenu: "is-size-6",
+   };
+
    return (
       <React.Fragment>
          {ReactDOM.createPortal(
@@ -189,6 +210,7 @@ const RegModal = ({ showModal }) => {
                   inputColors={inputColors}
                   showModal={showModal}
                   showEye={false}
+                  dropdown={dropdownData}
                />
             </React.Fragment>,
             document.getElementById("modal-root")
