@@ -51,14 +51,6 @@ const ScoreTablePage = () => {
 	const indexOfLastUser = currentPage * usersPerPage;
 	const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
-	/* 	const NoGoal = () => {
-		return (
-			<div className=''>
-				<p className=''>PRAZDNO TU JE</p>
-			</div>
-		);
-	}; */
-
 	if (!state.data && !state.matches) return <LoadingButton />;
 
 	return (

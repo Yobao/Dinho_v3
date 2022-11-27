@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import useFetch from "../hooks/use-fetch";
+import React, { useEffect, useRef } from "react";
 import ModalInput from "./ui/modal-input";
 import ButtonComponent from "./ui/button";
 
@@ -11,9 +10,12 @@ const ModalComponent = ({
 	inputColors,
 	showModal,
 	showEye,
+	dropdown,
 }) => {
 	const renderRef = useRef(0);
 	renderRef.current++;
+
+	console.log(dropdown);
 
 	useEffect(() => {
 		const handleKeys = (e) => {
@@ -44,10 +46,10 @@ const ModalComponent = ({
 	return (
 		<div className='modal is-active'>
 			<div className='modal-background' onClick={showModal}></div>
-			{renderRef.current}
 			<div
 				className='modal-content has-background-white py-5 px-5'
 				style={{ borderRadius: "1rem" }}>
+				{renderRef.current}
 				{inputs}
 				<div className={`has-content-left`}>{buttons}</div>
 			</div>
@@ -59,4 +61,4 @@ const ModalComponent = ({
 	);
 };
 
-export default ModalComponent;
+export default React.memo(ModalComponent);

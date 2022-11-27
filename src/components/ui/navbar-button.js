@@ -6,7 +6,7 @@ const NavbarButtonComponent = ({ children, path, type, text, ...props }) => {
 	const isActive = useMatch({ path: resolvedPath.pathname, end: true });
 
 	const buttonClass = `navbar-item is-mobile ${
-		isActive
+		isActive && type !== "modal"
 			? "has-text-link has-text-weight-medium custom-navbar-active"
 			: "is-size-5-tablet"
 	}`;

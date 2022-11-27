@@ -19,7 +19,8 @@ const useFetch = () => {
 							: `Bearer ${token}`,
 				}),
 				...(accept && { accept: "application/json" }),
-				"content-type": "application/x-www-form-urlencoded",
+				//"content-type": "application/x-www-form-urlencoded",
+				"content-type": "application/json",
 			});
 	}
 
@@ -28,7 +29,7 @@ const useFetch = () => {
 		try {
 			const response = await fetch(URL + path, { ...reqOptions });
 			const data =
-				response.headers.get("content-length") !== 0 ? await response.json() : null;
+				response.headers.get("content-length") > 1 ? await response.json() : null;
 
 			if (data) applyData(data);
 			if (!data) applyData(response.status);
@@ -47,3 +48,4 @@ const useFetch = () => {
 };
 
 export default useFetch;
+//jozef.babos11@gmail.com

@@ -62,3 +62,14 @@
 		width: 50%;
 	}
 }
+
+[data-tooltip]:not(.is-loading).has-tooltip-multiline::before,
+[data-tooltip]:not(.is-disabled).has-tooltip-multiline::before,
+[data-tooltip]:not([disabled]).has-tooltip-multiline::before {
+	height: auto;
+	width: 15rem;
+	max-width: 15rem;
+	text-overflow: clip;
+	white-space: pre-line;
+	word-break: keep-all;
+}

@@ -1,17 +1,12 @@
-import React, { useState, useContext, useRef, useCallback, useMemo } from "react";
+import React, { useState, useContext, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/use-fetch";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
-import { URL } from "../store/data";
 
-import ForgotPwdModal from "./forgotpwd-modal";
 import ModalComponent from "../components/modal";
 import toastik from "../components/ui/toast";
 
 const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
-	const renderRef = useRef(0);
-	renderRef.current++;
-
 	const { applanguage, setApplanguage } = useContext(LanguageContext);
 	const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
 	const alerts = applanguage.loginModal.warnings;
@@ -57,17 +52,13 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 		username: loginName,
 		password: loginPwd,
 	};
-	const requestConfig = {
-		url: URL + "/login",
-		requestOptions: {
-			method: "POST",
-			headers: {
-				accept: "application/json",
-				"content-type": "application/json",
-			},
-			body: JSON.stringify(userData),
-		},
+	const options = {
+		method: "POST",
+		undefined,
+		accept: true,
+		body: JSON.stringify(userData),
 	};
+
 	const { isLoading, err, sendRequest } = useFetch();
 	const transformData = (data) => {
 		if (data === 401 || data === 422) {
@@ -76,9 +67,8 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 			return toastik(alerts.warning);
 		}
 		if (err !== undefined) return toastik(alerts.somethingWrong);
-
 		localStorage.setItem("dinhotoken", data.access_token);
-		setCurrentUser(loginName);
+		setCurrentUser({ user: loginName, id: data.user_id });
 		showModal();
 	};
 
@@ -95,8 +85,9 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 			index++;
 		}
 		if (message) return toastik(message);
-		sendRequest(requestConfig, transformData);
-	}, [requestConfig]);
+
+		sendRequest("/login", options, transformData);
+	}, [options.body]);
 
 	const lostPwd = useCallback(() => {
 		showModal();
@@ -112,7 +103,6 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 		<React.Fragment>
 			{ReactDOM.createPortal(
 				<React.Fragment>
-					RENDERS {renderRef.current}
 					<ModalComponent
 						language={applanguage.loginModal}
 						handleInputs={handleInputs}

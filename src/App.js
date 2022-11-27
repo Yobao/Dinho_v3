@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-//import "bulma/css/bulma.css";
 import "./App.scss";
-//import "@creativebulma/bulma-tooltip/dist/bulma-tooltip.css";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
 
@@ -14,7 +12,7 @@ import {
 	LanguageContext,
 } from "./store/user-context";
 import * as TRANSLATIONS from "./store/translations";
-import { LANGUAGES, URL } from "./store/data";
+import { LANGUAGES } from "./store/data";
 
 const App = () => {
 	const location = window.location.pathname;
@@ -43,8 +41,8 @@ const App = () => {
 		return TRANSLATIONS["CZECH"];
 	});
 
-	const { isLoading, error, sendRequest, isAuth } = useFetch();
 	const options = { method: "GET", token };
+	const { isLoading, error, sendRequest, isAuth } = useFetch();
 
 	useEffect(() => {
 		const transformData = (data) => {
