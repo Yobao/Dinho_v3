@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useContext } from "react";
 import { CurrentUserContext, OtherUserContext } from "../store/user-context";
-import { Link } from "react-router-dom";
-import { Navigate, Route } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const TableComponent = ({ head, body, data, position }) => {
