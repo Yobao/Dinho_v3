@@ -1,17 +1,12 @@
-import React, { useState, useContext, useRef, useCallback, useMemo } from "react";
+import React, { useState, useContext, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/use-fetch";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
-import { URL } from "../store/data";
 
 import ModalComponent from "../components/modal";
-import DropdownComponent from "../components/ui/dropdown";
 import toastik from "../components/ui/toast";
 
 const RegModal = ({ showModal }) => {
-   const renderRef = useRef(0);
-   renderRef.current++;
-
    const { applanguage, setApplanguage } = useContext(LanguageContext);
    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
    const alerts = applanguage.regModal.warnings;
@@ -33,7 +28,6 @@ const RegModal = ({ showModal }) => {
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegName(val);
-         //console.log("Name", e.target.value);
          const validation = () => {
             setRegNameColor(
                val.length < 3 ||
@@ -52,7 +46,6 @@ const RegModal = ({ showModal }) => {
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegPwd(val);
-         //console.log("PWD", e.target.value);
          const validation = () => {
             setRegPwdColor(val.length < 6 ? "is-danger" : "");
          };
@@ -64,7 +57,6 @@ const RegModal = ({ showModal }) => {
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegPwd2(val);
-         //console.log("PWD2", e.target.value);
          const validation = () => {
             setRegPwdColor2(val.length < 6 ? "is-danger" : "");
          };
@@ -76,7 +68,6 @@ const RegModal = ({ showModal }) => {
       (e) => {
          const val = e?.target === undefined ? e : e.target.value;
          setRegEmail(val);
-         //console.log("MAIL", e.target.value);
          const validation = () => {
             setRegEmailColor(
                !val.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}/) ? "is-danger" : ""
@@ -86,10 +77,13 @@ const RegModal = ({ showModal }) => {
       },
       [submitSent]
    );
-   const handleCommunity = (value) => {
-      setCommunityColor("");
-      setCommunity(value);
-   };
+   const handleCommunity = useCallback(
+      (value) => {
+         setCommunityColor("");
+         setCommunity(value);
+      },
+      [submitSent]
+   );
    const handleInputs = useMemo(
       () => ({
          handleRegName,
@@ -131,8 +125,6 @@ const RegModal = ({ showModal }) => {
 
    const { err, sendRequest } = useFetch();
    const transformData = (data) => {
-      console.log(data);
-
       if (data === 400 || data === 409) {
          setRegNameColor("is-danger");
          setRegEmailColor("is-danger");
@@ -201,7 +193,6 @@ const RegModal = ({ showModal }) => {
       <React.Fragment>
          {ReactDOM.createPortal(
             <React.Fragment>
-               RENDERS {renderRef.current}
                <ModalComponent
                   language={applanguage.regModal}
                   handleInputs={handleInputs}

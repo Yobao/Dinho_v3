@@ -15,9 +15,6 @@ const ModalComponent = ({
    dropdown,
    isLoading,
 }) => {
-   const renderRef = useRef(0);
-   renderRef.current++;
-
    useEffect(() => {
       const handleKeys = (e) => {
          if (e.keyCode === 27) return showModal();
@@ -44,8 +41,6 @@ const ModalComponent = ({
       />
    ));
 
-   console.log(inputColors.communityColor);
-
    return (
       <div className='modal is-active'>
          <div className='modal-background' onClick={showModal}></div>
@@ -63,7 +58,6 @@ const ModalComponent = ({
             )}
             {!isLoading && (
                <React.Fragment>
-                  {renderRef.current}
                   {inputs}
                   {dropdown && (
                      <div style={{ maxWidth: "154px" }}>

@@ -97,7 +97,7 @@ const ScoreTablePage = () => {
                                  </div>
                                  <div className='column p-0 m-0 is-3 has-text-right-mobile has-text-right-tablet'>
                                     <p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
-                                       {Math.floor(goal.points).toLocaleString()}
+                                       {Math.floor(goal.points).toLocaleString("sk-SK")}
                                     </p>
                                  </div>
                               </div>

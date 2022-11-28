@@ -29,12 +29,6 @@ const useFetch = () => {
       try {
          const response = await fetch(URL + path, { ...reqOptions });
 
-         console.log(response.status);
-         // POSSIBLE REFACTOR
-         const responseHeaderType = response.headers.get("content-type").toString().slice(0, 10);
-         const valuation = "text/plain" !== responseHeaderType ? "wait for response" : "nothing";
-         console.log(responseHeaderType, valuation);
-
          const data =
             response.headers.get("content-type").toString().slice(0, 10) !== "text/plain" ||
             response.headers.get("content-type") === "null"

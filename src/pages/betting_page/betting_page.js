@@ -129,7 +129,9 @@ const BettingPage = () => {
             </p>
             <p className='title is-size-4-mobile is-size-3-tablet'>
                {applanguage.betTitle.points1}
-               <strong className='has-text-weight-bold'>{` ${data.pool.toLocaleString()} `}</strong>
+               <strong className='has-text-weight-bold'>{` ${data.pool.toLocaleString(
+                  "sk-SK"
+               )} `}</strong>
                {applanguage.betTitle.points2}
             </p>
             <TimeComponent
