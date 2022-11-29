@@ -10,107 +10,116 @@ import "./../body.css";
 import DropdownComponent from "../../components/ui/dropdown";
 
 const ScoreTablePage = () => {
-	const { applanguage, setApplanguage } = useContext(LanguageContext);
-	const { dropdownTitle, setDropdownTitle } = useContext(DropdownTitleContext);
-	const [currentPage, setCurrentPage] = useState(1);
-	const [usersPerPage, setUsersPerPage] = useState(50);
-	const [state, setState] = useReducer(
-		(previous, newState) => ({ ...previous, ...newState }),
-		{ data: null, matches: null, match: "", club: 1, isLoading: false }
-	);
+   const { applanguage, setApplanguage } = useContext(LanguageContext);
+   const { dropdownTitle, setDropdownTitle } = useContext(DropdownTitleContext);
+   const [currentPage, setCurrentPage] = useState(1);
+   const [usersPerPage, setUsersPerPage] = useState(50);
+   const [state, setState] = useReducer((previous, newState) => ({ ...previous, ...newState }), {
+      data: null,
+      matches: null,
+      match: "",
+      club: 1,
+      isLoading: false,
+   });
 
-	const options = { method: "GET" };
-	const { error, sendRequest } = useFetch();
+   const handleState = (value) => {
+      setState({ match: `&m=${value}`, isLoading: true });
+   };
 
-	useEffect(() => {
-		const transformData = (data) => {
-			const dropdown = data.matches.reverse().map((match, i, matches) => {
-				const index = matches.length - i;
-				const start = match.start.slice(0, match.start.length - 4);
-				return {
-					value: useTitle(match.side, match.opponent, start, index),
-					id: match.id,
-				};
-			});
+   const options = { method: "GET" };
+   const { error, sendRequest } = useFetch();
 
-			if (!state.data) setState({ data: data, matches: dropdown });
-			if (state.data) setState({ data: data, matches: dropdown, isLoading: false });
-			setCurrentPage(1);
-			if (!state.data) setDropdownTitle(dropdown[0].value);
-		};
+   useEffect(() => {
+      const transformData = (data) => {
+         const dropdown = data.matches.reverse().map((match, i, matches) => {
+            const index = matches.length - i;
+            const start = match.start.slice(0, match.start.length - 4);
+            return {
+               value: useTitle(match.side, match.opponent, start, index),
+               id: match.id,
+            };
+         });
 
-		sendRequest(`/table?club=${state.club}${state.match}`, options, transformData);
-	}, [state.match]);
+         if (!state.data) setState({ data: data, matches: dropdown });
+         if (state.data) setState({ data: data, matches: dropdown, isLoading: false });
+         setCurrentPage(1);
+         if (!state.data) setDropdownTitle(dropdown[0].value);
+      };
 
-	useEffect(() => {
-		return () => {
-			setDropdownTitle(null);
-		};
-	}, []);
+      sendRequest(`/table?club=${state.club}${state.match}`, options, transformData);
+   }, [state.match]);
 
-	const indexOfLastUser = currentPage * usersPerPage;
-	const indexOfFirstUser = indexOfLastUser - usersPerPage;
+   useEffect(() => {
+      return () => {
+         setDropdownTitle(null);
+      };
+   }, []);
 
-	if (!state.data && !state.matches) return <LoadingButton />;
+   const indexOfLastUser = currentPage * usersPerPage;
+   const indexOfFirstUser = indexOfLastUser - usersPerPage;
 
-	return (
-		<div
-			className='column table-width 
-				is-full-mobile is-three-quarters-tablet is-three-quarters-desktop is-three-fifths-fullhd'>
-			<div className='columns is-centered is-mobile mt-4 mb-6'>
-				<DropdownComponent
-					data={state.matches}
-					dropdownTitle={dropdownTitle}
-					setDropdownTitle={setDropdownTitle}
-					handleRequest={setState}
-					styleTitle='is-size-9-mobile is-size-5-tablet is-size-4-desktop custom-mobile-width'
-					styleMenu='is-size-6-mobile is-size-6-tablet is-size-5-desktop'
-				/>
-			</div>
+   if (!state.data && !state.matches) return <LoadingButton />;
 
-			{state.isLoading && <LoadingButton />}
-			{!state.isLoading && (
-				<React.Fragment>
-					<div className='columns p-0 mx-0 my-6 is-mobile is-vcentered'>
-						<div className='column p-0 pl-1 m-0 is-5-mobile is-6-tablet has-text-left-mobile has-text-centered-tablet has-text-weight-semibold'>
-							<p className='is-size-8-mobile is-size-5-tablet is-size-4-desktop'>{`${applanguage.scoreTableTitles.total1} ${state.data.points} ${applanguage.scoreTableTitles.total2}`}</p>
-						</div>
-						<div className='column p-0 m-0 is-7-mobile is-6-tablet'>
-							{/* {state.data.goals.length === 0 && <NoGoal />} */}
-							{state.data.goals.length > 0 &&
-								state.data.goals.map((goal) => {
-									return (
-										<div
-											className='columns p-0 mx-0 pr-1 my-2 is-mobile is-centered is-vcentered'
-											key={`${goal.name}`}>
-											<div className='column p-0 m-0 is-9 has-text-centered-mobile has-text-right-tablet'>
-												<p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>{`${goal.name}`}</p>
-											</div>
-											<div className='column p-0 m-0 is-3 has-text-right-mobile has-text-right-tablet'>
-												<p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
-													{Math.floor(goal.points).toLocaleString()}
-												</p>
-											</div>
-										</div>
-									);
-								})}
-						</div>
-					</div>
+   return (
+      <div
+         className='column table-width 
+				is-full-mobile is-three-quarters-tablet is-three-quarters-desktop is-three-fifths-fullhd'
+      >
+         <div className='columns is-centered is-mobile mt-4 mb-6'>
+            <DropdownComponent
+               data={state.matches}
+               dropdownTitle={dropdownTitle}
+               setDropdownTitle={setDropdownTitle}
+               handleRequest={handleState}
+               styleTitle='is-size-9-mobile is-size-5-tablet is-size-4-desktop custom-mobile-width'
+               styleMenu='is-size-6-mobile is-size-6-tablet is-size-5-desktop'
+            />
+         </div>
 
-					<TableComponent
-						head={applanguage.scoreTableHead}
-						body={SCORE_TABLE_BODY}
-						data={state.data.table.slice(indexOfFirstUser, indexOfLastUser)}
-						position={indexOfFirstUser}
-					/>
-					<PaginationComponent
-						currentPage={{ currentPage, setCurrentPage }}
-						length={Math.ceil(state.data.table.length / usersPerPage)}
-					/>
-				</React.Fragment>
-			)}
-		</div>
-	);
+         {state.isLoading && <LoadingButton />}
+         {!state.isLoading && (
+            <React.Fragment>
+               <div className='columns p-0 mx-0 my-6 is-mobile is-vcentered'>
+                  <div className='column p-0 pl-1 m-0 is-5-mobile is-6-tablet has-text-left-mobile has-text-centered-tablet has-text-weight-semibold'>
+                     <p className='is-size-8-mobile is-size-5-tablet is-size-4-desktop'>{`${applanguage.scoreTableTitles.total1} ${state.data.points} ${applanguage.scoreTableTitles.total2}`}</p>
+                  </div>
+                  <div className='column p-0 m-0 is-7-mobile is-6-tablet'>
+                     {/* {state.data.goals.length === 0 && <NoGoal />} */}
+                     {state.data.goals.length > 0 &&
+                        state.data.goals.map((goal) => {
+                           return (
+                              <div
+                                 className='columns p-0 mx-0 pr-1 my-2 is-mobile is-centered is-vcentered'
+                                 key={`${goal.name}`}
+                              >
+                                 <div className='column p-0 m-0 is-9 has-text-centered-mobile has-text-right-tablet'>
+                                    <p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>{`${goal.name}`}</p>
+                                 </div>
+                                 <div className='column p-0 m-0 is-3 has-text-right-mobile has-text-right-tablet'>
+                                    <p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
+                                       {Math.floor(goal.points).toLocaleString("sk-SK")}
+                                    </p>
+                                 </div>
+                              </div>
+                           );
+                        })}
+                  </div>
+               </div>
+
+               <TableComponent
+                  head={applanguage.scoreTableHead}
+                  body={SCORE_TABLE_BODY}
+                  data={state.data.table.slice(indexOfFirstUser, indexOfLastUser)}
+                  position={indexOfFirstUser}
+               />
+               <PaginationComponent
+                  currentPage={{ currentPage, setCurrentPage }}
+                  length={Math.ceil(state.data.table.length / usersPerPage)}
+               />
+            </React.Fragment>
+         )}
+      </div>
+   );
 };
 
 export default ScoreTablePage;

@@ -4,48 +4,51 @@ import { URL } from "../store/data";
 //request url as well as request header in the component where we want to fetch data.
 
 const useFetch = () => {
-	const [error, setError] = useState(null);
-	const [isAuth, setIsAuth] = useState(null);
+   const [error, setError] = useState(null);
+   const [isAuth, setIsAuth] = useState(null);
 
-	function RequestOptions(r_method, token = false, accept = false, body) {
-		(this.method = r_method),
-			(this.body = body ? body : null),
-			//(this.mode = "cors"),
-			(this.headers = {
-				...(token && {
-					Authorization:
-						token === true
-							? `Bearer ${localStorage.getItem("dinhotoken")}`
-							: `Bearer ${token}`,
-				}),
-				...(accept && { accept: "application/json" }),
-				//"content-type": "application/x-www-form-urlencoded",
-				"content-type": "application/json",
-			});
-	}
+   function RequestOptions(r_method, token = false, accept = false, body) {
+      (this.method = r_method),
+         (this.body = body ? body : null),
+         //(this.mode = "cors"),
+         (this.headers = {
+            ...(token && {
+               Authorization:
+                  token === true
+                     ? `Bearer ${localStorage.getItem("dinhotoken")}`
+                     : `Bearer ${token}`,
+            }),
+            ...(accept && { accept: "application/json" }),
+            //"content-type": "application/x-www-form-urlencoded",
+            "content-type": "application/json",
+         });
+   }
 
-	const sendRequest = useCallback(async (path, options, applyData) => {
-		const reqOptions = new RequestOptions(...Object.values(options));
-		try {
-			const response = await fetch(URL + path, { ...reqOptions });
-			const data =
-				response.headers.get("content-length") > 1 ? await response.json() : null;
+   const sendRequest = useCallback(async (path, options, applyData) => {
+      const reqOptions = new RequestOptions(...Object.values(options));
+      try {
+         const response = await fetch(URL + path, { ...reqOptions });
 
-			if (data) applyData(data);
-			if (!data) applyData(response.status);
-		} catch (err) {
-			setError(err.message || "Something went wrong!");
-		}
+         const data =
+            response.headers.get("content-type").toString().slice(0, 10) !== "text/plain" ||
+            response.headers.get("content-type") === "null"
+               ? await response.json()
+               : null;
 
-		if (path.slice(-9) === "autologin") setIsAuth(true);
-	}, []);
+         if (data) applyData(data);
+         if (!data) applyData(response.status);
+      } catch (err) {
+         setError(err.message || "Something went wrong!");
+      }
 
-	return {
-		error,
-		sendRequest,
-		isAuth,
-	};
+      if (path.slice(-9) === "autologin") setIsAuth(true);
+   }, []);
+
+   return {
+      error,
+      sendRequest,
+      isAuth,
+   };
 };
 
 export default useFetch;
-//jozef.babos11@gmail.com
