@@ -12,6 +12,8 @@ const TableComponent = ({ head, body, data, position }) => {
       navigate(`/${path}`);
    };
 
+   console.log();
+
    return (
       <React.Fragment>
          {data && (
@@ -21,7 +23,7 @@ const TableComponent = ({ head, body, data, position }) => {
             >
                <thead>
                   <tr>
-                     {head.map((column, i) => (
+                     {head.map((column) => (
                         <th
                            key={column}
                            className='has-text-centered is-vcentered is-size-7-mobile is-full-tablet'
@@ -48,7 +50,7 @@ const TableComponent = ({ head, body, data, position }) => {
                                     : ""
                               }`}
                               onClick={() => {
-                                 if (iColumn === 1)
+                                 if (column.name === "username")
                                     handleNavigate(`user/${row.id}/${row.username}`);
                               }}
                            >
