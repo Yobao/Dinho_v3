@@ -10,6 +10,12 @@
    }
 }
 
+@media all and (min-width: 600px) and (max-width: 768px) {
+   #test-table {
+      font-size: 0.9rem !important;
+   }
+}
+
 @media all and (max-width: 768px) {
    .custom-mobile-width {
       width: 336px;

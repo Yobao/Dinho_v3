@@ -9,6 +9,8 @@ import LoadingButton from "../../components/ui/button-loading";
 import "./../body.css";
 import DropdownComponent from "../../components/ui/dropdown";
 
+import Ball from "../../assets/soccer_ball.png";
+
 const ScoreTablePage = () => {
    const { applanguage, setApplanguage } = useContext(LanguageContext);
    const { dropdownTitle, setDropdownTitle } = useContext(DropdownTitleContext);
@@ -60,6 +62,8 @@ const ScoreTablePage = () => {
 
    if (!state.data && !state.matches) return <LoadingButton />;
 
+   console.log(Array.apply(null, { length: 2 }).map(Number.call, Number));
+
    return (
       <div
          className='column table-width 
@@ -79,23 +83,33 @@ const ScoreTablePage = () => {
          {state.isLoading && <LoadingButton />}
          {!state.isLoading && (
             <React.Fragment>
-               <div className='columns p-0 mx-0 my-6 is-mobile is-vcentered'>
-                  <div className='column p-0 pl-1 m-0 is-5-mobile is-6-tablet has-text-left-mobile has-text-centered-tablet has-text-weight-semibold'>
-                     <p className='is-size-8-mobile is-size-5-tablet is-size-4-desktop'>{`${applanguage.scoreTableTitles.total1} ${state.data.points} ${applanguage.scoreTableTitles.total2}`}</p>
+               <div className='columns p-0 mx-0 px-1 my-6 is-vcentered'>
+                  <div className='column p-0 m-0 is-full-mobile is-4-tablet is-5-widescreen has-text-left has-text-weight-semibold'>
+                     <p className='is-size-full-mobile is-size-6-tablet is-size-4-desktop'>{`${applanguage.scoreTableTitles.total1} ${state.data.points} ${applanguage.scoreTableTitles.total2}`}</p>
                   </div>
-                  <div className='column p-0 m-0 is-7-mobile is-6-tablet'>
-                     {/* {state.data.goals.length === 0 && <NoGoal />} */}
+                  <div className='column p-0 m-0 is-full-mobile is-8-tablet is-7-widescreen'>
                      {state.data.goals.length > 0 &&
                         state.data.goals.map((goal) => {
                            return (
                               <div
-                                 className='columns p-0 mx-0 pr-1 my-2 is-mobile is-centered is-vcentered'
+                                 className='columns p-0 mx-0 my-1 is-mobile is-centered is-vcentered'
                                  key={`${goal.name}`}
                               >
-                                 <div className='column p-0 m-0 is-9 has-text-centered-mobile has-text-right-tablet'>
+                                 <div className='column p-0 m-0 is-8-mobile is-8-tablet has-text-left'>
                                     <p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>{`${goal.name}`}</p>
                                  </div>
-                                 <div className='column p-0 m-0 is-3 has-text-right-mobile has-text-right-tablet'>
+                                 <div className='column is-2-mobile is-2-tablet is-vcentered p-0 m-0 has-text-left'>
+                                    {Array.apply(null, { length: 2 })
+                                       .map(Number.call, Number)
+                                       .map((ball) => (
+                                          <img
+                                             src={Ball}
+                                             className='image is-16x16'
+                                             style={{ display: "inline" }}
+                                          />
+                                       ))}
+                                 </div>
+                                 <div className='column p-0 m-0 is-2-mobile is-2-tablet has-text-right'>
                                     <p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
                                        {Math.floor(goal.points).toLocaleString("sk-SK")}
                                     </p>
