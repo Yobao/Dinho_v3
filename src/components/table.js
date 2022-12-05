@@ -12,12 +12,11 @@ const TableComponent = ({ head, body, data, position }) => {
       navigate(`/${path}`);
    };
 
-   console.log();
-
    return (
       <React.Fragment>
          {data && (
             <table
+               id='table_content'
                className='table is-bordered is-striped is-hoverable is-narrow is-fullwidth
 					 is-mobile has-text-centered is-size-7-mobile is-full-tablet'
             >
@@ -26,6 +25,7 @@ const TableComponent = ({ head, body, data, position }) => {
                      {head.map((column) => (
                         <th
                            key={column}
+                           id='table_header'
                            className='has-text-centered is-vcentered is-size-7-mobile is-full-tablet'
                         >
                            {column}

@@ -10,6 +10,24 @@
    }
 }
 
+@media all and (min-width: 600px) and (max-width: 768px) {
+   #table_content {
+      font-size: 0.9rem !important;
+   }
+   #table_header {
+      font-size: 0.9rem !important;
+   }
+   #title_total_points {
+      font-size: 1.35rem !important;
+   }
+   #title_players {
+      font-size: 1.05rem !important;
+   }
+   #title_points {
+      font-size: 1.05rem !important;
+   }
+}
+
 @media all and (max-width: 768px) {
    .custom-mobile-width {
       width: 336px;
@@ -53,12 +71,21 @@
    }
 }
 
+@media all and (max-width: 1023px) {
+   .custom-title-name-width {
+      max-width: 280px;
+   }
+}
+
 @media all and (min-width: 1024px) {
    .custom-mobile-width {
       width: 500px;
    }
    .custom-navbar-end {
       width: "140px";
+   }
+   .custom-title-name-width {
+      max-width: 400px;
    }
 }
 

@@ -4,7 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import * as TRANSLATIONS from "../store/translations";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
 import { NAVBAR, FLAGS } from "./../store/templates";
-import { URL, LANGUAGES } from "./../store/data";
+import { LANGUAGES } from "./../store/data";
 import NavbarButtonComponent from "./ui/navbar-button";
 import LoginModal from "../modals/login-modal";
 import RegModal from "../modals/registration-modal";
