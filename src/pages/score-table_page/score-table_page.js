@@ -10,8 +10,6 @@ import "./../body.css";
 import DropdownComponent from "../../components/ui/dropdown";
 import BallsComponent from "./balls";
 
-import Ball from "../../assets/soccer_ball.png";
-
 const ScoreTablePage = () => {
    const { applanguage, setApplanguage } = useContext(LanguageContext);
    const { dropdownTitle, setDropdownTitle } = useContext(DropdownTitleContext);
@@ -142,23 +140,3 @@ const ScoreTablePage = () => {
 };
 
 export default ScoreTablePage;
-
-{
-   /* <div className='columns is-mobile p-0 mx-0 my-1 is-centered ' key={`${goal.name}`}>
-   <div className='columns column is-mobile p-0 m-0 has-text-left custom-title-name-width'>
-      <div className='p-0 '>
-         <p
-            id='title_players'
-            className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'
-         >{`${goal.name}`}</p>
-      </div>
-      <BallsComponent ballsCount={goal.amount} />
-   </div>
-
-   <div className='column is-2 p-0 m-0 has-text-right' style={{ maxWidth: "70px" }}>
-      <p id='title_points' className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
-         {Math.floor(goal.points).toLocaleString("sk-SK")}
-      </p>
-   </div>
-</div>; */
-}
