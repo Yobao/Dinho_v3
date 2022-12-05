@@ -16,16 +16,17 @@ const TableComponent = ({ head, body, data, position }) => {
       <React.Fragment>
          {data && (
             <table
-               id='test-table'
+               id='table_content'
                className='table is-bordered is-striped is-hoverable is-narrow is-fullwidth
-					 is-mobile has-text-centered is-size-7-mobile is-full-tablet custom-mobile-font-size'
+					 is-mobile has-text-centered is-size-7-mobile is-full-tablet'
             >
                <thead>
                   <tr>
                      {head.map((column) => (
                         <th
                            key={column}
-                           className='has-text-centered is-vcentered is-size-7-mobile is-full-tablet custom-mobile-font-size'
+                           id='table_header'
+                           className='has-text-centered is-vcentered is-size-7-mobile is-full-tablet'
                         >
                            {column}
                         </th>

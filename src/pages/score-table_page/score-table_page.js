@@ -8,6 +8,7 @@ import PaginationComponent from "./pagination";
 import LoadingButton from "../../components/ui/button-loading";
 import "./../body.css";
 import DropdownComponent from "../../components/ui/dropdown";
+import BallsComponent from "./balls";
 
 import Ball from "../../assets/soccer_ball.png";
 
@@ -62,14 +63,12 @@ const ScoreTablePage = () => {
 
    if (!state.data && !state.matches) return <LoadingButton />;
 
-   console.log(Array.apply(null, { length: 2 }).map(Number.call, Number));
-
    return (
       <div
          className='column table-width 
 				is-full-mobile is-three-quarters-tablet is-three-quarters-desktop is-three-fifths-fullhd'
       >
-         <div className='columns is-centered is-mobile mt-4 mb-6'>
+         <div className='columns is-centered is-mobile my-4 pb-2'>
             <DropdownComponent
                data={state.matches}
                dropdownTitle={dropdownTitle}
@@ -80,37 +79,43 @@ const ScoreTablePage = () => {
             />
          </div>
 
-         {state.isLoading && <LoadingButton />}
-         {!state.isLoading && (
+         {state.isLoading ? (
+            <LoadingButton />
+         ) : (
             <React.Fragment>
-               <div className='columns p-0 mx-0 px-1 my-6 is-vcentered'>
-                  <div className='column p-0 m-0 is-full-mobile is-4-tablet is-5-widescreen has-text-left has-text-weight-semibold'>
-                     <p className='is-size-full-mobile is-size-6-tablet is-size-4-desktop'>{`${applanguage.scoreTableTitles.total1} ${state.data.points} ${applanguage.scoreTableTitles.total2}`}</p>
+               <div className='columns p-0 mx-0 px-1 my-4 is-vcentered'>
+                  <div className='column p-0 m-0 is-full-mobile is-4-tablet is-5-widescreen has-text-centered has-text-weight-semibold'>
+                     <p
+                        id='title_total_points'
+                        className='is-size-9-mobile is-size-9-tablet is-size-4-desktop'
+                     >{`${applanguage.scoreTableTitles.total1} ${state.data.points} ${applanguage.scoreTableTitles.total2}`}</p>
                   </div>
                   <div className='column p-0 m-0 is-full-mobile is-8-tablet is-7-widescreen'>
                      {state.data.goals.length > 0 &&
                         state.data.goals.map((goal) => {
                            return (
                               <div
-                                 className='columns p-0 mx-0 my-1 is-mobile is-centered is-vcentered'
+                                 className='columns is-mobile p-0 mx-0 my-1 is-centered '
                                  key={`${goal.name}`}
                               >
-                                 <div className='column p-0 m-0 is-8-mobile is-8-tablet has-text-left'>
-                                    <p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>{`${goal.name}`}</p>
+                                 <div className='columns column is-mobile p-0 m-0 has-text-left custom-title-name-width'>
+                                    <div className='p-0 '>
+                                       <p
+                                          id='title_players'
+                                          className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'
+                                       >{`${goal.name}`}</p>
+                                    </div>
+                                    <BallsComponent ballsCount={goal.amount} />
                                  </div>
-                                 <div className='column is-2-mobile is-2-tablet is-vcentered p-0 m-0 has-text-left'>
-                                    {Array.apply(null, { length: 2 })
-                                       .map(Number.call, Number)
-                                       .map((ball) => (
-                                          <img
-                                             src={Ball}
-                                             className='image is-16x16'
-                                             style={{ display: "inline" }}
-                                          />
-                                       ))}
-                                 </div>
-                                 <div className='column p-0 m-0 is-2-mobile is-2-tablet has-text-right'>
-                                    <p className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
+
+                                 <div
+                                    className='column is-2 p-0 m-0 has-text-right'
+                                    style={{ maxWidth: "70px" }}
+                                 >
+                                    <p
+                                       id='title_points'
+                                       className='is-size-8-mobile is-size-6-tablet is-size-5-desktop has-text-success has-text-weight-bold'
+                                    >
                                        {Math.floor(goal.points).toLocaleString("sk-SK")}
                                     </p>
                                  </div>
@@ -137,3 +142,23 @@ const ScoreTablePage = () => {
 };
 
 export default ScoreTablePage;
+
+{
+   /* <div className='columns is-mobile p-0 mx-0 my-1 is-centered ' key={`${goal.name}`}>
+   <div className='columns column is-mobile p-0 m-0 has-text-left custom-title-name-width'>
+      <div className='p-0 '>
+         <p
+            id='title_players'
+            className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'
+         >{`${goal.name}`}</p>
+      </div>
+      <BallsComponent ballsCount={goal.amount} />
+   </div>
+
+   <div className='column is-2 p-0 m-0 has-text-right' style={{ maxWidth: "70px" }}>
+      <p id='title_points' className='is-size-8-mobile is-size-6-tablet is-size-5-desktop'>
+         {Math.floor(goal.points).toLocaleString("sk-SK")}
+      </p>
+   </div>
+</div>; */
+}
