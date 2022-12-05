@@ -75,5 +75,3 @@ const TableComponent = ({ head, body, data, position }) => {
 };
 
 export default TableComponent;
-
-// (${row.prize}€)

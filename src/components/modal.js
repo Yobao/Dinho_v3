@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import ModalInput from "./ui/modal-input";
 import ButtonComponent from "./ui/button";
 import DropdownComponent from "./ui/dropdown";
@@ -48,15 +48,14 @@ const ModalComponent = ({
             className='modal-content has-background-white py-5 px-5'
             style={{ borderRadius: "1rem", minHeight: "304px" }}
          >
-            {isLoading && (
+            {isLoading ? (
                <div
                   className='columns is-mobile is-centered is-vcentered'
                   style={{ minHeight: "304px" }}
                >
                   <LoadingButton />
                </div>
-            )}
-            {!isLoading && (
+            ) : (
                <React.Fragment>
                   {inputs}
                   {dropdown && (

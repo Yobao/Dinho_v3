@@ -2,9 +2,7 @@ import React, { useState, useContext, useCallback, useMemo } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/use-fetch";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
-
 import ModalComponent from "../components/modal";
-import LoadingButton from "../components/ui/button-loading";
 import toastik from "../components/ui/toast";
 
 const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
@@ -127,6 +125,3 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
 };
 
 export default LoginModal;
-
-//CSS in JS - imotion library
-//APPsource git
