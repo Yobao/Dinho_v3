@@ -46,12 +46,12 @@ const ModalComponent = ({
          <div className='modal-background' onClick={showModal}></div>
          <div
             className='modal-content has-background-white py-5 px-5'
-            style={{ borderRadius: "1rem", minHeight: "304px" }}
+            style={{ borderRadius: "1rem" }}
          >
             {isLoading ? (
                <div
                   className='columns is-mobile is-centered is-vcentered'
-                  style={{ minHeight: "304px" }}
+                  style={{ minHeight: "256px" }}
                >
                   <LoadingButton />
                </div>
