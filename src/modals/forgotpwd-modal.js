@@ -47,11 +47,10 @@ const ForgotPwdModal = ({ showModal }) => {
    const { err, sendRequest } = useFetch();
 
    const transformData = (data) => {
-      if (typeof data === "number" && data !== 200 && data !== 201) {
+      if (typeof data === "number" && data !== 200 && data !== 201 && data !== 500) {
          return toastik(alerts.mailNotExists);
       }
-      if (err !== undefined) return toastik(alerts.somethingWrong);
-
+      if (data === 500) return toastik(alerts.somethingWrong);
       toastik(alerts.passwordSent, "is-success");
       showModal();
    };
