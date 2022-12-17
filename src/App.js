@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import "./App.scss";
 import BodyComponent from "./pages/body";
 import NavbarComponent from "./components/navbar";
-
+import MailPwdModal from "./modals/mailpwd-modal";
 import useFetch from "./hooks/use-fetch";
 import {
    CurrentUserContext,
@@ -70,7 +70,7 @@ const App = () => {
                            )
                         }
                      />
-                     <Route path={`/changepassword/*`} element={<p>Change PWD!</p>} />
+                     <Route path={`/changepassword/*`} element={<MailPwdModal />} />
                   </Routes>
                </DropdownTitleContext.Provider>
             </OtherUserContext.Provider>

@@ -2,9 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LanguageContext, OtherUserContext } from "../../store/user-context";
 import useFetch from "../../hooks/use-fetch";
-
 import { USER_TABLE_BODY } from "../../store/templates";
-
 import TableComponent from "../../components/table";
 import LoadingButton from "../../components/ui/button-loading";
 

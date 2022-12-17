@@ -31,8 +31,8 @@ const BallsComponent = ({ ballsCount }) => {
          {Array.apply(null, { length: ballsCount })
             .map(Number.call, Number)
             .map((ball, i) => (
-               <figure className={`image ${imageSize}`}>
-                  <img key={`ball-${i}`} src={Ball} style={{ display: "inline" }} />
+               <figure key={`ball-${i}`} className={`image ${imageSize}`}>
+                  <img src={Ball} style={{ display: "inline" }} />
                </figure>
             ))}
       </div>
