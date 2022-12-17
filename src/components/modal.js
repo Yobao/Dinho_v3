@@ -78,11 +78,13 @@ const ModalComponent = ({
                </React.Fragment>
             )}
          </div>
-         <button
-            className='modal-close is-large button-close'
-            aria-label='close'
-            onClick={showModal}
-         ></button>
+         {showModal !== undefined && (
+            <button
+               className='modal-close is-large button-close'
+               aria-label='close'
+               onClick={showModal}
+            ></button>
+         )}
       </div>
    );
 };
