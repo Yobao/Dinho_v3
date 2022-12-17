@@ -105,6 +105,7 @@ export const SLOVAK = {
          pwdMin: "Zadané heslo musí obsahovať minimálne 6 znakov.",
          somethingWrong: "Niekde nastala chyba. Skúste to prosím znova.",
          fillEverything: "Vyplňte prosím všetky polia.",
+         wrongPassword: "Staré heslo je nesprávne. Skúste prosím znova.",
       },
    },
    forgotPwdModal: {
@@ -246,6 +247,7 @@ export const CZECH = {
          pwdMin: "Zadané heslo musí obsahovat minimálně 6 znaků.",
          somethingWrong: "Někde nastala chyba. Zkuste to prosím znovu.",
          fillEverything: "Vyplňte prosím všechna pole.",
+         wrongPassword: "Staré heslo je nesprávné. Zkuste prosím znovu.",
       },
    },
    forgotPwdModal: {
@@ -395,6 +397,7 @@ export const ENGLISH = {
          pwdMin: "At least 6 characters are required for passowrd.",
          somethingWrong: "Something went wrong. Please try again.",
          fillEverything: "Please fill in all fields.",
+         wrongPassword: "Old password is wrong. Please, try again.",
       },
    },
    forgotPwdModal: {

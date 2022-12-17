@@ -94,7 +94,7 @@ const BettingPage = () => {
          duration: 2500,
          type: "is-info",
       });
-      sendRequest(`/bet`, optionsNewBet);
+      sendRequest(`/bet`, optionsNewBet, function transformBet(data) {});
    };
 
    const goToCurrentBet = () => {

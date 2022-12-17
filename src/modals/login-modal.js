@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useMemo } from "react";
+import React, { useState, useContext, useCallback, useMemo, useEffect } from "react";
 import ReactDOM from "react-dom";
 import useFetch from "../hooks/use-fetch";
 import { CurrentUserContext, LanguageContext } from "../store/user-context";
@@ -69,7 +69,7 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
          setLoginPwdColor("is-danger");
          return toastik(alerts.warning);
       }
-      if (err !== undefined) return toastik(alerts.somethingWrong);
+      if (data === 500) return toastik(alerts.somethingWrong);
       localStorage.setItem("dinhotoken", data.access_token);
       setCurrentUser({ user: loginName, id: data.user_id });
       showModal();
@@ -90,6 +90,7 @@ const LoginModal = ({ showModal, showAnotherModal: showForgotPwd }) => {
       if (message) return toastik(message);
 
       sendRequest("/login", options, transformData);
+
       setIsLoading(true);
    }, [options.body]);
 

@@ -81,7 +81,7 @@ const ScoreTablePage = () => {
             <LoadingButton />
          ) : (
             <React.Fragment>
-               <div className='columns p-0 mx-0 px-1 my-4 is-vcentered'>
+               <div className='columns p-0 mx-0 mb-5 mt-5 is-vcentered'>
                   <div className='column p-0 m-0 is-full-mobile is-4-tablet is-5-widescreen has-text-centered has-text-weight-semibold'>
                      <p
                         id='title_total_points'

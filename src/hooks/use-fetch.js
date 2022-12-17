@@ -27,18 +27,18 @@ const useFetch = () => {
    const sendRequest = useCallback(async (path, options, applyData) => {
       const reqOptions = new RequestOptions(...Object.values(options));
       try {
-         const response = await fetch(URL + path, { ...reqOptions });
-
-         const data =
-            response.headers.get("content-type").toString().slice(0, 10) !== "text/plain" ||
-            response.headers.get("content-type") === "null"
-               ? await response.json()
-               : null;
+         const response = await fetch(URL + path, { ...reqOptions }).then((res) => {
+            if (!res.ok) {
+               throw new Error(res.status);
+            }
+            return res;
+         });
+         const data = await response.json();
 
          if (data) applyData(data);
-         if (!data) applyData(response.status);
       } catch (err) {
-         setError(err.message || "Something went wrong!");
+         applyData(Number(err.message));
+         setError(err.message);
       }
 
       if (path.slice(-9) === "autologin") setIsAuth(true);
