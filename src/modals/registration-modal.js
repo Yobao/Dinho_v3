@@ -130,8 +130,7 @@ const RegModal = ({ showModal }) => {
          setRegEmailColor("is-danger");
          return toastik(`${alerts.exists}`);
       }
-
-      // toastik(`${alerts.somethingWrong}`);
+      if (data === 500) return toastik(`${alerts.somethingWrong}`);
       localStorage.setItem("dinhotoken", data.access_token);
       setCurrentUser({ user: regName, id: null });
       showModal();
@@ -161,7 +160,6 @@ const RegModal = ({ showModal }) => {
          }
          index++;
       }
-
       if (message) return toastik(message);
       // Inputfield specific.
       for (let i = 0; i < Object.keys(handleInputs).length; i++) {
