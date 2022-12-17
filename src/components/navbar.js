@@ -105,7 +105,7 @@ const NavbarComponent = () => {
    };
 
    const logOut = () => {
-      sendRequest("/logout", options);
+      sendRequest("/logout", options, function transformData(data) {});
       setCurrentUser(null);
       localStorage.removeItem("dinhotoken");
       handleShowMobileMenu();
